@@ -1,0 +1,107 @@
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { Layout, Menu, Button, Drawer } from "antd";
+import { MenuOutlined } from "@ant-design/icons";
+import { useMemo, useState } from "react";
+import { useTheme } from "../context/ThemeContext.jsx";
+import ThemeToggle from "./ThemeToggle.jsx";
+
+
+const { Header } = Layout;
+
+const links = [
+  { label: "Home", path: "/" },
+  { label: "About Us", path: "/about" },
+  { label: "Services", path: "/services" },
+  // { label: "Products", path: "/products" },
+  { label: "Projects", path: "/projects" },
+  { label: "Clients", path: "/clients" },
+  { label: "Careers", path: "/careers" },
+  { label: "Contact", path: "/contact" },
+];
+
+export default function Navbar() {
+  const location = useLocation();
+  const [open, setOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+
+  const selectedKeys = useMemo(() => {
+    // map current pathname to matching menu key
+    const match = links.find((l) => l.path === location.pathname);
+    return match ? [match.path] : [];
+  }, [location.pathname]);
+
+  return (
+    <Header
+      className="sticky top-0 z-50 px-4 shadow-sm transition-colors"
+      style={{ padding: "0 16px", backgroundColor: theme === 'dark' ? 'var(--header-bg)' : 'var(--header-bg)' }}
+    >
+      <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+        <div className="flex items-center">
+          <Link
+            to="/"
+            className="inline-flex items-center text-2xl font-extrabold tracking-tight hover:opacity-90 transition-colors mr-4"
+            aria-label="Safetyc Home"
+          >
+            <span>
+              SAFETY<span className="text-orange-600">C</span>
+            </span>
+          </Link>
+          
+          <ThemeToggle 
+            className="hidden md:flex theme-toggle-navbar" 
+            variant="default"
+            key={`theme-toggle-${theme}`} 
+          />
+        </div>
+
+        {/* Desktop menu */}
+        <div className="hidden md:flex items-center justify-end">
+          <Menu
+            mode="horizontal"
+            selectedKeys={selectedKeys}
+            items={links.map((l) => ({ 
+              key: l.path, 
+              label: <NavLink 
+                to={l.path} 
+                className={({ isActive }) => isActive ? "text-orange-600 font-medium" : ""}
+              >
+                {l.label}
+              </NavLink> 
+            }))}
+            className="border-0 bg-transparent"
+          />
+        </div>
+
+        {/* Mobile menu button */}
+        <div className="md:hidden flex items-center">
+          <Button type="text" icon={<MenuOutlined />} onClick={() => setOpen(true)} />
+          <Drawer
+            title="Menu"
+            placement="right"
+            open={open}
+            onClose={() => setOpen(false)}
+          >
+            <div className="flex items-center mb-4">
+              <span className="text-base mr-2">Theme:</span>
+              <ThemeToggle variant="drawer" />
+            </div>
+            <Menu
+              mode="inline"
+              selectedKeys={selectedKeys}
+              onClick={() => setOpen(false)}
+              items={links.map((l) => ({
+                key: l.path,
+                label: <NavLink 
+                  to={l.path} 
+                  className={({ isActive }) => isActive ? "text-orange-600 font-medium" : ""}
+                >
+                  {l.label}
+                </NavLink>,
+              }))}
+            />
+          </Drawer>
+        </div>
+      </div>
+    </Header>
+  );
+}
