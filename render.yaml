@@ -15,7 +15,7 @@ services:
         fromService:
           name: safetyc-web
           type: web
-          property: url
+          property: host
       - key: PORT
         value: 10000
     autoDeploy: true
@@ -32,7 +32,7 @@ services:
         fromService:
           name: safetyc-api
           type: web
-          property: url
+          property: host
     autoDeploy: true
     headers:
       - path: /*
