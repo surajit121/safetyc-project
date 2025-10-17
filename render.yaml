@@ -3,7 +3,6 @@ services:
   - type: web
     name: safetyc-api
     env: node
-    plan: starter
     buildCommand: cd backend && npm install
     startCommand: cd backend && npm start
     envVars:
@@ -24,7 +23,6 @@ services:
   - type: web
     name: safetyc-web
     env: static
-    plan: starter
     buildCommand: cd client && npm install && npm run build
     staticPublishPath: client/dist
     envVars:
