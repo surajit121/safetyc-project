@@ -12,12 +12,31 @@ export default function Clients() {
   useEffect(() => {
     setLoading(true);
     setError(null);
-  axios.get(apiUrl('/clients'))
+    
+    // Use direct API URL for production
+    let url;
+    const apiBase = import.meta.env.VITE_API_URL;
+    
+    console.log("Original API base:", apiBase);
+    
+    if (apiBase === 'safetyc-api') {
+      // Direct hardcoded URL for production
+      url = 'https://safetyc-api.onrender.com/api/clients';
+      console.log('Using hardcoded production API URL for clients');
+    } else {
+      // Use the apiUrl function for development or custom environments
+      url = apiUrl('/clients');
+    }
+    
+    console.log('Calling API URL for clients:', url);
+    
+    axios.get(url)
       .then(res => {
         setClients(res.data);
         setLoading(false);
       })
       .catch(err => {
+        console.error("Error fetching clients:", err);
         setError(err);
         setLoading(false);
       });

@@ -25,7 +25,24 @@ function useProjectsApi() {
     controllerRef.current = controller;
 
     try {
-      const res = await axios.get(apiUrl('/projects'), { signal: controller.signal, timeout: 10000 });
+      // Use direct API URL for production
+      let url;
+      const apiBase = import.meta.env.VITE_API_URL;
+      
+      console.log("Original API base:", apiBase);
+      
+      if (apiBase === 'safetyc-api') {
+        // Direct hardcoded URL for production
+        url = 'https://safetyc-api.onrender.com/api/projects';
+        console.log('Using hardcoded production API URL');
+      } else {
+        // Use the apiUrl function for development or custom environments
+        url = apiUrl('/projects');
+      }
+      
+      console.log('Calling API URL:', url);
+      
+      const res = await axios.get(url, { signal: controller.signal, timeout: 10000 });
       if (Array.isArray(res.data)) {
         setProjects(res.data);
       } else {

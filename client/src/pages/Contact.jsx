@@ -9,11 +9,30 @@ export default function Contact() {
   async function submit(e) {
     e.preventDefault();
     setStatus(null);
+    
     try {
-  await axios.post(apiUrl('/inquiries'), form);
+      // Use direct API URL for production
+      let url;
+      const apiBase = import.meta.env.VITE_API_URL;
+      
+      console.log("Original API base:", apiBase);
+      
+      if (apiBase === 'safetyc-api') {
+        // Direct hardcoded URL for production
+        url = 'https://safetyc-api.onrender.com/api/inquiries';
+        console.log('Using hardcoded production API URL for inquiries');
+      } else {
+        // Use the apiUrl function for development or custom environments
+        url = apiUrl('/inquiries');
+      }
+      
+      console.log('Posting to API URL:', url);
+      
+      await axios.post(url, form);
       setStatus("Thanks! We'll get back to you soon.");
       setForm({ name: "", email: "", phone: "", message: "" });
     } catch (e) {
+      console.error("Error submitting form:", e);
       setStatus("Something went wrong. Please try again.");
     }
   }

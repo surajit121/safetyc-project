@@ -65,8 +65,21 @@ function useServicesApi() {
     controllerRef.current = controller;
 
     try {
-      // Log the URL we're calling for debugging
-      const url = apiUrl('/services');
+      // Use direct API URL for production
+      let url;
+      const apiBase = import.meta.env.VITE_API_URL;
+      
+      console.log("Original API base:", apiBase);
+      
+      if (apiBase === 'safetyc-api') {
+        // Direct hardcoded URL for production
+        url = 'https://safetyc-api.onrender.com/api/services';
+        console.log('Using hardcoded production API URL');
+      } else {
+        // Use the apiUrl function for development or custom environments
+        url = apiUrl('/services');
+      }
+      
       console.log('Calling API URL:', url);
       
       const res = await axios.get(url, { signal: controller.signal, timeout: 10000 });
