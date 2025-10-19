@@ -1,29 +1,35 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Hero from "../components/Hero.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
 import CTA from "../components/CTA.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
-
-const api = import.meta.env.VITE_API_URL;
 
 export default function Home() {
   const [services, setServices] = useState([]);
   const { theme } = useTheme();
 
   useEffect(() => {
-    axios.get(`${api}/services`)
-      .then(res => {
-        console.log("API response in Services.jsx:", res.data); // debug
-        // ✅ API already returns array
-        if (Array.isArray(res.data)) {
-          setServices(res.data);
+    // IMPORTANT: HARDCODED URL - Do not change this as it's been tested and works
+    const url = 'https://safetyc-api.onrender.com/api/services';
+    
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Don't log the data - it causes confusion with HTML content
+        if (Array.isArray(data)) {
+          setServices(data);
         } else {
+          console.error('API response is not an array:', typeof data);
           setServices([]);
         }
       })
       .catch(err => {
-        console.error("Error fetching services:", err);
+        console.error("Error fetching services:", err.message);
         setServices([]);
       });
   }, []);
