@@ -13,6 +13,13 @@ export function apiUrl(path) {
   // Normalize base URL by removing trailing slashes
   let base = BASE.replace(/\/+$/, '');
   
+  // Special case for Render.com service names without domain
+  // If the base is just "safetyc-api", add ".onrender.com"
+  if (base === 'safetyc-api') {
+    base = 'safetyc-api.onrender.com';
+    console.log('Added Render domain to API base URL:', base);
+  }
+  
   // Check if the base URL includes protocol (http:// or https://)
   // If not, add https:// prefix for production
   if (!base.match(/^https?:\/\//)) {
