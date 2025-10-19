@@ -65,10 +65,17 @@ function useServicesApi() {
     controllerRef.current = controller;
 
     try {
-      const res = await axios.get(apiUrl('/services'), { signal: controller.signal, timeout: 10000 });
+      // Log the URL we're calling for debugging
+      const url = apiUrl('/services');
+      console.log('Calling API URL:', url);
+      
+      const res = await axios.get(url, { signal: controller.signal, timeout: 10000 });
+      console.log('API response:', res);
+      
       if (Array.isArray(res.data)) {
         setServices(res.data);
       } else {
+        console.error('Non-array response:', res.data);
         setServices([]);
         setError(new Error("Unexpected server response"));
       }
@@ -86,7 +93,23 @@ function useServicesApi() {
         return;
       }
 
+      // Enhanced error logging
       console.error("Error fetching services:", err);
+      
+      if (err.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Response data:", err.response.data);
+        console.error("Response status:", err.response.status);
+        console.error("Response headers:", err.response.headers);
+      } else if (err.request) {
+        // The request was made but no response was received
+        console.error("No response received:", err.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error setting up request:", err.message);
+      }
+      
       setLoading(false);
       setServices([]);
       setError(err instanceof Error ? err : new Error(String(err)));
