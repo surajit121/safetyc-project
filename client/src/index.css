@@ -117,10 +117,16 @@ a[data-cta-link]:visited {
   box-shadow: 0 0 10px rgba(230, 81, 0, 0.2);
 }
 
-.dark .ant-menu-item:hover {
+/* Menu item hover in both light and dark modes */
+.ant-menu-item:hover {
   color: var(--ant-primary-color) !important;
 }
 
+.ant-menu-item-selected {
+  color: var(--ant-primary-color) !important;
+}
+
+/* Dark mode specific styling if needed */
 .dark .ant-menu-item-selected {
   color: var(--ant-primary-color) !important;
 }

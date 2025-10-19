@@ -63,7 +63,7 @@ export default function Navbar() {
               key: l.path, 
               label: <NavLink 
                 to={l.path} 
-                className={({ isActive }) => isActive ? "text-orange-600 font-medium" : ""}
+                className={({ isActive }) => isActive ? "text-orange-600 font-medium" : "hover:text-orange-600"}
               >
                 {l.label}
               </NavLink> 
@@ -93,7 +93,7 @@ export default function Navbar() {
                 key: l.path,
                 label: <NavLink 
                   to={l.path} 
-                  className={({ isActive }) => isActive ? "text-orange-600 font-medium" : ""}
+                  className={({ isActive }) => isActive ? "text-orange-600 font-medium" : "hover:text-orange-600"}
                 >
                   {l.label}
                 </NavLink>,
