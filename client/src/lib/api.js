@@ -1,7 +1,7 @@
 const BASE = import.meta.env.VITE_API_URL || '';
 
 // For debugging purposes
-console.log('API Base URL:', BASE);
+console.log('API Base URL (original):', BASE);
 
 export function apiUrl(path) {
   // Ensure path starts with /
@@ -11,7 +11,14 @@ export function apiUrl(path) {
   if (!BASE) return `/api${p}`;
   
   // Normalize base URL by removing trailing slashes
-  const base = BASE.replace(/\/+$/, '');
+  let base = BASE.replace(/\/+$/, '');
+  
+  // Check if the base URL includes protocol (http:// or https://)
+  // If not, add https:// prefix for production
+  if (!base.match(/^https?:\/\//)) {
+    base = `https://${base}`;
+    console.log('Added HTTPS protocol to base URL:', base);
+  }
   
   // If base already includes /api suffix, don't add it again
   if (base.endsWith('/api')) return `${base}${p}`;
