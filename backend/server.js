@@ -28,12 +28,46 @@ const allowedOrigins = (process.env.ALLOWED_ORIGINS || "*")
     .split(",")
     .map((o) => o.trim())
     .filter(Boolean);
+    
+console.log('Configured allowed origins:', allowedOrigins);
+
+// In production, ensure we accept requests from the web frontend
+if (NODE_ENV === 'production') {
+    // Force add the web frontend domain if not already included
+    const webFrontendDomain = 'https://safetyc-web.onrender.com';
+    if (!allowedOrigins.includes('*') && !allowedOrigins.includes(webFrontendDomain)) {
+        allowedOrigins.push(webFrontendDomain);
+        console.log('Added web frontend domain to allowed origins:', webFrontendDomain);
+    }
+}
+
 app.use(
     cors({
         origin: (origin, callback) => {
-            if (allowedOrigins.includes("*") || !origin) return callback(null, true);
-            if (allowedOrigins.includes(origin)) return callback(null, true);
-            return callback(new Error("Not allowed by CORS"));
+            // Log incoming origin for debugging
+            console.log('Request from origin:', origin);
+            
+            // Allow requests with no origin (like mobile apps, curl requests)
+            if (!origin) {
+                console.log('Allowing request with no origin');
+                return callback(null, true);
+            }
+            
+            // Allow any origin if "*" is in allowed origins
+            if (allowedOrigins.includes("*")) {
+                console.log('Allowing all origins due to wildcard configuration');
+                return callback(null, true);
+            }
+            
+            // Check if origin is allowed
+            if (allowedOrigins.includes(origin)) {
+                console.log('Origin explicitly allowed:', origin);
+                return callback(null, true);
+            }
+            
+            // Origin not allowed
+            console.log('Origin rejected by CORS policy:', origin);
+            return callback(new Error(`Not allowed by CORS: ${origin}`));
         },
         credentials: true,
     })
@@ -63,6 +97,15 @@ app.use("/api", apiLimiter);
 
 app.get("/", (_req, res) => res.json({ ok: true, name: "Safetyc API" }));
 
+// Add an explicit route for API status check
+app.get("/api", (_req, res) => res.json({ 
+    status: "ok", 
+    message: "SafetyC API is running", 
+    version: "1.0.0",
+    environment: NODE_ENV
+}));
+
+// API Routes
 app.use("/api/services", servicesRouter)
 app.use("/api/projects", projectsRouter)
 app.use("/api/clients", clientsRouter)
