@@ -3,8 +3,6 @@ import axios from "axios";
 import { apiUrl } from "../lib/api.js";
 import { useTheme } from "../context/ThemeContext.jsx";
 
-const api = import.meta.env.VITE_API_URL;
-
 export default function Clients() {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +12,7 @@ export default function Clients() {
   useEffect(() => {
     setLoading(true);
     setError(null);
-  axios.get(api ? `${api}/clients` : apiUrl('/clients'))
+  axios.get(apiUrl('/clients'))
       .then(res => {
         setClients(res.data);
         setLoading(false);

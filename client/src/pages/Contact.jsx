@@ -2,8 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { apiUrl } from "../lib/api.js";
 
-const api = import.meta.env.VITE_API_URL;
-
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [status, setStatus] = useState(null);
@@ -12,7 +10,7 @@ export default function Contact() {
     e.preventDefault();
     setStatus(null);
     try {
-  await axios.post(api ? `${api}/inquiries` : apiUrl('/inquiries'), form);
+  await axios.post(apiUrl('/inquiries'), form);
       setStatus("Thanks! We'll get back to you soon.");
       setForm({ name: "", email: "", phone: "", message: "" });
     } catch (e) {

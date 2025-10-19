@@ -3,7 +3,6 @@ import axios from "axios";
 import { apiUrl } from "../lib/api.js";
 import ProjectCard from "../components/ProjectCard.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
-const api = import.meta.env.VITE_API_URL;
 
 function useProjectsApi() {
   const [projects, setProjects] = useState([]);
@@ -26,7 +25,7 @@ function useProjectsApi() {
     controllerRef.current = controller;
 
     try {
-      const res = await axios.get(api ? `${api}/projects` : apiUrl('/projects'), { signal: controller.signal, timeout: 10000 });
+      const res = await axios.get(apiUrl('/projects'), { signal: controller.signal, timeout: 10000 });
       if (Array.isArray(res.data)) {
         setProjects(res.data);
       } else {

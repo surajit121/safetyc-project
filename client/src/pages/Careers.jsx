@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { apiUrl } from "../lib/api.js";
 
 const JOBS = [
   {
@@ -31,17 +32,7 @@ const JOBS = [
   },
 ];
 
-const API = import.meta.env.VITE_API_URL || "";
 
-function buildApiUrl(path) {
-  // path should start with '/'
-  const p = path.startsWith("/") ? path : `/${path}`;
-  if (!API) return `/api${p}`; // dev: use same-origin /api
-  const base = API.replace(/\/+$/, "");
-  // if base already ends with /api, don't add another /api
-  if (base.endsWith("/api")) return `${base}${p}`;
-  return `${base}/api${p}`;
-}
 
 export default function Careers() {
   const [openJobId, setOpenJobId] = useState(null);
@@ -148,7 +139,7 @@ export default function Careers() {
 
     setStatus({ loading: true, success: null, error: null });
     try {
-      const url = buildApiUrl('/applications');
+      const url = apiUrl('/applications');
       // debug: ensures we don't accidentally call double /api
       if (import.meta.env.MODE !== 'production') console.debug('Uploading application to:', url, payload);
 

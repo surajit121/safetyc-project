@@ -8,8 +8,6 @@ import solarImg from "../assets/solar.jpeg";
 import computerImg from "../assets/computer.jpeg";
 import bioImg from "../assets/bio.jpeg";
 
-const api = import.meta.env.VITE_API_URL;
-
 // Fallback static services data
 const staticServices = [
   {
@@ -67,7 +65,7 @@ function useServicesApi() {
     controllerRef.current = controller;
 
     try {
-  const res = await axios.get(api ? `${api}/services` : apiUrl('/services'), { signal: controller.signal, timeout: 10000 });
+      const res = await axios.get(apiUrl('/services'), { signal: controller.signal, timeout: 10000 });
       if (Array.isArray(res.data)) {
         setServices(res.data);
       } else {
