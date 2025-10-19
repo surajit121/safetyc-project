@@ -65,32 +65,35 @@ function useServicesApi() {
     controllerRef.current = controller;
 
     try {
-      // Use direct API URL for production
-      let url;
-      const apiBase = import.meta.env.VITE_API_URL;
+      // IMPORTANT: HARDCODED URL - Do not change this as it's been tested and works
+      const url = 'https://safetyc-api.onrender.com/api/services';
       
-      console.log("Original API base:", apiBase);
+      // No logs before the request to prevent extra HTML output
       
-      if (apiBase === 'safetyc-api') {
-        // Direct hardcoded URL for production
-        url = 'https://safetyc-api.onrender.com/api/services';
-        console.log('Using hardcoded production API URL');
-      } else {
-        // Use the apiUrl function for development or custom environments
-        url = apiUrl('/services');
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        signal: controller.signal
+      });
+      
+      // Check if response is OK
+      if (!res.ok) {
+        throw new Error(`Server returned ${res.status} ${res.statusText}`);
       }
       
-      console.log('Calling API URL:', url);
+      // Parse the JSON response
+      const data = await res.json();
       
-      const res = await axios.get(url, { signal: controller.signal, timeout: 10000 });
-      console.log('API response:', res);
-      
-      if (Array.isArray(res.data)) {
-        setServices(res.data);
+      // Validate that we received an array
+      if (Array.isArray(data)) {
+        setServices(data);
       } else {
-        console.error('Non-array response:', res.data);
+        console.error('Non-array response from API:', data);
         setServices([]);
-        setError(new Error("Unexpected server response"));
+        setError(new Error("Unexpected data format from server"));
       }
       setLoading(false);
       retryRef.current = 0;
