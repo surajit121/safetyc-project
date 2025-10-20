@@ -32,17 +32,33 @@ export const applyMobileColorFix = () => {
       link.style.setProperty('border', '1px solid rgba(2, 132, 199, 0.15)', 'important');
     });
     
-    // Force selected menu items to be orange
-    const selectedMenuItems = document.querySelectorAll('.ant-menu-item-selected a');
-    selectedMenuItems.forEach(item => {
+    // Reset all menu items first to ensure no lingering active states
+    const allMobileMenuItems = document.querySelectorAll('.mobile-menu .ant-menu-item a');
+    allMobileMenuItems.forEach(item => {
+      if (item.getAttribute('data-active') !== 'true') {
+        item.style.setProperty('color', '', ''); // Remove any previously set colors
+        item.style.setProperty('font-weight', '', '');
+      }
+    });
+    
+    // Force selected menu items to be orange - only for desktop menu
+    const selectedDesktopItems = document.querySelectorAll('.hidden.md\\:flex .ant-menu-item-selected a');
+    selectedDesktopItems.forEach(item => {
       item.style.setProperty('color', '#e65100', 'important');
     });
     
-    // Fix for active menu items in mobile drawer
-    const mobileActiveLinks = document.querySelectorAll('.ant-drawer .ant-menu-item a.text-orange-600');
+    // Fix for active menu items in mobile drawer - use data-active attribute for reliability
+    const mobileActiveLinks = document.querySelectorAll('.ant-drawer .ant-menu-item a[data-active="true"]');
     mobileActiveLinks.forEach(item => {
       item.style.setProperty('color', '#e65100', 'important');
       item.style.setProperty('font-weight', '500', 'important');
+    });
+    
+    // Additional fix for mobile menu active item background
+    const mobileActiveItems = document.querySelectorAll('.mobile-menu-item-active');
+    mobileActiveItems.forEach(item => {
+      // Set a light background for the active item for better visibility
+      item.style.setProperty('background-color', 'rgba(230, 81, 0, 0.05)', 'important');
     });
   }
 };

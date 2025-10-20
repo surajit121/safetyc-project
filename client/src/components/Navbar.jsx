@@ -1,9 +1,10 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Layout, Menu, Button, Drawer } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
+import applyMobileColorFix from "../utils/mobileColorFix.js";
 
 
 const { Header } = Layout;
@@ -33,6 +34,16 @@ export default function Navbar() {
     // For other pages, check if the path exists in our links
     const match = links.find((l) => l.path === location.pathname);
     return match ? [match.path] : [];
+  }, [location.pathname]);
+  
+  // Apply mobile color fixes when location changes to ensure proper highlighting
+  useEffect(() => {
+    // Apply fixes after a short delay to ensure DOM has updated
+    const fixTimer = setTimeout(() => {
+      applyMobileColorFix();
+    }, 100);
+    
+    return () => clearTimeout(fixTimer);
   }, [location.pathname]);
 
   return (
@@ -77,6 +88,7 @@ export default function Navbar() {
                   // For other links, use React Router's isActive prop
                   return isActive ? "text-orange-600 font-medium" : "hover:text-orange-600";
                 }}
+                end={l.path === "/" ? true : false} // Ensure exact matching for home path
               >
                 {l.label}
               </NavLink>
@@ -92,7 +104,11 @@ export default function Navbar() {
             title="Menu"
             placement="right"
             open={open}
-            onClose={() => setOpen(false)}
+            onClose={() => {
+              setOpen(false);
+              // Apply mobile fixes after drawer closes to reset any lingering states
+              setTimeout(() => applyMobileColorFix(), 100);
+            }}
           >
             <div className="flex items-center mb-4">
               <span className="text-base mr-2">Theme:</span>
@@ -102,22 +118,18 @@ export default function Navbar() {
               mode="inline"
               selectedKeys={selectedKeys}
               onClick={() => setOpen(false)}
+              forceSubMenuRender={false}
+              className="mobile-menu"
               items={links.map((l) => ({
                 key: l.path,
-                label: <NavLink 
+                className: location.pathname === l.path ? "mobile-menu-item-active" : "",
+                label: <Link 
                   to={l.path} 
-                  className={({ isActive }) => {
-                    // For home link, be very specific about matching only the exact root path
-                    if (l.path === "/") {
-                      // Only highlight home when we're exactly at the root path
-                      return location.pathname === "/" ? "text-orange-600 font-medium" : "hover:text-orange-600";
-                    }
-                    // For other links, use React Router's isActive prop
-                    return isActive ? "text-orange-600 font-medium" : "hover:text-orange-600";
-                  }}
+                  className={location.pathname === l.path ? "text-orange-600 font-medium" : "text-gray-700 hover:text-orange-600"}
+                  data-active={location.pathname === l.path ? "true" : "false"}
                 >
                   {l.label}
-                </NavLink>,
+                </Link>,
               }))}
             />
           </Drawer>
