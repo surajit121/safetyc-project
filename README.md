@@ -39,7 +39,9 @@ The following environment variables are required for deployment:
 
 Once deployed, your application will be available at:
 
-- Frontend: `https://safetyc-web.onrender.com`
+- Frontend: 
+  - Custom domain: `https://safetyc.in` or `https://www.safetyc.in`
+  - Render domain: `https://safetyc-web.onrender.com`
 - Backend API: `https://safetyc-api.onrender.com`
 
 ## Local Development

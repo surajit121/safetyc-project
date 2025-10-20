@@ -33,12 +33,19 @@ console.log('Configured allowed origins:', allowedOrigins);
 
 // In production, ensure we accept requests from the web frontend
 if (NODE_ENV === 'production') {
-    // Force add the web frontend domain if not already included
-    const webFrontendDomain = 'https://safetyc-web.onrender.com';
-    if (!allowedOrigins.includes('*') && !allowedOrigins.includes(webFrontendDomain)) {
-        allowedOrigins.push(webFrontendDomain);
-        console.log('Added web frontend domain to allowed origins:', webFrontendDomain);
-    }
+    // Force add the web frontend domains if not already included
+    const webFrontendDomains = [
+        'https://safetyc-web.onrender.com',
+        'https://safetyc.in',
+        'https://www.safetyc.in'
+    ];
+    
+    webFrontendDomains.forEach(domain => {
+        if (!allowedOrigins.includes('*') && !allowedOrigins.includes(domain)) {
+            allowedOrigins.push(domain);
+            console.log('Added web frontend domain to allowed origins:', domain);
+        }
+    });
 }
 
 app.use(
