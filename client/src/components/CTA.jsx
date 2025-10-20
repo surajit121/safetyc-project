@@ -18,7 +18,7 @@ export default function CTA() {
             style={{
               display: "inline-block",
               backgroundColor: theme === 'dark' ? "#1f1f1f" : "#ffffff",
-              color: "#0ea5e9",
+              color: "#0ea5e9 !important",
               padding: "12px 20px",
               borderRadius: 8,
               boxShadow: theme === 'dark' ? "0 1px 3px rgba(0,0,0,0.2)" : "0 1px 2px rgba(0,0,0,0.05)",

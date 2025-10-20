@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "antd";
+import { useEffect } from "react";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
@@ -12,10 +13,24 @@ import Clients from "./pages/Clients.jsx";
 import Careers from "./pages/Careers.jsx";
 import Contact from "./pages/Contact.jsx";
 import { useTheme } from "./context/ThemeContext.jsx";
+import applyMobileColorFix from "./utils/mobileColorFix.js";
 
 
 export default function App() {
   const { theme } = useTheme();
+  
+  // Apply mobile color fixes when component mounts and whenever theme changes
+  useEffect(() => {
+    // Apply mobile fixes immediately
+    applyMobileColorFix();
+    
+    // Also reapply after a short delay to catch dynamically rendered elements
+    const fixTimer = setTimeout(() => {
+      applyMobileColorFix();
+    }, 500);
+    
+    return () => clearTimeout(fixTimer);
+  }, [theme]);
   
   return (
     <Layout className={`min-h-screen ${theme} transition-colors app-layout`} data-theme={theme}>

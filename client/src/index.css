@@ -70,6 +70,17 @@ a[data-cta-link]:visited {
 	color: #0ea5e9 !important;
 }
 
+/* Ensure colors are displayed correctly on mobile devices */
+@media (max-width: 768px) {
+  a[data-cta-link], a[data-cta-link]:visited {
+    color: #0ea5e9 !important;
+  }
+  
+  .text-orange-600 {
+    color: #e65100 !important;
+  }
+}
+
 /* Dark mode styles */
 .dark a {
   color: #4096ff;
@@ -129,6 +140,15 @@ a[data-cta-link]:visited {
 /* Dark mode specific styling if needed */
 .dark .ant-menu-item-selected {
   color: var(--ant-primary-color) !important;
+}
+
+/* Ensure mobile menu uses correct colors */
+@media (max-width: 768px) {
+  .ant-drawer .ant-menu-item-selected a,
+  .ant-drawer .ant-menu-item a:hover,
+  .ant-drawer .ant-menu-item-selected a:visited {
+    color: #e65100 !important;
+  }
 }
 
 .dark .ant-drawer-header,

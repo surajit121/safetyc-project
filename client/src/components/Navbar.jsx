@@ -43,7 +43,7 @@ export default function Navbar() {
             aria-label="Safetyc Home"
           >
             <span>
-              SAFETY<span className="text-orange-600">C</span>
+              SAFETY<span className="text-orange-600" style={{color: "#e65100 !important"}}>C</span>
             </span>
           </Link>
           
