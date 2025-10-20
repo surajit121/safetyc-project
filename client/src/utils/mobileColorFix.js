@@ -51,14 +51,25 @@ export const applyMobileColorFix = () => {
     const mobileActiveLinks = document.querySelectorAll('.ant-drawer .ant-menu-item a[data-active="true"]');
     mobileActiveLinks.forEach(item => {
       item.style.setProperty('color', '#e65100', 'important');
-      item.style.setProperty('font-weight', '500', 'important');
+      item.style.setProperty('font-weight', '600', 'important');
+      // Ensure parent menu item has no background
+      const parentMenuItem = item.closest('.ant-menu-item');
+      if (parentMenuItem) {
+        parentMenuItem.style.setProperty('background-color', 'transparent', 'important');
+      }
     });
     
-    // Additional fix for mobile menu active item background
-    const mobileActiveItems = document.querySelectorAll('.mobile-menu-item-active');
-    mobileActiveItems.forEach(item => {
-      // Set a light background for the active item for better visibility
-      item.style.setProperty('background-color', 'rgba(230, 81, 0, 0.05)', 'important');
+    // Remove any background color from mobile menu items
+    const allMenuItems = document.querySelectorAll('.mobile-menu .ant-menu-item');
+    allMenuItems.forEach(item => {
+      item.style.setProperty('background-color', 'transparent', 'important');
+      item.style.setProperty('background', 'none', 'important');
+      
+      // Remove any hover backgrounds from Ant Design
+      item.addEventListener('mouseenter', (e) => {
+        e.currentTarget.style.setProperty('background-color', 'transparent', 'important');
+        e.currentTarget.style.setProperty('background', 'none', 'important');
+      });
     });
   }
 };

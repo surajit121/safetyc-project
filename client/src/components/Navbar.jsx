@@ -119,13 +119,13 @@ export default function Navbar() {
               selectedKeys={selectedKeys}
               onClick={() => setOpen(false)}
               forceSubMenuRender={false}
-              className="mobile-menu"
+              className="mobile-menu bg-white dark:bg-gray-900"
               items={links.map((l) => ({
                 key: l.path,
-                className: location.pathname === l.path ? "mobile-menu-item-active" : "",
+                className: "",
                 label: <Link 
                   to={l.path} 
-                  className={location.pathname === l.path ? "text-orange-600 font-medium" : "text-gray-700 hover:text-orange-600"}
+                  className={location.pathname === l.path ? "text-orange-600 font-semibold" : "text-gray-700 hover:text-orange-600"}
                   data-active={location.pathname === l.path ? "true" : "false"}
                 >
                   {l.label}
