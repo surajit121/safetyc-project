@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { Layout } from "antd";
 import { useEffect } from "react";
 import Navbar from "./components/Navbar.jsx";
@@ -18,8 +18,9 @@ import applyMobileColorFix from "./utils/mobileColorFix.js";
 
 export default function App() {
   const { theme } = useTheme();
+  const location = useLocation();
   
-  // Apply mobile color fixes when component mounts and whenever theme changes
+  // Apply mobile color fixes when component mounts, theme changes, or navigation happens
   useEffect(() => {
     // Apply mobile fixes immediately
     applyMobileColorFix();
@@ -30,7 +31,7 @@ export default function App() {
     }, 500);
     
     return () => clearTimeout(fixTimer);
-  }, [theme]);
+  }, [theme, location.pathname]);
   
   return (
     <Layout className={`min-h-screen ${theme} transition-colors app-layout`} data-theme={theme}>

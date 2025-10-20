@@ -37,6 +37,13 @@ export const applyMobileColorFix = () => {
     selectedMenuItems.forEach(item => {
       item.style.setProperty('color', '#e65100', 'important');
     });
+    
+    // Fix for active menu items in mobile drawer
+    const mobileActiveLinks = document.querySelectorAll('.ant-drawer .ant-menu-item a.text-orange-600');
+    mobileActiveLinks.forEach(item => {
+      item.style.setProperty('color', '#e65100', 'important');
+      item.style.setProperty('font-weight', '500', 'important');
+    });
   }
 };
 

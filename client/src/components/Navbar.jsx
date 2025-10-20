@@ -26,6 +26,11 @@ export default function Navbar() {
 
   const selectedKeys = useMemo(() => {
     // map current pathname to matching menu key
+    // Handle exact path matching for home page
+    if (location.pathname === "/") {
+      return ["/"];
+    }
+    // For other pages, check if the path exists in our links
     const match = links.find((l) => l.path === location.pathname);
     return match ? [match.path] : [];
   }, [location.pathname]);
@@ -63,10 +68,18 @@ export default function Navbar() {
               key: l.path, 
               label: <NavLink 
                 to={l.path} 
-                className={({ isActive }) => isActive ? "text-orange-600 font-medium" : "hover:text-orange-600"}
+                className={({ isActive }) => {
+                  // For home link, be very specific about matching only the exact root path
+                  if (l.path === "/") {
+                    // Only highlight home when we're exactly at the root path
+                    return location.pathname === "/" ? "text-orange-600 font-medium" : "hover:text-orange-600";
+                  }
+                  // For other links, use React Router's isActive prop
+                  return isActive ? "text-orange-600 font-medium" : "hover:text-orange-600";
+                }}
               >
                 {l.label}
-              </NavLink> 
+              </NavLink>
             }))}
             className="border-0 bg-transparent"
           />
@@ -93,7 +106,15 @@ export default function Navbar() {
                 key: l.path,
                 label: <NavLink 
                   to={l.path} 
-                  className={({ isActive }) => isActive ? "text-orange-600 font-medium" : "hover:text-orange-600"}
+                  className={({ isActive }) => {
+                    // For home link, be very specific about matching only the exact root path
+                    if (l.path === "/") {
+                      // Only highlight home when we're exactly at the root path
+                      return location.pathname === "/" ? "text-orange-600 font-medium" : "hover:text-orange-600";
+                    }
+                    // For other links, use React Router's isActive prop
+                    return isActive ? "text-orange-600 font-medium" : "hover:text-orange-600";
+                  }}
                 >
                   {l.label}
                 </NavLink>,
