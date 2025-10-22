@@ -1,6 +1,8 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Layout } from "antd";
 import { useEffect } from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
@@ -35,6 +37,18 @@ export default function App() {
   
   return (
     <Layout className={`min-h-screen ${theme} transition-colors app-layout`} data-theme={theme}>
+      <ToastContainer 
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={theme === 'dark' ? 'dark' : 'light'}
+      />
       <Navbar />
       <Layout.Content className="flex-1">
         <ScrollToTop />
