@@ -1,11 +1,33 @@
 import { Link } from "react-router-dom";
 import { Typography, Button, Row, Col, Card, Tag, Space, Divider } from "antd";
 import { ArrowRightOutlined, SafetyOutlined, CheckCircleOutlined } from "@ant-design/icons";
-import building from "../assets/building.png";
+import { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext.jsx";
+
+// Import image dynamically to improve initial load time
+const buildingImageUrl = new URL('../assets/building.png', import.meta.url).href;
 
 export default function Hero() {
   const { theme } = useTheme();
+  const [imageLoaded, setImageLoaded] = useState(false);
+  
+  // Preload the image
+  useEffect(() => {
+    const img = new Image();
+    img.src = buildingImageUrl;
+    img.onload = () => setImageLoaded(true);
+    
+    // Add link preload to head
+    const linkPreload = document.createElement('link');
+    linkPreload.rel = 'preload';
+    linkPreload.as = 'image';
+    linkPreload.href = buildingImageUrl;
+    document.head.appendChild(linkPreload);
+    
+    return () => {
+      document.head.removeChild(linkPreload);
+    };
+  }, []);
   
   // List of clients/industries served - for corporate credibility
   const clientSectors = ["Government Institutions", "Manufacturing", "Healthcare", "Educational Institutions", "Commercial Buildings"];
@@ -96,11 +118,34 @@ export default function Hero() {
                 boxShadow: theme === 'dark' ? '0 20px 25px -5px rgba(0, 0, 0, 0.5)' : '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
               }}
             >
-              <div className="relative">
+              <div 
+                className="relative" 
+                style={{ 
+                  minHeight: '300px',
+                  backgroundColor: theme === 'dark' ? '#2d3748' : '#e2e8f0',
+                  borderRadius: '0.75rem'
+                }}
+              >
+                {/* Low quality placeholder with colored background */}
+                <div 
+                  className="absolute inset-0 rounded-xl flex items-center justify-center"
+                  style={{ 
+                    opacity: imageLoaded ? 0 : 1,
+                    transition: 'opacity 0.3s ease-in-out'
+                  }}
+                >
+                  <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+
+                {/* Actual image that will fade in when loaded */}
                 <img
-                  src={building}
+                  src={buildingImageUrl}
                   alt="Enterprise Security Solutions"
-                  className="w-full object-cover rounded-xl"
+                  className={`w-full object-cover rounded-xl transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  loading="eager" 
+                  decoding="async"
+                  fetchPriority="high"
+                  onLoad={() => setImageLoaded(true)}
                   style={{
                     maxHeight: '450px',
                     objectPosition: 'center'
