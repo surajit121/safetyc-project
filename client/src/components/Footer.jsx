@@ -118,7 +118,8 @@ export default function Footer() {
               <div>Schooldanga, Bankura - 722101, West Bengal, India</div>
             </div>
             <div>
-              <ul className="list-disc list-inside">
+              <strong>Branch Offices:</strong>
+              <ul className="list-disc list-inside mt-1">
                 <li>Purulia - Adra, Purulia 723121</li>
                 <li>Paschim Medinipur - Haldia / Midnapore</li>
                 <li>Birbhum - Suri, Birbhum 731101</li>
