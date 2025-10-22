@@ -7,39 +7,47 @@ import cctvImg from "../assets/cctv.jpeg";
 import solarImg from "../assets/solar.jpeg";
 import computerImg from "../assets/computer.jpeg";
 import bioImg from "../assets/bio.jpeg";
+import electricalImg from "../assets/bio.jpeg"; // Using bio image for electrical temporarily
+import rentalImg from "../assets/fire exting.jpeg"; // Using fire extinguisher image for rentals temporarily
 
 // Fallback static services data
 const staticServices = [
   {
     _id: "s1",
-    title: "Fire Safety",
-    description: "Complete fire detection and suppression products and solutions to protect lives and assets.",
-    highlights: ["Alarms & panels", "Extinguishers"]
+    title: "Fire Safety Solutions",
+    description: "Complete fire protection systems engineered to safeguard lives and protect valuable assets with industry-leading technology.",
+    highlights: ["Fire Hydrant, Alarm & Sprinkler Systems", "Fire Extinguishers & Suppression Systems", "Fire NOC Consulting & AMC Services"]
   },
   {
     _id: "s2",
-    title: "Solar Energy",
-    description: "Sustainable solar solutions to reduce costs and environmental impact.",
-    highlights: ["On-grid/Off-grid", "Rooftop design", "O&M"]
+    title: "CCTV Surveillance",
+    description: "Custom-designed surveillance systems providing round-the-clock monitoring solutions to enhance security protocols and ensure complete peace of mind.",
+    highlights: ["HD/IP Camera Installation", "Remote Monitoring & Recording", "System Maintenance & Support"]
   },
   {
-    _id: "s3", 
-    title: "Computer Sales & Peripherals",
-    description: "High-quality computers and peripherals to optimize operational efficiency.",
-    highlights: ["Desktops/Laptops", "Printers/Scanners", "Networking"]
+    _id: "s3",
+    title: "Biometric Attendance & Access Control",
+    description: "Smart attendance and security solutions to streamline workplace management and enhance security for organizations of all sizes.",
+    highlights: ["Fingerprint, Face & RFID Systems", "Visitor Management & Payroll Integration"]
   },
   {
     _id: "s4",
-    title: "Electrical Contracting",
-    description: "Certified electrical contracting for safe and efficient power distribution.",
-    highlights: ["LT/HT works", "Panel installation", "Compliance"]
+    title: "Solar Power Systems",
+    description: "Eco-friendly energy solutions designed to significantly reduce operational costs while minimizing environmental impact for a greener tomorrow.",
+    highlights: ["On-Grid, Off-Grid & Hybrid Installations", "Panels, Inverters, Net Metering & AMC"]
   },
   {
-    _id: "s5",
-    title: "CCTV & Surveillance",
-    description: "Advanced CCTV sales and services for continuous monitoring and enhanced security.",
-    highlights: ["Remote monitoring", "HD/4K cameras", "Maintenance & support"]
-  }
+    _id: "s5", 
+    title: "Computer Peripherals & IT Services",
+    description: "Reliable IT infrastructure solutions meticulously selected to enhance productivity and streamline your organization's digital operations.",
+    highlights: ["Supply of Devices & Peripherals", "IT Support, Networking & Software Services"]
+  },
+  {
+    _id: "s6",
+    title: "Electrical Contracting",
+    description: "End-to-end electrical services delivering safe, efficient, and code-compliant power distribution systems for commercial and industrial environments.",
+    highlights: ["Wiring, Panel Boards & Lighting Systems", "Earthing, Surge Protection & Safety Audits"]
+  },
 ];
 
 function useServicesApi() {
@@ -65,7 +73,7 @@ function useServicesApi() {
     controllerRef.current = controller;
 
     try {
-      // IMPORTANT: HARDCODED URL - Do not change this as it's been tested and works
+       // IMPORTANT: HARDCODED URL - Do not change this as it's been tested and works
       const url = 'https://safetyc-api.onrender.com/api/services';
       
       // No logs before the request to prevent extra HTML output
@@ -157,23 +165,47 @@ function useServicesApi() {
 export default function Services() {
   const { services, loading, error, retry } = useServicesApi();
   
-  // Sort services to ensure Fire Safety appears first
+  // Sort services in the specified order
   const sortServices = (servicesArray) => {
     // Create a copy of the array to avoid mutating the original
-    const sortedServices = [...servicesArray];
+    let sortedServices = [...servicesArray];
     
-    // Find the index of the Fire Safety service
-    const fireSafetyIndex = sortedServices.findIndex(
-      s => (s.title || '').toLowerCase().includes('fire safety')
-    );
+    // Define the desired order of services
+    const serviceOrder = [
+      "fire safety", 
+      "cctv", 
+      "biometric", 
+      "solar", 
+      "computer", 
+      "electrical"
+    ];
     
-    // If Fire Safety is found and not already at the first position
-    if (fireSafetyIndex > 0) {
-      // Remove the Fire Safety item
-      const fireSafetyItem = sortedServices.splice(fireSafetyIndex, 1)[0];
-      // Insert it at the beginning
-      sortedServices.unshift(fireSafetyItem);
-    }
+    // Sort based on our defined order
+    sortedServices.sort((a, b) => {
+      const titleA = (a.title || '').toLowerCase();
+      const titleB = (b.title || '').toLowerCase();
+      
+      // Find the position of each service in our desired order
+      let indexA = -1;
+      let indexB = -1;
+      
+      serviceOrder.forEach((keyword, index) => {
+        if (titleA.includes(keyword)) indexA = index;
+        if (titleB.includes(keyword)) indexB = index;
+      });
+      
+      // If both services are in our defined order, sort by that order
+      if (indexA !== -1 && indexB !== -1) {
+        return indexA - indexB;
+      }
+      
+      // If only one is in the defined order, prioritize it
+      if (indexA !== -1) return -1;
+      if (indexB !== -1) return 1;
+      
+      // Otherwise keep original order
+      return 0;
+    });
     
     return sortedServices;
   };
@@ -186,7 +218,10 @@ export default function Services() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
-      <h2 className="text-2xl font-bold mb-6">All Services</h2>
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-bold mb-3">Our Comprehensive Services</h2>
+        <p className="text-gray-600 max-w-3xl mx-auto">From fire safety and surveillance to renewable energy and IT infrastructure, we provide end-to-end solutions for your business security and operational needs with unmatched expertise and reliability.</p>
+      </div>
 
       {loading && (
         <div className="py-12 flex justify-center" role="status" aria-live="polite">
@@ -220,7 +255,9 @@ export default function Services() {
             else if (title.includes('solar')) image = solarImg; 
             else if (title.includes('cctv') || title.includes('surveillance')) image = cctvImg;
             else if (title.includes('computer') || title.includes('peripherals')) image = computerImg;
-            else if (title.includes('electrical') || title.includes('bio')) image = bioImg;
+            else if (title.includes('biometric') || title.includes('access')) image = bioImg;
+            else if (title.includes('electrical')) image = electricalImg;
+            else if (title.includes('rental')) image = rentalImg;
             else image = computerImg; // Default fallback
             
             return <ServiceCard key={s._id} {...s} image={image} />;

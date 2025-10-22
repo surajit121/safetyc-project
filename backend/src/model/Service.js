@@ -5,7 +5,8 @@ const ServiceSchema = new mongoose.Schema(
     slug: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     icon: { type: String },
-    highlights: [{ type: String }]
+    highlights: [{ type: String }],
+    sortOrder: { type: Number, default: 999 } // Higher numbers will appear last
   },
   { timestamps: true }
 );

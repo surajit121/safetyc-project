@@ -8,39 +8,52 @@ dotenv.config();
 
 const services = [
   {
-    title: "CCTV & Surveillance",
-    slug: "cctv-surveillance",
-    description:
-      "Advanced CCTV sales and services for continuous monitoring and enhanced security.",
-    highlights: ["Remote monitoring", "HD/4K cameras", "Maintenance & support"],
-  },
-  {
-    title: "Fire Safety",
+    title: "Fire Safety Solutions",
     slug: "fire-safety",
     description:
-      "Complete fire detection and suppression products and solutions to protect lives and assets.",
-    highlights: ["Alarms & panels", "Extinguishers", "AMC"],
+      "Complete fire protection systems engineered to safeguard lives and protect valuable assets with industry-leading technology.",
+    highlights: ["Fire Hydrant, Alarm & Sprinkler Systems", "Fire Extinguishers & Suppression Systems", "Fire NOC Consulting & AMC Services"],
+    sortOrder: 1
   },
   {
-    title: "Solar Energy",
+    title: "CCTV Surveillance",
+    slug: "cctv-surveillance",
+    description:
+      "Custom-designed surveillance systems providing round-the-clock monitoring solutions to enhance security protocols and ensure complete peace of mind.",
+    highlights: ["HD/IP Camera Installation", "Remote Monitoring & Recording", "System Maintenance & Support"],
+    sortOrder: 2
+  },
+  {
+    title: "Biometric Attendance & Access Control",
+    slug: "biometric-access-control",
+    description:
+      "Smart attendance and security solutions to streamline workplace management and enhance security for organizations of all sizes.",
+    highlights: ["Fingerprint, Face & RFID Systems", "Visitor Management & Payroll Integration"],
+    sortOrder: 3
+  },
+  {
+    title: "Solar Power Systems",
     slug: "solar-energy",
     description:
-      "Sustainable solar solutions to reduce costs and environmental impact.",
-    highlights: ["On-grid/Off-grid", "Rooftop design", "O&M"],
+      "Eco-friendly energy solutions designed to significantly reduce operational costs while minimizing environmental impact for a greener tomorrow.",
+    highlights: ["On-Grid, Off-Grid & Hybrid Installations", "Panels, Inverters, Net Metering & AMC"],
+    sortOrder: 4
   },
   {
-    title: "Computer Sales & Peripherals",
+    title: "Computer Peripherals & IT Services",
     slug: "computer-sales-peripherals",
     description:
-      "High-quality computers and peripherals to optimize operational efficiency.",
-    highlights: ["Desktops/Laptops", "Printers/Scanners", "Networking"],
+      "Reliable IT infrastructure solutions meticulously selected to enhance productivity and streamline your organization's digital operations.",
+    highlights: ["Supply of Devices & Peripherals", "IT Support, Networking & Software Services"],
+    sortOrder: 5
   },
   {
     title: "Electrical Contracting",
     slug: "electrical-contracting",
     description:
-      "Certified electrical contracting for safe and efficient power distribution.",
-    highlights: ["LT/HT works", "Panel installation", "Compliance"],
+      "End-to-end electrical services delivering safe, efficient, and code-compliant power distribution systems for commercial and industrial environments.",
+    highlights: ["Wiring, Panel Boards & Lighting Systems", "Earthing, Surge Protection & Safety Audits"],
+    sortOrder: 6
   },
 ];
 

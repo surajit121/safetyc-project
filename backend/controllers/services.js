@@ -3,7 +3,7 @@ import Service from "../src/model/Service.js";
 
 export async function listServices(_req, res) {
   try {
-    const items = await Service.find().sort({ createdAt: -1 });
+    const items = await Service.find().sort({ sortOrder: 1 }); // Sort by sortOrder ascending (1 appears first)
     // Always return a plain array
     return res.json(Array.isArray(items) ? items : []);
   } catch (err) {
