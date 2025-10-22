@@ -3,12 +3,6 @@ import Hero from "../components/Hero.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
 import CTA from "../components/CTA.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
-import fireExtinguisherImg from "../assets/fire exting.jpeg";
-import cctvImg from "../assets/cctv.jpeg";
-import solarImg from "../assets/solar.jpeg";
-import computerImg from "../assets/computer.jpeg";
-import bioImg from "../assets/bio.jpeg";
-import electricalImg from "../assets/bio.jpeg"; // Using bio image for electrical temporarily
 
 export default function Home() {
   const [services, setServices] = useState([]);
@@ -81,19 +75,8 @@ export default function Home() {
             });
             
             return sortedServices.slice(0, 6).map(s => {
-              // Assign images based on service title
-              let image;
-              const title = (s.title || '').toLowerCase();
-              
-              if (title.includes('fire safety')) image = fireExtinguisherImg;
-              else if (title.includes('cctv') || title.includes('surveillance')) image = cctvImg;
-              else if (title.includes('biometric') || title.includes('access')) image = bioImg;
-              else if (title.includes('solar')) image = solarImg;
-              else if (title.includes('computer') || title.includes('peripherals')) image = computerImg;
-              else if (title.includes('electrical')) image = electricalImg;
-              else image = computerImg; // Default fallback
-              
-              return <ServiceCard key={s._id || s.slug} {...s} image={image} />;
+              // Don't include images in the home page service cards
+              return <ServiceCard key={s._id || s.slug} {...s} />;
             });
           })()
         ) : (
