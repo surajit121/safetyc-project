@@ -39,3 +39,6 @@ Thumbs.db
 
 # Testing
 /coverage
+# PDF Files
+client/safetyc brochure.pdf
+
