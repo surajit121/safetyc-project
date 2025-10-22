@@ -16,60 +16,70 @@ export default function Hero() {
         <Row gutter={[32, 40]} align="middle">
           <Col xs={24} lg={14}>
             <div className="mb-4 flex items-center">
-              <SafetyOutlined className="text-orange-500 mr-2" />
-              <Tag color="orange" className="text-base px-3 py-1">Trusted by enterprises across West Bengal</Tag>
+              <SafetyOutlined className={`text-xl ${theme === 'dark' ? 'text-orange-400' : 'text-orange-500'} mr-2`} />
+              <div className={`text-sm md:text-base px-3 py-1 rounded-md font-medium ${
+                theme === 'dark' ? 'bg-orange-900/50 text-orange-200' : 'bg-orange-100 text-orange-800'
+              }`}>
+                Trusted by enterprises across West Bengal
+              </div>
             </div>
             
-            <Typography.Title level={1} style={{ 
-              margin: 0, 
-              lineHeight: 1.1, 
-              fontSize: '2.5rem', 
-              fontWeight: 700, 
-              marginBottom: '1rem',
-              background: theme === 'dark' ? 'linear-gradient(90deg, #fff, #ccc)' : 'linear-gradient(90deg, #1a365d, #2a4365)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
+            {/* Regular title instead of gradient text for better visibility and mobile compatibility */}
+            <h1 className={`text-4xl md:text-5xl font-bold leading-tight mb-4 ${
+              theme === 'dark' ? 'text-white' : 'text-blue-900'
+            }`}>
               Enterprise-Grade Safety & Security Solutions
-            </Typography.Title>
+            </h1>
             
-            <Typography.Title level={2} style={{ 
-              fontSize: '1.5rem', 
-              margin: 0, 
-              marginBottom: '1.5rem',
-              fontWeight: 500,
-              opacity: 0.85
-            }}>
+            <h2 className={`text-xl md:text-2xl font-medium mb-6 ${
+              theme === 'dark' ? 'text-blue-300' : 'text-blue-700'
+            }`}>
               Protecting what matters most to your business
-            </Typography.Title>
+            </h2>
             
-            <Typography.Paragraph style={{ 
-              fontSize: 17, 
-              marginBottom: 24,
-              lineHeight: 1.6,
-              maxWidth: '90%'
-            }}>
+            <p className={`text-base md:text-lg mb-6 leading-relaxed max-w-[95%] md:max-w-[90%] ${
+              theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+            }`}>
               Comprehensive CCTV, Fire Safety, Solar, Electrical and IT solutions expertly tailored for enterprises, government institutions, and commercial facilities with professional implementation and support.
-            </Typography.Paragraph>
+            </p>
             
-            <Space wrap className="mb-8">
+            <div className="flex flex-wrap mb-8">
               {["ISO Standards", "24/7 Support", "Certified Technicians", "Govt. Approved"].map(item => (
-                <div key={item} className={`flex items-center px-3 py-1.5 rounded-full text-sm mr-2 mb-2 ${
-                  theme === 'dark' ? 'bg-gray-800 text-blue-400' : 'bg-blue-50 text-blue-800'
+                <div key={item} className={`flex items-center px-3 py-1.5 rounded-full text-sm mr-2 mb-2 border ${
+                  theme === 'dark' 
+                    ? 'bg-blue-900/30 text-blue-200 border-blue-800' 
+                    : 'bg-blue-50 text-blue-800 border-blue-200'
                 }`}>
-                  <CheckCircleOutlined className="mr-1" /> {item}
+                  <CheckCircleOutlined className={`mr-1.5 ${theme === 'dark' ? 'text-blue-300' : 'text-blue-600'}`} /> 
+                  {item}
                 </div>
               ))}
-            </Space>
+            </div>
             
-            <div className="mt-6 flex flex-wrap gap-4">
+            <div className="mt-6 flex flex-wrap gap-3 md:gap-4">
               <Link to="/contact">
-                <Button type="primary" size="large" icon={<ArrowRightOutlined />} className="h-12 px-8 text-base font-medium">
+                <Button 
+                  type="primary" 
+                  size="large" 
+                  icon={<ArrowRightOutlined />} 
+                  className="h-11 md:h-12 px-4 md:px-8 text-sm md:text-base font-medium"
+                  style={{
+                    background: theme === 'dark' ? '#3182ce' : undefined, // Brighter blue in dark mode
+                    borderColor: theme === 'dark' ? '#2c5282' : undefined
+                  }}
+                >
                   Request Consultation
                 </Button>
               </Link>
               <Link to="/services">
-                <Button size="large" className="h-12 px-8 text-base font-medium">
+                <Button 
+                  size="large" 
+                  className="h-11 md:h-12 px-4 md:px-8 text-sm md:text-base font-medium"
+                  style={{
+                    borderColor: theme === 'dark' ? '#718096' : undefined,
+                    color: theme === 'dark' ? '#e2e8f0' : undefined
+                  }}
+                >
                   View Solutions
                 </Button>
               </Link>
@@ -106,21 +116,25 @@ export default function Hero() {
         <Divider className="my-12" style={{ borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.06)' }} />
         
         <div className="text-center">
-          <Typography.Text className="text-gray-500 text-base font-medium uppercase tracking-wider">
+          <p className={`text-sm md:text-base font-medium uppercase tracking-wider ${
+            theme === 'dark' ? 'text-gray-400' : 'text-gray-500'
+          }`}>
             Trusted by Organizations Across Industries
-          </Typography.Text>
+          </p>
           
-          <Row justify="center" className="mt-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 md:gap-3 mt-6">
             {clientSectors.map((sector, index) => (
-              <Col key={index} xs={12} sm={8} md={4} className="mb-4 px-2">
-                <div className={`py-2 px-3 text-center rounded-md ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}>
-                  <Typography.Text strong className={theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}>
-                    {sector}
-                  </Typography.Text>
-                </div>
-              </Col>
+              <div key={index} className={`py-2 px-2 md:px-3 text-center rounded-md ${
+                theme === 'dark' 
+                  ? 'bg-gray-800/80 text-gray-300 border border-gray-700' 
+                  : 'bg-gray-100 text-gray-700 border border-gray-200'
+              }`}>
+                <p className="text-xs md:text-sm font-medium">
+                  {sector}
+                </p>
+              </div>
             ))}
-          </Row>
+          </div>
         </div>
       </div>
     </section>
