@@ -40,3 +40,68 @@
 .read-the-docs {
   color: #888;
 } */
+
+/* Mobile Optimizations */
+@media (max-width: 640px) {
+  /* Fix for iOS input zoom issues */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+  
+  /* Prevent bounce scroll in iOS */
+  html, body {
+    position: relative;
+    overflow-x: hidden;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Ensure toast notifications don't overflow on mobile */
+  .Toastify__toast-container {
+    padding: 0 10px;
+    width: 100% !important;
+  }
+  
+  .Toastify__toast {
+    margin-bottom: 10px;
+    border-radius: 8px !important;
+  }
+  
+  /* Fix toast position on mobile */
+  .Toastify__toast-container--top-right {
+    top: env(safe-area-inset-top, 10px) !important;
+    right: 0 !important;
+  }
+}
+
+/* Mobile form improvements */
+.mobile-form-container {
+  /* Add subtle shadow for depth on mobile */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
+  /* Ensure buttons are easily tappable on mobile */
+  touch-action: manipulation;
+}
+
+/* Fix iOS input appearance */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Improve tap target sizes on mobile */
+@media (max-width: 640px) {
+  button, 
+  a.button,
+  input[type="submit"] {
+    min-height: 48px;
+  }
+  
+  .mobile-form-container input,
+  .mobile-form-container textarea {
+    margin-bottom: 10px;
+  }
+}

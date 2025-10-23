@@ -35,12 +35,16 @@ export default function App() {
     return () => clearTimeout(fixTimer);
   }, [theme, location.pathname]);
   
+  // Detect mobile viewport
+  const isMobile = typeof window !== 'undefined' && 
+    (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 640);
+    
   return (
     <Layout className={`min-h-screen ${theme} transition-colors app-layout`} data-theme={theme}>
       <ToastContainer 
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
+        position={isMobile ? "bottom-center" : "top-right"}
+        autoClose={4000}
+        hideProgressBar={isMobile}
         newestOnTop
         closeOnClick
         rtl={false}
@@ -48,6 +52,14 @@ export default function App() {
         draggable
         pauseOnHover
         theme={theme === 'dark' ? 'dark' : 'light'}
+        toastClassName="rounded-lg shadow-md"
+        bodyClassName="text-sm font-medium"
+        style={isMobile ? { 
+          width: '90%', 
+          maxWidth: '400px',
+          padding: '0',
+          margin: '0 auto 20px'
+        } : {}}
       />
       <Navbar />
       <Layout.Content className="flex-1">
