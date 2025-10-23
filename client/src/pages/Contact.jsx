@@ -1,9 +1,23 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { apiUrl } from "../lib/api.js";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import '../utils/mobileToast.css';
+import { ToastManager } from "../components/FallbackToast.jsx";
+
+// Try to import toast from react-toastify, but fall back to our custom implementation
+let toast;
+try {
+  // Import react-toastify dynamically
+  import('react-toastify').then(toastify => {
+    toast = toastify.toast;
+    console.log('React-toastify loaded in Contact.jsx');
+  }).catch(err => {
+    console.warn('Using fallback toast implementation:', err);
+    toast = ToastManager;
+  });
+} catch (error) {
+  console.warn('Using fallback toast implementation due to error:', error);
+  toast = ToastManager;
+}
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
@@ -43,31 +57,54 @@ export default function Contact() {
       
       await axios.post(url, form);
       
-      // Use mobile-optimized toast options
-      toast.success("Thanks! We'll get back to you soon.", {
-        position: isMobile ? "bottom-center" : "top-right",
-        autoClose: isMobile ? 4000 : 5000,
-        hideProgressBar: isMobile,
-        closeOnClick: true,
-        pauseOnHover: !isMobile, // Disable pause on hover for mobile
-        draggable: !isMobile, // Disable dragging for mobile
-        style: isMobile ? { fontSize: '14px' } : {},
-        icon: "🎉",
-      });
+      // Check if we're using the real toast or our fallback
+      if (!toast) {
+        // If toast is not available yet, use a direct fallback
+        ToastManager.success("Thanks! We'll get back to you soon.");
+        console.log("Using direct ToastManager fallback - success");
+      } else {
+        // Check if toast has the success method (it should be either react-toastify or our fallback)
+        if (typeof toast.success === 'function') {
+          // Using react-toastify
+          toast.success("Thanks! We'll get back to you soon.", {
+            position: isMobile ? "bottom-center" : "top-right",
+            autoClose: isMobile ? 4000 : 5000,
+            hideProgressBar: isMobile,
+            closeOnClick: true,
+            pauseOnHover: !isMobile,
+            draggable: !isMobile,
+            style: isMobile ? { fontSize: '14px' } : {},
+            icon: "🎉",
+          });
+        } else {
+          // Using another object that doesn't have success method
+          ToastManager.success("Thanks! We'll get back to you soon.");
+        }
+      }
       
       setForm({ name: "", email: "", phone: "", message: "" });
     } catch (e) {
       console.error("Error submitting form:", e);
       
-      toast.error("Something went wrong. Please try again.", {
-        position: isMobile ? "bottom-center" : "top-right",
-        autoClose: isMobile ? 4000 : 5000,
-        hideProgressBar: isMobile,
-        closeOnClick: true,
-        pauseOnHover: !isMobile,
-        draggable: !isMobile,
-        style: isMobile ? { fontSize: '14px' } : {},
-      });
+      // Similar fallback pattern for error toasts
+      if (!toast) {
+        ToastManager.error("Something went wrong. Please try again.");
+        console.log("Using direct ToastManager fallback - error");
+      } else {
+        if (typeof toast.error === 'function') {
+          toast.error("Something went wrong. Please try again.", {
+            position: isMobile ? "bottom-center" : "top-right",
+            autoClose: isMobile ? 4000 : 5000,
+            hideProgressBar: isMobile,
+            closeOnClick: true,
+            pauseOnHover: !isMobile,
+            draggable: !isMobile,
+            style: isMobile ? { fontSize: '14px' } : {},
+          });
+        } else {
+          ToastManager.error("Something went wrong. Please try again.");
+        }
+      }
     } finally {
       setLoading(false);
     }

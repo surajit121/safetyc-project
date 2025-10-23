@@ -105,3 +105,39 @@ textarea {
     margin-bottom: 10px;
   }
 }
+
+/* Mobile-specific toast styles */
+@media screen and (max-width: 640px) {
+  .Toastify__toast-container--bottom-center {
+    bottom: env(safe-area-inset-bottom, 10px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .Toastify__toast {
+    margin-bottom: 10px;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  
+  .Toastify__toast-body {
+    padding: 6px 4px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  
+  /* Enlarged close button for better tap target */
+  .Toastify__close-button {
+    padding: 8px;
+    margin: -8px -8px -8px 0;
+  }
+  
+  /* Fix for notched iPhones */
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .Toastify__toast-container--bottom-center {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+}
