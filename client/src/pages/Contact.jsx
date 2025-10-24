@@ -184,7 +184,7 @@ export default function Contact() {
           <h2 className="text-lg font-semibold mb-3 text-black dark:text-white">Need help right away?</h2>
           <div className="space-y-3">
             <a 
-              href="tel:+123456789" 
+              href="tel:+9199073 71539" 
               className="flex items-center text-blue-600 dark:text-blue-400"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -193,7 +193,7 @@ export default function Contact() {
               Call us
             </a>
             <a 
-              href="mailto:contact@safetyc.com" 
+              href="mailto:mssafetyc@gmail.com" 
               className="flex items-center text-blue-600 dark:text-blue-400"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
