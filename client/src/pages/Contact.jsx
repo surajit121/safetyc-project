@@ -105,15 +105,14 @@ export default function Contact() {
 
   return (
     <section className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center sm:text-left">Contact Our Team</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">Contact Our Team</h1>
       
-      <div className={`${isMobile ? 'mobile-form-container' : ''} bg-white dark:bg-[#1B2431] rounded-2xl shadow-sm border border-gray-300 dark:border-none overflow-hidden`}>
-        <form onSubmit={submit} className="grid gap-4 sm:gap-5 p-4 sm:p-6">
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-black dark:text-white">Name</label>
+      <div className="max-w-2xl mx-auto bg-white rounded-3xl shadow-lg overflow-hidden p-8">
+        <form onSubmit={submit} className="grid gap-6">
+          <div>
             <input
-              className="w-full rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white dark:bg-[#2A3441] text-black dark:text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-gray-300 dark:border-none"
-              placeholder="Your name"
+              className="w-full rounded-2xl px-6 py-4 text-base outline-none bg-white text-black placeholder-gray-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-gray-200"
+              placeholder="Name"
               required
               value={form.name}
               onChange={e => setForm({ ...form, name: e.target.value })}
@@ -121,11 +120,10 @@ export default function Contact() {
               style={{ WebkitAppearance: 'none' }} // Fix for iOS input styling
             />
           </div>
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-black dark:text-white">Email</label>
+          <div>
             <input
-              className="w-full rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white dark:bg-[#2A3441] text-black dark:text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-gray-300 dark:border-none"
-              placeholder="your.email@example.com"
+              className="w-full rounded-2xl px-6 py-4 text-base outline-none bg-white text-black placeholder-gray-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-gray-200"
+              placeholder="Email"
               type="email"
               inputMode="email"
               required
@@ -135,11 +133,10 @@ export default function Contact() {
               style={{ WebkitAppearance: 'none' }}
             />
           </div>
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-black dark:text-white">Phone (Optional)</label>
+          <div>
             <input
-              className="w-full rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white dark:bg-[#2A3441] text-black dark:text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-gray-300 dark:border-none"
-              placeholder="Your phone number"
+              className="w-full rounded-2xl px-6 py-4 text-base outline-none bg-white text-black placeholder-gray-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-gray-200"
+              placeholder="Phone"
               type="tel"
               inputMode="tel"
               value={form.phone}
@@ -148,11 +145,10 @@ export default function Contact() {
               style={{ WebkitAppearance: 'none' }}
             />
           </div>
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-black dark:text-white">Message</label>
+          <div>
             <textarea
-              className="w-full rounded-lg px-3 py-3 sm:py-2 min-h-[120px] sm:min-h-[150px] text-base outline-none bg-white dark:bg-[#2A3441] text-black dark:text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-gray-300 dark:border-none"
-              placeholder="How can we help you?"
+              className="w-full rounded-2xl px-6 py-4 min-h-[150px] text-base outline-none bg-white text-black placeholder-gray-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-gray-200"
+              placeholder="Message"
               required
               value={form.message}
               onChange={e => setForm({ ...form, message: e.target.value })}
@@ -161,7 +157,7 @@ export default function Contact() {
           </div>
           <button 
             type="submit" 
-            className="mt-2 px-5 py-3 sm:py-3 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center text-base"
+            className="w-full px-6 py-4 bg-[#FF4A17] text-white rounded-2xl font-semibold hover:bg-[#ff3c03] transition disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center text-base"
             disabled={loading}
             style={isMobile ? { 
               // iOS-specific button fixes
@@ -177,7 +173,7 @@ export default function Contact() {
                 </svg>
                 <span>Sending...</span>
               </>
-            ) : "Send Message"}
+            ) : "Send"}
           </button>
         </form>
       </div>
