@@ -23,7 +23,7 @@ services:
   - type: web
     name: safetyc-web
     env: static
-    buildCommand: cd client && chmod +x install-deps.sh && ./install-deps.sh && npm run build
+    buildCommand: cd client && rm -rf node_modules package-lock.json && npm install && NODE_ENV=production npm run build
     staticPublishPath: client/dist
     envVars:
       - key: VITE_API_URL
