@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node --loader ts-node/esm scripts/check-dependencies.js",
+    "prebuild": "node scripts/check-dependencies.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

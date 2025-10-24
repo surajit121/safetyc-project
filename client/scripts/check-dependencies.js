@@ -2,12 +2,8 @@
  * Script to check for required dependencies before build
  */
 
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-import { existsSync, promises as fs } from 'fs';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const path = require('path');
+const fs = require('fs');
 
 // Define critical dependencies to check
 const criticalDependencies = [
@@ -17,19 +13,19 @@ const criticalDependencies = [
   'antd'
 ];
 
-async function checkDependencies() {
+function checkDependencies() {
   console.log('Checking for required dependencies before build...');
 
-  const projectRoot = join(__dirname, '..');
+  const projectRoot = path.join(__dirname, '..');
   let allDependenciesFound = true;
   let missingDependencies = [];
 
   // Check each dependency
-  for (const dep of criticalDependencies) {
-    const depPath = join(projectRoot, 'node_modules', dep);
+  criticalDependencies.forEach(dep => {
+    const depPath = path.join(projectRoot, 'node_modules', dep);
     
     try {
-      if (existsSync(depPath)) {
+      if (fs.existsSync(depPath)) {
         console.log(`✅ ${dep} found at ${depPath}`);
       } else {
         console.error(`❌ ERROR: ${dep} not found!`);
@@ -41,7 +37,7 @@ async function checkDependencies() {
       allDependenciesFound = false;
       missingDependencies.push(dep);
     }
-  }
+  });
 
   // If any dependencies are missing, try to install them
   if (!allDependenciesFound) {
@@ -57,8 +53,10 @@ async function checkDependencies() {
   }
 }
 
-// Run the async function
-checkDependencies().catch(error => {
+// Run the check
+try {
+  checkDependencies();
+} catch (error) {
   console.error('Error during dependency check:', error);
   process.exit(1);
-});
+}
