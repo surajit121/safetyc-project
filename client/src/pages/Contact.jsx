@@ -107,12 +107,12 @@ export default function Contact() {
     <section className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
       <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center sm:text-left">Contact Our Team</h1>
       
-      <div className={`${isMobile ? 'mobile-form-container' : ''} bg-white dark:bg-[#1B2431] rounded-2xl shadow-sm overflow-hidden`}>
+      <div className={`${isMobile ? 'mobile-form-container' : ''} bg-white dark:bg-[#1B2431] rounded-2xl shadow-sm border border-gray-300 dark:border-none overflow-hidden`}>
         <form onSubmit={submit} className="grid gap-4 sm:gap-5 p-4 sm:p-6">
           <div className="space-y-1">
             <label className="text-sm font-medium text-black dark:text-white">Name</label>
             <input
-              className="w-full rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white dark:bg-[#2A3441] text-black dark:text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-white dark:border-none"
+              className="w-full rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white dark:bg-[#2A3441] text-black dark:text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-gray-300 dark:border-none"
               placeholder="Your name"
               required
               value={form.name}
@@ -124,7 +124,7 @@ export default function Contact() {
           <div className="space-y-1">
             <label className="text-sm font-medium text-black dark:text-white">Email</label>
             <input
-              className="w-full rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white dark:bg-[#2A3441] text-black dark:text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-white dark:border-none"
+              className="w-full rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white dark:bg-[#2A3441] text-black dark:text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-gray-300 dark:border-none"
               placeholder="your.email@example.com"
               type="email"
               inputMode="email"
@@ -138,7 +138,7 @@ export default function Contact() {
           <div className="space-y-1">
             <label className="text-sm font-medium text-black dark:text-white">Phone (Optional)</label>
             <input
-              className="w-full rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white dark:bg-[#2A3441] text-black dark:text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-white dark:border-none"
+              className="w-full rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white dark:bg-[#2A3441] text-black dark:text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-gray-300 dark:border-none"
               placeholder="Your phone number"
               type="tel"
               inputMode="tel"
@@ -151,7 +151,7 @@ export default function Contact() {
           <div className="space-y-1">
             <label className="text-sm font-medium text-black dark:text-white">Message</label>
             <textarea
-              className="w-full rounded-lg px-3 py-3 sm:py-2 min-h-[120px] sm:min-h-[150px] text-base outline-none bg-white dark:bg-[#2A3441] text-black dark:text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-white dark:border-none"
+              className="w-full rounded-lg px-3 py-3 sm:py-2 min-h-[120px] sm:min-h-[150px] text-base outline-none bg-white dark:bg-[#2A3441] text-black dark:text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition border border-gray-300 dark:border-none"
               placeholder="How can we help you?"
               required
               value={form.message}
