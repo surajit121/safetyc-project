@@ -184,8 +184,8 @@ export default function Contact() {
       
       {/* Mobile contact info section */}
       {isMobile && (
-        <div className="mt-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700">
-          <h2 className="text-lg font-semibold mb-3">Need help right away?</h2>
+        <div className="mt-8 p-4 bg-white dark:bg-[#1B2431] rounded-xl border border-gray-300 dark:border-none">
+          <h2 className="text-lg font-semibold mb-3 text-black dark:text-white">Need help right away?</h2>
           <div className="space-y-3">
             <a 
               href="tel:+123456789" 
