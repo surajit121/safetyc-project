@@ -112,7 +112,7 @@ export default function Contact() {
           <div className="space-y-1">
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
             <input
-              className="w-full border border-gray-300 rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white text-gray-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full border border-gray-200 rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white text-black focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               placeholder="Your name"
               required
               value={form.name}
@@ -124,7 +124,7 @@ export default function Contact() {
           <div className="space-y-1">
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
             <input
-              className="w-full border border-gray-300 rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white text-gray-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full border border-gray-200 rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white text-black focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               placeholder="your.email@example.com"
               type="email"
               inputMode="email"
@@ -138,7 +138,7 @@ export default function Contact() {
           <div className="space-y-1">
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Phone (Optional)</label>
             <input
-              className="w-full border border-gray-300 rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white text-gray-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full border border-gray-200 rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white text-black focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               placeholder="Your phone number"
               type="tel"
               inputMode="tel"
@@ -151,7 +151,7 @@ export default function Contact() {
           <div className="space-y-1">
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
             <textarea
-              className="w-full border border-gray-300 rounded-lg px-3 py-3 sm:py-2 min-h-[120px] sm:min-h-[150px] text-base outline-none bg-white text-gray-900 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full border border-gray-200 rounded-lg px-3 py-3 sm:py-2 min-h-[120px] sm:min-h-[150px] text-base outline-none bg-white text-black focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               placeholder="How can we help you?"
               required
               value={form.message}
