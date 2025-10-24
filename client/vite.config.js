@@ -24,18 +24,28 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    },
     rollupOptions: {
-      // Ensure these packages are properly handled
-      external: [],
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
           'ui-vendor': ['antd', '@ant-design/icons'],
           'toast-vendor': ['react-toastify']
-        }
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
       }
     },
-    // Increase build limits to prevent warnings
-    chunkSizeWarningLimit: 1600
+    chunkSizeWarningLimit: 1600,
+    reportCompressedSize: false,
+    cssCodeSplit: true,
+    assetsInlineLimit: 4096
   }
 })
