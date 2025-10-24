@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             (btn.getAttribute('aria-label') === "Switch to Light Mode" && document.documentElement.classList.contains('light'))) {
           if (btn.parentElement) {
             btn.parentElement.removeChild(btn);
-            console.log('Removed incorrect theme toggle button');
+            // Theme toggle button removed successfully
           }
         }
       });

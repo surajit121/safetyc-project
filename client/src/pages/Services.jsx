@@ -99,7 +99,6 @@ function useServicesApi() {
       if (Array.isArray(data)) {
         setServices(data);
       } else {
-        console.error('Non-array response from API:', data);
         setServices([]);
         setError(new Error("Unexpected data format from server"));
       }
@@ -117,21 +116,18 @@ function useServicesApi() {
         return;
       }
 
-      // Enhanced error logging
-      console.error("Error fetching services:", err);
+      // Handle different types of errors
+      let errorMessage = "Failed to fetch services. ";
       
       if (err.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error("Response data:", err.response.data);
-        console.error("Response status:", err.response.status);
-        console.error("Response headers:", err.response.headers);
+        // Server responded with an error status
+        errorMessage += `Server error: ${err.response.status}`;
       } else if (err.request) {
-        // The request was made but no response was received
-        console.error("No response received:", err.request);
+        // No response received
+        errorMessage += "No response from server";
       } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error("Error setting up request:", err.message);
+        // Request setup error
+        errorMessage += err.message;
       }
       
       setLoading(false);

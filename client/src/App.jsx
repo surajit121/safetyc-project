@@ -22,15 +22,14 @@ try {
   // Try to load react-toastify
   import('react-toastify/dist/ReactToastify.css')
     .then(() => import('react-toastify'))
-    .then((module) => {
+    .then(() => {
       ToastContainer = module.ToastContainer;
-      console.log('React-toastify loaded successfully');
     })
-    .catch(error => {
-      console.error('Failed to load react-toastify:', error);
+    .catch(() => {
+      // Silently fall back to custom implementation
     });
 } catch (error) {
-  console.error('Error importing react-toastify:', error);
+  // Silently fall back to custom implementation
 }
 
 
@@ -66,10 +65,10 @@ export default function App() {
         if (toastify && toastify.ToastContainer) {
           ToastContainer = toastify.ToastContainer;
           setToastifyLoaded(true);
-          console.log('React-toastify loaded successfully via useEffect');
+          // Successfully loaded react-toastify
         }
       } catch (error) {
-        console.error('Failed to load react-toastify in useEffect:', error);
+        // Silently fall back to custom implementation
         setToastifyLoaded(false);
       }
     };

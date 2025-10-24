@@ -9,13 +9,10 @@ try {
   // Import react-toastify dynamically
   import('react-toastify').then(toastify => {
     toast = toastify.toast;
-    console.log('React-toastify loaded in Contact.jsx');
-  }).catch(err => {
-    console.warn('Using fallback toast implementation:', err);
+  }).catch(() => {
     toast = ToastManager;
   });
 } catch (error) {
-  console.warn('Using fallback toast implementation due to error:', error);
   toast = ToastManager;
 }
 
@@ -61,7 +58,6 @@ export default function Contact() {
       if (!toast) {
         // If toast is not available yet, use a direct fallback
         ToastManager.success("Thanks! We'll get back to you soon.");
-        console.log("Using direct ToastManager fallback - success");
       } else {
         // Check if toast has the success method (it should be either react-toastify or our fallback)
         if (typeof toast.success === 'function') {
@@ -84,12 +80,9 @@ export default function Contact() {
       
       setForm({ name: "", email: "", phone: "", message: "" });
     } catch (e) {
-      console.error("Error submitting form:", e);
-      
       // Similar fallback pattern for error toasts
       if (!toast) {
         ToastManager.error("Something went wrong. Please try again.");
-        console.log("Using direct ToastManager fallback - error");
       } else {
         if (typeof toast.error === 'function') {
           toast.error("Something went wrong. Please try again.", {
