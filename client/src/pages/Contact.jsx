@@ -110,9 +110,9 @@ export default function Contact() {
       <div className={`${isMobile ? 'mobile-form-container' : ''} bg-white dark:bg-gray-800 rounded-2xl shadow-sm border dark:border-gray-700 overflow-hidden`}>
         <form onSubmit={submit} className="grid gap-4 sm:gap-5 p-4 sm:p-6">
           <div className="space-y-1">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+            <label className="text-sm font-medium text-black dark:text-gray-300">Name</label>
             <input
-              className="w-full border border-gray-200 rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white text-black focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full border border-white rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white text-black focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               placeholder="Your name"
               required
               value={form.name}
@@ -122,9 +122,9 @@ export default function Contact() {
             />
           </div>
           <div className="space-y-1">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+            <label className="text-sm font-medium text-black dark:text-gray-300">Email</label>
             <input
-              className="w-full border border-gray-200 rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white text-black focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full border border-white rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white text-black focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               placeholder="your.email@example.com"
               type="email"
               inputMode="email"
@@ -136,9 +136,9 @@ export default function Contact() {
             />
           </div>
           <div className="space-y-1">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Phone (Optional)</label>
+            <label className="text-sm font-medium text-black dark:text-gray-300">Phone (Optional)</label>
             <input
-              className="w-full border border-gray-200 rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white text-black focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full border border-white rounded-lg px-3 py-3 sm:py-2 text-base outline-none bg-white text-black focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               placeholder="Your phone number"
               type="tel"
               inputMode="tel"
@@ -149,9 +149,9 @@ export default function Contact() {
             />
           </div>
           <div className="space-y-1">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
+            <label className="text-sm font-medium text-black dark:text-gray-300">Message</label>
             <textarea
-              className="w-full border border-gray-200 rounded-lg px-3 py-3 sm:py-2 min-h-[120px] sm:min-h-[150px] text-base outline-none bg-white text-black focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full border border-white rounded-lg px-3 py-3 sm:py-2 min-h-[120px] sm:min-h-[150px] text-base outline-none bg-white text-black focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               placeholder="How can we help you?"
               required
               value={form.message}
