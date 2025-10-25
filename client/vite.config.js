@@ -2,10 +2,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'path'
+import copyStaticFiles from './vite.copy-static'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), copyStaticFiles()],
   server: {
     proxy: {
       // during dev, proxy /api to backend
@@ -28,6 +29,9 @@ export default defineConfig({
     esbuild: {
       drop: ['console', 'debugger']
     },
+    // Copy static files to build output
+    copyPublicDir: true,
+    
     rollupOptions: {
       output: {
         manualChunks: {
