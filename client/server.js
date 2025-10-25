@@ -6,24 +6,28 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Enable CORS for all routes
+const distPath = path.join(__dirname, 'dist');
+const publicPath = path.join(__dirname, 'public');
+
+// Enable CORS for all routes to avoid cross-origin issues with Google bots
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type']
 }));
 
-// Serve the built Vite app
-app.use(express.static(path.join(__dirname, '..')));
+// Serve the built Vite app from the dist directory
+app.use(express.static(distPath));
 
 // Special route for sitemap.xml
 app.get('/sitemap.xml', (req, res) => {
-  const sitemapPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
+  const distSitemap = path.join(distPath, 'sitemap.xml');
+  const publicSitemap = path.join(publicPath, 'sitemap.xml');
+  const sitemapPath = fs.existsSync(distSitemap) ? distSitemap : publicSitemap;
+
   console.log('Attempting to serve sitemap from:', sitemapPath);
-  
-  // Check if file exists
+
   if (fs.existsSync(sitemapPath)) {
-    console.log('Sitemap file found');
     res.header('Content-Type', 'application/xml');
     res.sendFile(sitemapPath);
   } else {
@@ -34,12 +38,13 @@ app.get('/sitemap.xml', (req, res) => {
 
 // Special route for robots.txt
 app.get('/robots.txt', (req, res) => {
-  const robotsPath = path.join(__dirname, '..', 'public', 'robots.txt');
+  const distRobots = path.join(distPath, 'robots.txt');
+  const publicRobots = path.join(publicPath, 'robots.txt');
+  const robotsPath = fs.existsSync(distRobots) ? distRobots : publicRobots;
+
   console.log('Attempting to serve robots.txt from:', robotsPath);
-  
-  // Check if file exists
+
   if (fs.existsSync(robotsPath)) {
-    console.log('Robots.txt file found');
     res.header('Content-Type', 'text/plain');
     res.sendFile(robotsPath);
   } else {
@@ -50,7 +55,7 @@ app.get('/robots.txt', (req, res) => {
 
 // Handle client-side routing
 app.get('*', (req, res) => {
-  const indexPath = path.join(__dirname, '..', 'dist', 'index.html');
+  const indexPath = path.join(distPath, 'index.html');
   console.log('Serving index.html from:', indexPath);
   res.sendFile(indexPath);
 });
