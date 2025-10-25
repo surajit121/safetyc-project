@@ -27,11 +27,10 @@ services:
       cd client && 
       rm -rf node_modules package-lock.json && 
       npm install --production=false && 
-      NODE_ENV=production npm run build &&
-      mkdir -p dist/public &&
-      cp -r public/* dist/public/ &&
-      cp server.js dist/
-    startCommand: cd client/dist && NODE_ENV=production node server.js
+      NODE_ENV=production npm run build && 
+      cp -r public dist/ && 
+      cp server.js ./
+    startCommand: cd client && NODE_ENV=production node server.js
     envVars:
       - key: VITE_API_URL
         fromService:

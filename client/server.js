@@ -1,38 +1,58 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Enable CORS
-app.use(cors());
+// Enable CORS for all routes
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
+}));
 
-// Serve static files from the public directory
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve the built Vite app
+app.use(express.static(path.join(__dirname, '..')));
 
-// Serve the built files
-app.use(express.static(path.join(__dirname)));
-
-// Special route for sitemap.xml with proper headers
+// Special route for sitemap.xml
 app.get('/sitemap.xml', (req, res) => {
-  res.header('Content-Type', 'application/xml');
-  const sitemapPath = path.join(__dirname, 'public', 'sitemap.xml');
-  console.log('Serving sitemap from:', sitemapPath);
-  res.sendFile(sitemapPath);
+  const sitemapPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
+  console.log('Attempting to serve sitemap from:', sitemapPath);
+  
+  // Check if file exists
+  if (fs.existsSync(sitemapPath)) {
+    console.log('Sitemap file found');
+    res.header('Content-Type', 'application/xml');
+    res.sendFile(sitemapPath);
+  } else {
+    console.error('Sitemap file not found at:', sitemapPath);
+    res.status(404).send('Sitemap not found');
+  }
 });
 
-// Special route for robots.txt with proper headers
+// Special route for robots.txt
 app.get('/robots.txt', (req, res) => {
-  res.header('Content-Type', 'text/plain');
-  const robotsPath = path.join(__dirname, 'public', 'robots.txt');
-  console.log('Serving robots.txt from:', robotsPath);
-  res.sendFile(robotsPath);
+  const robotsPath = path.join(__dirname, '..', 'public', 'robots.txt');
+  console.log('Attempting to serve robots.txt from:', robotsPath);
+  
+  // Check if file exists
+  if (fs.existsSync(robotsPath)) {
+    console.log('Robots.txt file found');
+    res.header('Content-Type', 'text/plain');
+    res.sendFile(robotsPath);
+  } else {
+    console.error('Robots.txt file not found at:', robotsPath);
+    res.status(404).send('Robots.txt not found');
+  }
 });
 
-// Handle all other routes for SPA
+// Handle client-side routing
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  const indexPath = path.join(__dirname, '..', 'dist', 'index.html');
+  console.log('Serving index.html from:', indexPath);
+  res.sendFile(indexPath);
 });
 
 app.listen(PORT, () => {
