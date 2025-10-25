@@ -22,28 +22,16 @@ services:
   # Frontend web service
   - type: web
     name: safetyc-web
-    env: static
-    buildCommand: |
-      cd client && 
-      rm -rf node_modules package-lock.json && 
-      npm install --production=false && 
-      NODE_ENV=production npm run build
-    staticPublishPath: client/dist
-    # Ensure these files are served with correct headers
-    headers:
-      - path: /sitemap.xml
-        name: Content-Type
-        value: application/xml
-      - path: /robots.txt
-        name: Content-Type
-        value: text/plain
+    env: node
     buildCommand: |
       cd client && 
       rm -rf node_modules package-lock.json && 
       npm install --production=false && 
       NODE_ENV=production npm run build &&
-      cp public/sitemap.xml dist/ &&
-      cp public/robots.txt dist/
+      mkdir -p dist/public &&
+      cp -r public/* dist/public/ &&
+      cp server.js dist/
+    startCommand: cd client/dist && NODE_ENV=production node server.js
     envVars:
       - key: VITE_API_URL
         fromService:
@@ -59,12 +47,7 @@ services:
         name: Cache-Control
         value: no-cache
     routes:
-      # Serve static files directly
-      - type: static
-        src: /sitemap.xml
-      - type: static
-        src: /robots.txt
-      # All other routes go to index.html
+      # All routes are handled by Express server
       - type: rewrite
         source: /*
-        destination: /index.html
+        destination: /*
