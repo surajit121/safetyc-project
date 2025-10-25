@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
-Sitemap: https://safetyc.in/static/sitemap.xml
+
+# Primary sitemap
+Sitemap: https://raw.githubusercontent.com/surajit121/safetyc-project/master/client/public/sitemap-new.xml
