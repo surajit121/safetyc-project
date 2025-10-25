@@ -28,8 +28,8 @@ services:
       rm -rf node_modules package-lock.json && 
       npm install --production=false && 
       NODE_ENV=production npm run build && 
-      cp -r public dist/ && 
-      cp server.js ./
+      cp public/sitemap.xml dist/ && 
+      cp public/robots.txt dist/
     startCommand: cd client && NODE_ENV=production node server.js
     envVars:
       - key: VITE_API_URL
@@ -45,8 +45,3 @@ services:
       - path: /*
         name: Cache-Control
         value: no-cache
-    routes:
-      # All routes are handled by Express server
-      - type: rewrite
-        source: /*
-        destination: /*
