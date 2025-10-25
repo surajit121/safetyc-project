@@ -23,8 +23,20 @@ services:
   - type: web
     name: safetyc-web
     env: static
-    buildCommand: cd client && rm -rf node_modules package-lock.json && npm install --production=false && NODE_ENV=production npm run build
+    buildCommand: |
+      cd client && 
+      rm -rf node_modules package-lock.json && 
+      npm install --production=false && 
+      NODE_ENV=production npm run build
     staticPublishPath: client/dist
+    # Ensure these files are served with correct headers
+    headers:
+      - path: /sitemap.xml
+        name: Content-Type
+        value: application/xml
+      - path: /robots.txt
+        name: Content-Type
+        value: text/plain
     buildCommand: |
       cd client && 
       rm -rf node_modules package-lock.json && 
