@@ -6,28 +6,7 @@ import copyStaticFiles from './vite.copy-static'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(), 
-    tailwindcss(),
-    {
-      name: 'copy-static-files',
-      writeBundle() {
-        // Copy static files directly to dist
-        const publicDir = resolve(__dirname, 'public');
-        const distDir = resolve(__dirname, 'dist');
-        ['sitemap.xml', 'robots.txt'].forEach(file => {
-          try {
-            const src = resolve(publicDir, file);
-            const dest = resolve(distDir, file);
-            require('fs').copyFileSync(src, dest);
-            console.log(`Copied ${file} to ${dest}`);
-          } catch (err) {
-            console.error(`Error copying ${file}:`, err);
-          }
-        });
-      }
-    }
-  ],
+  plugins: [react(), tailwindcss()],
   server: {
     proxy: {
       // during dev, proxy /api to backend

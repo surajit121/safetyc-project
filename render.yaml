@@ -59,13 +59,11 @@ services:
         name: Cache-Control
         value: no-cache
     routes:
-      # Allow direct access to sitemap.xml and robots.txt
-      - type: rewrite
-        source: /sitemap.xml
-        destination: /sitemap.xml
-      - type: rewrite
-        source: /robots.txt
-        destination: /robots.txt
+      # Serve static files directly
+      - type: static
+        src: /sitemap.xml
+      - type: static
+        src: /robots.txt
       # All other routes go to index.html
       - type: rewrite
         source: /*
