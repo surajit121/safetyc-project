@@ -10,8 +10,9 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-const distPath = path.join(__dirname, 'dist');
-const publicPath = path.join(__dirname, 'public');
+const projectRoot = process.cwd();
+const distPath = path.join(projectRoot, 'dist');
+const publicPath = path.join(projectRoot, 'public');
 
 // Enable CORS for all routes to avoid cross-origin issues with Google bots
 app.use(cors({
@@ -25,42 +26,45 @@ app.use(express.static(distPath));
 
 // Special route for sitemap.xml
 app.get('/sitemap.xml', (req, res) => {
-  const distSitemap = path.join(distPath, 'sitemap.xml');
-  const publicSitemap = path.join(publicPath, 'sitemap.xml');
-  const sitemapPath = fs.existsSync(distSitemap) ? distSitemap : publicSitemap;
+  const candidatePaths = [
+    path.join(distPath, 'sitemap.xml'),
+    path.join(publicPath, 'sitemap.xml'),
+    path.join(projectRoot, 'sitemap.xml')
+  ];
 
-  console.log('Attempting to serve sitemap from:', sitemapPath);
+  const sitemapPath = candidatePaths.find(fs.existsSync);
 
-  if (fs.existsSync(sitemapPath)) {
+  if (sitemapPath) {
     res.header('Content-Type', 'application/xml');
-    res.sendFile(sitemapPath);
-  } else {
-    console.error('Sitemap file not found at:', sitemapPath);
-    res.status(404).send('Sitemap not found');
+    return res.sendFile(sitemapPath);
   }
+
+  console.error('Sitemap file not found in any known location');
+  res.status(404).send('Sitemap not found');
 });
 
 // Special route for robots.txt
 app.get('/robots.txt', (req, res) => {
-  const distRobots = path.join(distPath, 'robots.txt');
-  const publicRobots = path.join(publicPath, 'robots.txt');
-  const robotsPath = fs.existsSync(distRobots) ? distRobots : publicRobots;
+  const candidatePaths = [
+    path.join(distPath, 'robots.txt'),
+    path.join(publicPath, 'robots.txt'),
+    path.join(projectRoot, 'robots.txt')
+  ];
 
-  console.log('Attempting to serve robots.txt from:', robotsPath);
+  const robotsPath = candidatePaths.find(fs.existsSync);
 
-  if (fs.existsSync(robotsPath)) {
+  if (robotsPath) {
     res.header('Content-Type', 'text/plain');
-    res.sendFile(robotsPath);
-  } else {
-    console.error('Robots.txt file not found at:', robotsPath);
-    res.status(404).send('Robots.txt not found');
+    return res.sendFile(robotsPath);
   }
+
+  console.error('Robots.txt file not found in any known location');
+  res.status(404).send('Robots.txt not found');
 });
 
 // Handle client-side routing
 app.get('*', (req, res) => {
   const indexPath = path.join(distPath, 'index.html');
-  console.log('Serving index.html from:', indexPath);
   res.sendFile(indexPath);
 });
 
