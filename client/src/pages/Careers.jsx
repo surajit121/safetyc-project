@@ -1,5 +1,19 @@
 import { useState, useRef, useEffect } from "react";
 import { apiUrl } from "../lib/api.js";
+import { ToastManager } from "../components/FallbackToast.jsx";
+
+// Try to import toast from react-toastify, but fall back to our custom implementation
+let toast;
+try {
+  // Import react-toastify dynamically
+  import('react-toastify').then(toastify => {
+    toast = toastify.toast;
+  }).catch(() => {
+    toast = ToastManager;
+  });
+} catch (error) {
+  toast = ToastManager;
+}
 
 const JOBS = [
   {
@@ -120,7 +134,27 @@ export default function Careers() {
     e.preventDefault();
     const v = validate();
     setErrors(v);
-    if (Object.keys(v).length) return;
+    if (Object.keys(v).length) {
+      // Show validation error toast
+      if (!toast) {
+        ToastManager.error("Please fix the highlighted errors before submitting.");
+      } else {
+        if (typeof toast.error === 'function') {
+          toast.error("Please fix the highlighted errors before submitting.", {
+            position: window.innerWidth < 640 ? "bottom-center" : "top-right",
+            autoClose: window.innerWidth < 640 ? 4000 : 5000,
+            hideProgressBar: window.innerWidth < 640,
+            closeOnClick: true,
+            pauseOnHover: window.innerWidth >= 640,
+            draggable: window.innerWidth >= 640,
+            style: window.innerWidth < 640 ? { fontSize: '14px' } : {},
+          });
+        } else {
+          ToastManager.error("Please fix the highlighted errors before submitting.");
+        }
+      }
+      return;
+    }
 
     const job = JOBS.find((j) => j.id === openJobId);
     // send trimmed values
@@ -181,6 +215,26 @@ export default function Careers() {
         throw new Error(data?.error || "Upload failed");
       }
 
+      // Show success toast
+      if (!toast) {
+        ToastManager.success("Application submitted successfully! We'll get back to you soon.");
+      } else {
+        if (typeof toast.success === 'function') {
+          toast.success("Application submitted successfully! We'll get back to you soon.", {
+            position: window.innerWidth < 640 ? "bottom-center" : "top-right",
+            autoClose: window.innerWidth < 640 ? 4000 : 5000,
+            hideProgressBar: window.innerWidth < 640,
+            closeOnClick: true,
+            pauseOnHover: window.innerWidth >= 640,
+            draggable: window.innerWidth >= 640,
+            style: window.innerWidth < 640 ? { fontSize: '14px' } : {},
+            icon: "🎉",
+          });
+        } else {
+          ToastManager.success("Application submitted successfully! We'll get back to you soon.");
+        }
+      }
+      
       setStatus({ loading: false, success: `Application submitted`, error: null });
       setFormState({ name: "", email: "", message: "", whatsapp: "", address: "", phone: "", dob: "", pincode: "" });
       setTimeout(() => setOpenJobId(null), 1200);
@@ -194,6 +248,26 @@ export default function Careers() {
 
       // More helpful message for HTML responses or network errors
       const msg = err?.message || "Submission failed";
+      
+      // Show error toast
+      if (!toast) {
+        ToastManager.error(msg);
+      } else {
+        if (typeof toast.error === 'function') {
+          toast.error(msg, {
+            position: window.innerWidth < 640 ? "bottom-center" : "top-right",
+            autoClose: window.innerWidth < 640 ? 4000 : 5000,
+            hideProgressBar: window.innerWidth < 640,
+            closeOnClick: true,
+            pauseOnHover: window.innerWidth >= 640,
+            draggable: window.innerWidth >= 640,
+            style: window.innerWidth < 640 ? { fontSize: '14px' } : {},
+          });
+        } else {
+          ToastManager.error(msg);
+        }
+      }
+      
       setStatus({ loading: false, success: null, error: msg });
       // only log non-sensitive info in production
       if (import.meta.env.MODE !== 'production') console.error("Application upload error:", err);
