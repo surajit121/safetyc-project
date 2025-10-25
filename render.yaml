@@ -25,6 +25,13 @@ services:
     env: static
     buildCommand: cd client && rm -rf node_modules package-lock.json && npm install --production=false && NODE_ENV=production npm run build
     staticPublishPath: client/dist
+    buildCommand: |
+      cd client && 
+      rm -rf node_modules package-lock.json && 
+      npm install --production=false && 
+      NODE_ENV=production npm run build &&
+      cp public/sitemap.xml dist/ &&
+      cp public/robots.txt dist/
     envVars:
       - key: VITE_API_URL
         fromService:
