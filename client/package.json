@@ -8,7 +8,8 @@
     "prebuild": "node scripts/check-dependencies.cjs",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node server.js"
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
@@ -19,6 +20,8 @@
     "@tailwindcss/vite": "^4.1.12",
     "antd": "^5.27.4",
     "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.8.2",
