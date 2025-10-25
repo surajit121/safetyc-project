@@ -41,7 +41,3 @@ services:
     buildFilter:
       paths:
         - client/**/*
-    headers:
-      - path: /*
-        name: Cache-Control
-        value: no-cache
