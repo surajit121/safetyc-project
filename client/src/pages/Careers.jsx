@@ -389,36 +389,36 @@ export default function Careers() {
   return (
     <section className="max-w-4xl mx-auto px-4 py-12">
       <header className="mb-6">
-        <h1 className="text-3xl font-bold">Careers & Job Opportunities</h1>
-        <p className="text-gray-700 mt-2">Click a job below to view details and apply.</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Careers & Job Opportunities</h1>
+        <p className="text-gray-700 dark:text-gray-300 mt-2">Click a job below to view details and apply.</p>
       </header>
 
       <div className="space-y-4">
         {JOBS.map((job) => (
-          <div key={job.id} className="border rounded-lg overflow-hidden">
+          <div key={job.id} className="border dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-[#111827]">
             <button
               aria-expanded={openJobId === job.id}
               aria-controls={`job-panel-${job.id}`}
               onClick={() => toggle(job.id)}
-              className="w-full text-left px-4 py-3 flex justify-between items-center bg-gray-50 hover:bg-gray-100"
+              className="w-full text-left px-4 py-3 flex justify-between items-center bg-gray-50 hover:bg-gray-100 dark:bg-[#171f2d] dark:hover:bg-[#1f2937]"
               id={`job-button-${job.id}`}
             >
               <div>
-                <div className="font-semibold">{job.title}</div>
-                <div className="text-sm text-gray-600">{job.location}</div>
-                {job.category && <div className="text-xs text-gray-500 mt-0.5">{job.category}</div>}
+                <div className="font-semibold text-gray-900 dark:text-gray-100">{job.title}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">{job.location}</div>
+                {job.category && <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{job.category}</div>}
               </div>
               <div className="text-sm text-orange-600">{openJobId === job.id ? "Close" : "Apply"}</div>
             </button>
 
             {openJobId === job.id && (
-              <div id={`job-panel-${job.id}`} role="region" aria-labelledby={`job-button-${job.id}`} className="px-4 py-4 bg-white">
-                <p className="mb-3 text-gray-700">{job.summary}</p>
+              <div id={`job-panel-${job.id}`} role="region" aria-labelledby={`job-button-${job.id}`} className="px-4 py-4 bg-white dark:bg-[#111827]">
+                <p className="mb-3 text-gray-700 dark:text-gray-200">{job.summary}</p>
 
                 {Array.isArray(job.responsibilities) && job.responsibilities.length > 0 && (
                   <div className="mb-3">
-                    <h3 className="font-semibold text-sm text-gray-800">What you&apos;ll do</h3>
-                    <ul className="list-disc list-inside text-gray-700 text-sm space-y-1 mt-1">
+                    <h3 className="font-semibold text-sm text-gray-800 dark:text-gray-100">What you&apos;ll do</h3>
+                    <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm space-y-1 mt-1">
                       {job.responsibilities.map((item, idx) => (
                         <li key={`resp-${job.id}-${idx}`}>{item}</li>
                       ))}
@@ -428,8 +428,8 @@ export default function Careers() {
 
                 {Array.isArray(job.requirements) && job.requirements.length > 0 && (
                   <div className="mb-3">
-                    <h3 className="font-semibold text-sm text-gray-800">Requirements</h3>
-                    <ul className="list-disc list-inside text-gray-700 text-sm space-y-1 mt-1">
+                    <h3 className="font-semibold text-sm text-gray-800 dark:text-gray-100">Requirements</h3>
+                    <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm space-y-1 mt-1">
                       {job.requirements.map((item, idx) => (
                         <li key={`req-${job.id}-${idx}`}>{item}</li>
                       ))}
@@ -439,8 +439,8 @@ export default function Careers() {
 
                 {Array.isArray(job.perks) && job.perks.length > 0 && (
                   <div className="mb-3">
-                    <h3 className="font-semibold text-sm text-gray-800">Perks</h3>
-                    <ul className="list-disc list-inside text-gray-700 text-sm space-y-1 mt-1">
+                    <h3 className="font-semibold text-sm text-gray-800 dark:text-gray-100">Perks</h3>
+                    <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm space-y-1 mt-1">
                       {job.perks.map((item, idx) => (
                         <li key={`perk-${job.id}-${idx}`}>{item}</li>
                       ))}
