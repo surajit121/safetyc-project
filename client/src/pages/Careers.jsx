@@ -20,31 +20,141 @@ try {
 const JOBS = [
   {
     id: 1,
-    title: "IT Support Engineer",
-    location: "Remote",
-    category: "Operations",
-    summary: "Provide technical support to clients and maintain internal systems.",
+    title: "CCTV & Security Technician",
+    location: "West Bengal (Multiple Locations)",
+    category: "Technical",
+    summary: `Who we're looking for:
+A skilled technician to install, maintain, and troubleshoot CCTV and security systems. If you love gadgets, tech, and keeping people safe, this is your spot!
+
+What you'll do:
+•	Install CCTV cameras, DVRs, and access control systems
+•	Troubleshoot and repair systems onsite
+•	Assist clients with setup and guidance
+
+Requirements:
+•	Experience in CCTV or security systems
+•	Basic electrical knowledge
+•	Problem-solving and teamwork
+
+Perks:
+•	Growth across West Bengal
+•	Hands-on experience with latest technology
+•	Friendly and supportive team`,
   },
   {
     id: 2,
-    title: "Frontend Developer",
-    location: "Remote",
-    category: "Engineering",
-    summary: "Build responsive UI components using React and Tailwind.",
+    title: "Fire Safety Technician",
+    location: "West Bengal",
+    category: "Safety",
+    summary: `Who we're looking for:
+A fire safety technician to handle installation, maintenance, and testing of fire safety systems. Safety is serious, but your work environment is fun!
+
+What you'll do:
+•	Install fire hydrants, extinguishers, and suppression systems
+•	Conduct inspections and tests
+•	Educate clients on fire safety practices
+
+Requirements:
+•	Experience in fire safety systems preferred
+•	Knowledge of safety standards
+•	Quick learner and proactive attitude
+
+Perks:
+•	Skill development opportunities
+•	On-field hands-on experience
+•	Supportive team`,
   },
   {
     id: 3,
-    title: "Project Manager",
-    location: "Remote",
-    category: "Product",
-    summary: "Coordinate projects, stakeholders, and delivery timelines.",
+    title: "Electrical & Solar Technician",
+    location: "West Bengal",
+    category: "Technical",
+    summary: `Who we're looking for:
+If you love wires, circuits, and renewable energy, join our electrical and solar team. You'll work on installations, maintenance, and repairs for residential and commercial projects.
+
+What you'll do:
+•	Install and maintain electrical and solar systems
+•	Troubleshoot and repair issues
+•	Assist project teams and clients
+
+Requirements:
+•	Diploma or experience in electrical/solar work
+•	Safety-first mindset
+•	Team player with good communication
+
+Perks:
+•	Career growth and training opportunities
+•	Exposure to multiple projects
+•	Friendly work environment`,
   },
   {
     id: 4,
-    title: "head",
-    location: "Remote",
-    category: "Product",
-    summary: "Coordinate projects, stakeholders, and delivery timelines.",
+    title: "Computer Sales & Service Executive",
+    location: "West Bengal",
+    category: "Sales & Service",
+    summary: `Who we're looking for:
+A tech-savvy person to sell and service computers and peripherals. If you love computers and helping people with tech, this is your role!
+
+What you'll do:
+•	Sell computers, laptops, and accessories
+•	Provide onsite and remote support for clients
+•	Maintain inventory and service records
+
+Requirements:
+•	Knowledge of computer hardware and software
+•	Good communication and problem-solving skills
+•	Customer-focused attitude
+
+Perks:
+•	Hands-on experience with latest tech
+•	Growth opportunities
+•	Supportive team`,
+  },
+  {
+    id: 5,
+    title: "Biometric Attendance & Access Control Technician",
+    location: "West Bengal",
+    category: "Technical",
+    summary: `Who we're looking for:
+A technician to install, maintain, and troubleshoot biometric attendance and access control systems.
+
+What you'll do:
+•	Install biometric devices at client locations
+•	Troubleshoot hardware/software issues
+•	Guide clients on proper usage
+
+Requirements:
+•	Experience with biometric systems preferred
+•	Basic IT and electrical knowledge
+•	Reliable and proactive
+
+Perks:
+•	Skill growth and on-field experience
+•	Friendly work culture
+•	Opportunity to work on modern technology`,
+  },
+  {
+    id: 6,
+    title: "Office & Admin Executive",
+    location: "Bankura (Head Office)",
+    category: "Administration",
+    summary: `Who we're looking for:
+A detail-oriented office admin who keeps things running smoothly. If organizing and coordinating is your thing, join us!
+
+What you'll do:
+•	Manage day-to-day office operations
+•	Coordinate with teams and clients
+•	Maintain records, reports, and schedules
+
+Requirements:
+•	Good communication and organizational skills
+•	Basic knowledge of office tools
+•	Proactive and reliable
+
+Perks:
+•	Growth opportunities within the company
+•	Be part of a fast-growing safety and security solutions company
+•	Friendly office culture`,
   },
 ];
 
@@ -310,7 +420,7 @@ export default function Careers() {
 
             {openJobId === job.id && (
               <div id={`job-panel-${job.id}`} role="region" aria-labelledby={`job-button-${job.id}`} className="px-4 py-4 bg-white">
-                <p className="mb-3 text-gray-700">{job.summary}</p>
+                <div className="mb-3 text-gray-700 whitespace-pre-line">{job.summary}</div>
 
                 <form onSubmit={handleSubmit} className="space-y-3" noValidate>
                   <div>
