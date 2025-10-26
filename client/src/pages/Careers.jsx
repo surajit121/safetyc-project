@@ -412,8 +412,8 @@ export default function Careers() {
             </button>
 
             {openJobId === job.id && (
-              <div id={`job-panel-${job.id}`} role="region" aria-labelledby={`job-button-${job.id}`} className="px-4 py-4 bg-white dark:bg-[#111827]">
-                <p className="mb-3 text-gray-700 dark:text-gray-200">{job.summary}</p>
+              <div id={`job-panel-${job.id}`} role="region" aria-labelledby={`job-button-${job.id}`} className="px-4 py-4 bg-white dark:bg-gray-800">
+                <p className="mb-3 text-gray-700 dark:text-gray-300">{job.summary}</p>
 
                 {Array.isArray(job.responsibilities) && job.responsibilities.length > 0 && (
                   <div className="mb-3">
@@ -450,7 +450,7 @@ export default function Careers() {
 
                 <form onSubmit={handleSubmit} className="space-y-3" noValidate>
                   <div>
-                    <label htmlFor="app-name" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Full name</label>
+                    <label htmlFor="app-name" className="block text-sm font-medium">Full name</label>
                     <input
                       id="app-name"
                       name="name"
@@ -461,13 +461,13 @@ export default function Careers() {
                       maxLength={100}
                       aria-invalid={errors.name ? true : false}
                       aria-describedby={errors.name ? "app-name-error" : undefined}
-                      className="mt-1 w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      className="mt-1 w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                     />
                     {errors.name && <div id="app-name-error" className="text-sm text-red-600">{errors.name}</div>}
                   </div>
 
                   <div>
-                    <label htmlFor="app-email" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Email</label>
+                    <label htmlFor="app-email" className="block text-sm font-medium">Email</label>
                     <input
                       id="app-email"
                       name="email"
@@ -479,13 +479,13 @@ export default function Careers() {
                       maxLength={254}
                       aria-invalid={errors.email ? true : false}
                       aria-describedby={errors.email ? "app-email-error" : undefined}
-                      className="mt-1 w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      className="mt-1 w-full border rounded px-3 py-2"
                     />
                     {errors.email && <div id="app-email-error" className="text-sm text-red-600">{errors.email}</div>}
                   </div>
 
                   <div>
-                    <label htmlFor="app-whatsapp" className="block text-sm font-medium text-gray-700 dark:text-gray-200">WhatsApp number</label>
+                    <label htmlFor="app-whatsapp" className="block text-sm font-medium">WhatsApp number</label>
                     <input
                       id="app-whatsapp"
                       name="whatsapp"
@@ -499,13 +499,13 @@ export default function Careers() {
                       maxLength={30}
                       aria-invalid={errors.whatsapp ? true : false}
                       aria-describedby={errors.whatsapp ? "app-whatsapp-error" : undefined}
-                      className="mt-1 w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      className="mt-1 w-full border rounded px-3 py-2"
                     />
                     {errors.whatsapp && <div id="app-whatsapp-error" className="text-sm text-red-600">{errors.whatsapp}</div>}
                   </div>
 
                   <div>
-                    <label htmlFor="app-phone" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Phone number</label>
+                    <label htmlFor="app-phone" className="block text-sm font-medium">Phone number</label>
                     <input
                       id="app-phone"
                       name="phone"
@@ -520,13 +520,13 @@ export default function Careers() {
                       maxLength={30}
                       aria-invalid={errors.phone ? true : false}
                       aria-describedby={errors.phone ? "app-phone-error" : undefined}
-                      className="mt-1 w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      className="mt-1 w-full border rounded px-3 py-2"
                     />
                     {errors.phone && <div id="app-phone-error" className="text-sm text-red-600">{errors.phone}</div>}
                   </div>
 
                   <div>
-                    <label htmlFor="app-address" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Address</label>
+                    <label htmlFor="app-address" className="block text-sm font-medium">Address</label>
                     <input
                       id="app-address"
                       name="address"
@@ -537,13 +537,13 @@ export default function Careers() {
                       maxLength={300}
                       aria-invalid={errors.address ? true : false}
                       aria-describedby={errors.address ? "app-address-error" : undefined}
-                      className="mt-1 w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      className="mt-1 w-full border rounded px-3 py-2"
                     />
                     {errors.address && <div id="app-address-error" className="text-sm text-red-600">{errors.address}</div>}
                   </div>
 
                   <div>
-                    <label htmlFor="app-dob" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Date of Birth</label>
+                    <label htmlFor="app-dob" className="block text-sm font-medium">Date of Birth</label>
                     <input
                       id="app-dob"
                       name="dob"
@@ -554,13 +554,13 @@ export default function Careers() {
                       onBlur={handleBlur}
                       aria-invalid={errors.dob ? true : false}
                       aria-describedby={errors.dob ? "app-dob-error" : undefined}
-                      className="mt-1 w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      className="mt-1 w-full border rounded px-3 py-2"
                     />
                     {errors.dob && <div id="app-dob-error" className="text-sm text-red-600">{errors.dob}</div>}
                   </div>
 
                   <div>
-                    <label htmlFor="app-pincode" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Pincode</label>
+                    <label htmlFor="app-pincode" className="block text-sm font-medium">Pincode</label>
                     <input
                       id="app-pincode"
                       name="pincode"
@@ -573,13 +573,13 @@ export default function Careers() {
                       maxLength={10}
                       aria-invalid={errors.pincode ? true : false}
                       aria-describedby={errors.pincode ? "app-pincode-error" : undefined}
-                      className="mt-1 w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      className="mt-1 w-full border rounded px-3 py-2"
                     />
                     {errors.pincode && <div id="app-pincode-error" className="text-sm text-red-600">{errors.pincode}</div>}
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">Message</label>
+                    <label className="block text-sm font-medium">Message</label>
                     <textarea
                       name="message"
                       value={formState.message}
@@ -588,7 +588,7 @@ export default function Careers() {
                       maxLength={2000}
                       aria-invalid={errors.message ? true : false}
                       aria-describedby={errors.message ? "message-error" : undefined}
-                      className="mt-1 w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                      className="mt-1 w-full border rounded px-3 py-2"
                       rows={3}
                     />
                     {errors.message && <div id="message-error" className="text-sm text-red-600">{errors.message}</div>}
