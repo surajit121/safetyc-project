@@ -287,25 +287,23 @@ export default function Careers() {
   return (
     <section className="max-w-4xl mx-auto px-4 py-12">
       <header className="mb-6">
-        <h1 className="text-3xl font-bold" style={{color: '#111827'}}>Careers & Job Opportunities</h1>
-        <p className="mt-2" style={{color: '#374151'}}>Click a job below to view details and apply.</p>
+        <h1 className="text-3xl font-bold">Careers & Job Opportunities</h1>
+        <p className="text-gray-700 mt-2">Click a job below to view details and apply.</p>
       </header>
 
       <div className="space-y-4">
         {JOBS.map((job) => (
-          <div key={job.id} className="border dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-[#111827]">
+          <div key={job.id} className="border rounded-lg overflow-hidden">
             <button
               aria-expanded={openJobId === job.id}
               aria-controls={`job-panel-${job.id}`}
               onClick={() => toggle(job.id)}
-              className="w-full text-left px-4 py-3 flex justify-between items-center bg-white hover:bg-gray-50 border-b border-gray-200"
-              style={{backgroundColor: '#ffffff'}}
+              className="w-full text-left px-4 py-3 flex justify-between items-center bg-gray-50 hover:bg-gray-100"
               id={`job-button-${job.id}`}
             >
               <div>
-                <div className="font-semibold" style={{color: '#111827'}}>{job.title}</div>
-                <div className="text-sm" style={{color: '#6b7280'}}>{job.location}</div>
-                {job.category && <div className="text-xs mt-0.5" style={{color: '#9ca3af'}}>{job.category}</div>}
+                <div className="font-semibold">{job.title}</div>
+                <div className="text-sm text-gray-600">{job.location}</div>
               </div>
               <div className="text-sm text-orange-600">{openJobId === job.id ? "Close" : "Apply"}</div>
             </button>
