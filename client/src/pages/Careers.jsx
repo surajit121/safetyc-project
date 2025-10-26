@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { apiUrl } from "../lib/api.js";
 import { ToastManager } from "../components/FallbackToast.jsx";
 
+
+
 // Try to import toast from react-toastify, but fall back to our custom implementation
 let toast;
 try {
@@ -18,135 +20,31 @@ try {
 const JOBS = [
   {
     id: 1,
-    title: "CCTV & Security Technician",
-    location: "West Bengal (Multiple Locations)",
-    category: "Field Services",
-    summary: "Install, maintain, and troubleshoot CCTV, DVR, and access control systems for residential and commercial clients across West Bengal.",
-    responsibilities: [
-      "Install CCTV cameras, DVRs, and access control systems",
-      "Diagnose onsite issues and perform repairs or replacements",
-      "Support clients with system configuration and training",
-    ],
-    requirements: [
-      "Hands-on experience with CCTV or electronic security systems",
-      "Foundational electrical knowledge and safe work practices",
-      "Collaborative mindset with strong problem-solving skills",
-    ],
-    perks: [
-      "Travel-based role with exposure to diverse sites",
-      "Access to the latest surveillance technology",
-      "Supportive team focused on professional growth",
-    ],
+    title: "IT Support Engineer",
+    location: "Remote",
+    category: "Operations",
+    summary: "Provide technical support to clients and maintain internal systems.",
   },
   {
     id: 2,
-    title: "Fire Safety Technician",
-    location: "West Bengal",
-    category: "Field Services",
-    summary: "Lead the installation, maintenance, and testing of fire safety systems while educating clients on best practices.",
-    responsibilities: [
-      "Install fire hydrants, extinguishers, and suppression systems",
-      "Conduct scheduled inspections, testing, and maintenance",
-      "Deliver fire safety guidance and training to clients",
-    ],
-    requirements: [
-      "Experience with fire safety equipment preferred",
-      "Understanding of relevant fire safety standards and codes",
-      "Proactive attitude with the ability to learn quickly",
-    ],
-    perks: [
-      "Skill development through real-world assignments",
-      "Hands-on field experience across multiple environments",
-      "Encouraging, safety-first work culture",
-    ],
+    title: "Frontend Developer",
+    location: "Remote",
+    category: "Engineering",
+    summary: "Build responsive UI components using React and Tailwind.",
   },
   {
     id: 3,
-    title: "Electrical & Solar Technician",
-    location: "West Bengal",
-    category: "Projects",
-    summary: "Install and maintain electrical and solar systems for residential and commercial projects while ensuring safe, reliable power.",
-    responsibilities: [
-      "Install and commission electrical and solar solutions",
-      "Perform preventive maintenance and urgent repairs",
-      "Collaborate with project teams and assist clients",
-    ],
-    requirements: [
-      "Diploma or equivalent experience in electrical or solar work",
-      "Strict adherence to safety procedures",
-      "Effective communication and teamwork",
-    ],
-    perks: [
-      "Career growth with continuous training",
-      "Exposure to varied electrical and renewable projects",
-      "Friendly environment committed to clean energy",
-    ],
+    title: "Project Manager",
+    location: "Remote",
+    category: "Product",
+    summary: "Coordinate projects, stakeholders, and delivery timelines.",
   },
   {
     id: 4,
-    title: "Computer Sales & Service Executive",
-    location: "West Bengal",
-    category: "Sales & Support",
-    summary: "Drive computer hardware sales while delivering onsite and remote technical support that keeps clients productive.",
-    responsibilities: [
-      "Sell computers, laptops, and accessories to retail and corporate clients",
-      "Provide remote and onsite troubleshooting and repairs",
-      "Maintain inventory, service logs, and customer records",
-    ],
-    requirements: [
-      "Solid knowledge of computer hardware, operating systems, and software",
-      "Clear communication with a customer-first attitude",
-      "Ability to solve technical issues independently",
-    ],
-    perks: [
-      "Direct exposure to the latest computing technology",
-      "Opportunities for role-based advancement",
-      "Collaborative and supportive sales team",
-    ],
-  },
-  {
-    id: 5,
-    title: "Biometric Attendance & Access Control Technician",
-    location: "West Bengal",
-    category: "Field Services",
-    summary: "Deploy and service biometric attendance and access control solutions tailored to client security needs.",
-    responsibilities: [
-      "Install biometric attendance and access control devices",
-      "Troubleshoot hardware and software issues onsite",
-      "Train clients on device usage and maintenance",
-    ],
-    requirements: [
-      "Experience with biometric or access control systems preferred",
-      "Working knowledge of IT networking and basic electricals",
-      "Reliable, proactive approach to client support",
-    ],
-    perks: [
-      "Immersive experience with cutting-edge security tech",
-      "Opportunities to expand technical skill sets",
-      "Positive culture that values initiative",
-    ],
-  },
-  {
-    id: 6,
-    title: "Office & Admin Executive",
-    location: "Bankura (Head Office)",
-    category: "Administration",
-    summary: "Coordinate day-to-day office operations and support teams so our safety and security projects stay on track.",
-    responsibilities: [
-      "Manage office operations, scheduling, and documentation",
-      "Coordinate with internal teams, vendors, and clients",
-      "Maintain accurate records, reports, and follow-ups",
-    ],
-    requirements: [
-      "Organized professional with strong communication skills",
-      "Comfortable with standard office productivity tools",
-      "Dependable, proactive attitude toward problem-solving",
-    ],
-    perks: [
-      "Structured growth path within a fast-scaling company",
-      "Chance to shape processes at the headquarters",
-      "Supportive office culture with collaborative teams",
-    ],
+    title: "head",
+    location: "Remote",
+    category: "Product",
+    summary: "Coordinate projects, stakeholders, and delivery timelines.",
   },
 ];
 
@@ -389,8 +287,8 @@ export default function Careers() {
   return (
     <section className="max-w-4xl mx-auto px-4 py-12">
       <header className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Careers & Job Opportunities</h1>
-        <p className="text-gray-700 dark:text-gray-300 mt-2">Click a job below to view details and apply.</p>
+        <h1 className="text-3xl font-bold" style={{color: '#111827'}}>Careers & Job Opportunities</h1>
+        <p className="mt-2" style={{color: '#374151'}}>Click a job below to view details and apply.</p>
       </header>
 
       <div className="space-y-4">
@@ -400,53 +298,21 @@ export default function Careers() {
               aria-expanded={openJobId === job.id}
               aria-controls={`job-panel-${job.id}`}
               onClick={() => toggle(job.id)}
-              className="w-full text-left px-4 py-3 flex justify-between items-center bg-gray-50 hover:bg-gray-100 dark:bg-[#171f2d] dark:hover:bg-[#1f2937]"
+              className="w-full text-left px-4 py-3 flex justify-between items-center bg-white hover:bg-gray-50 border-b border-gray-200"
+              style={{backgroundColor: '#ffffff'}}
               id={`job-button-${job.id}`}
             >
               <div>
-                <div className="font-semibold text-gray-900 dark:text-gray-100">{job.title}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">{job.location}</div>
-                {job.category && <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{job.category}</div>}
+                <div className="font-semibold" style={{color: '#111827'}}>{job.title}</div>
+                <div className="text-sm" style={{color: '#6b7280'}}>{job.location}</div>
+                {job.category && <div className="text-xs mt-0.5" style={{color: '#9ca3af'}}>{job.category}</div>}
               </div>
               <div className="text-sm text-orange-600">{openJobId === job.id ? "Close" : "Apply"}</div>
             </button>
 
             {openJobId === job.id && (
-              <div id={`job-panel-${job.id}`} role="region" aria-labelledby={`job-button-${job.id}`} className="px-4 py-4 bg-white dark:bg-gray-800">
-                <p className="mb-3 text-gray-700 dark:text-gray-300">{job.summary}</p>
-
-                {Array.isArray(job.responsibilities) && job.responsibilities.length > 0 && (
-                  <div className="mb-3">
-                    <h3 className="font-semibold text-sm text-gray-800 dark:text-gray-100">What you&apos;ll do</h3>
-                    <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm space-y-1 mt-1">
-                      {job.responsibilities.map((item, idx) => (
-                        <li key={`resp-${job.id}-${idx}`}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {Array.isArray(job.requirements) && job.requirements.length > 0 && (
-                  <div className="mb-3">
-                    <h3 className="font-semibold text-sm text-gray-800 dark:text-gray-100">Requirements</h3>
-                    <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm space-y-1 mt-1">
-                      {job.requirements.map((item, idx) => (
-                        <li key={`req-${job.id}-${idx}`}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {Array.isArray(job.perks) && job.perks.length > 0 && (
-                  <div className="mb-3">
-                    <h3 className="font-semibold text-sm text-gray-800 dark:text-gray-100">Perks</h3>
-                    <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm space-y-1 mt-1">
-                      {job.perks.map((item, idx) => (
-                        <li key={`perk-${job.id}-${idx}`}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+              <div id={`job-panel-${job.id}`} role="region" aria-labelledby={`job-button-${job.id}`} className="px-4 py-4 bg-white">
+                <p className="mb-3 text-gray-700">{job.summary}</p>
 
                 <form onSubmit={handleSubmit} className="space-y-3" noValidate>
                   <div>
@@ -461,7 +327,7 @@ export default function Careers() {
                       maxLength={100}
                       aria-invalid={errors.name ? true : false}
                       aria-describedby={errors.name ? "app-name-error" : undefined}
-                      className="mt-1 w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      className="mt-1 w-full border rounded px-3 py-2"
                     />
                     {errors.name && <div id="app-name-error" className="text-sm text-red-600">{errors.name}</div>}
                   </div>
