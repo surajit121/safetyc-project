@@ -11,7 +11,7 @@ export const applyMobileColorFix = () => {
     // Force orange color on the "C" in SAFETYC
     const logoC = document.querySelector('.text-orange-600');
     if (logoC) {
-      logoC.style.setProperty('color', '#e65100', 'important');
+      logoC.style.setProperty('color', '#f97316', 'important');
     }
     
     // Force CTA link colors and styling
@@ -44,13 +44,13 @@ export const applyMobileColorFix = () => {
     // Force selected menu items to be orange - only for desktop menu
     const selectedDesktopItems = document.querySelectorAll('.hidden.md\\:flex .ant-menu-item-selected a');
     selectedDesktopItems.forEach(item => {
-      item.style.setProperty('color', '#e65100', 'important');
+      item.style.setProperty('color', '#f97316', 'important');
     });
     
     // Fix for active menu items in mobile drawer - use data-active attribute for reliability
     const mobileActiveLinks = document.querySelectorAll('.ant-drawer .ant-menu-item a[data-active="true"]');
     mobileActiveLinks.forEach(item => {
-      item.style.setProperty('color', '#e65100', 'important');
+      item.style.setProperty('color', '#f97316', 'important');
       item.style.setProperty('font-weight', '600', 'important');
       // Ensure parent menu item has no background
       const parentMenuItem = item.closest('.ant-menu-item');

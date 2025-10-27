@@ -215,9 +215,15 @@ export default function Hero() {
                   ? 'bg-gray-700/50 border border-gray-600' 
                   : 'bg-white border border-gray-200 shadow-md'
               }`}>
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 ${
-                  theme === 'dark' ? 'bg-orange-600' : 'bg-orange-500'
-                } text-white font-bold text-xl`}>
+                <div 
+                  className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl"
+                  style={{
+                    backgroundColor: theme === 'dark' ? '#f97316' : '#f97316',
+                    color: '#ffffff',
+                    fontWeight: 'bold',
+                    fontSize: '1.25rem'
+                  }}
+                >
                   1
                 </div>
                 <h5 className={`font-semibold mb-2 ${
@@ -237,9 +243,15 @@ export default function Hero() {
                   ? 'bg-gray-700/50 border border-gray-600' 
                   : 'bg-white border border-gray-200 shadow-md'
               }`}>
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 ${
-                  theme === 'dark' ? 'bg-orange-600' : 'bg-orange-500'
-                } text-white font-bold text-xl`}>
+                <div 
+                  className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl"
+                  style={{
+                    backgroundColor: theme === 'dark' ? '#f97316' : '#f97316',
+                    color: '#ffffff',
+                    fontWeight: 'bold',
+                    fontSize: '1.25rem'
+                  }}
+                >
                   2
                 </div>
                 <h5 className={`font-semibold mb-2 ${
@@ -259,9 +271,15 @@ export default function Hero() {
                   ? 'bg-gray-700/50 border border-gray-600' 
                   : 'bg-white border border-gray-200 shadow-md'
               }`}>
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 ${
-                  theme === 'dark' ? 'bg-orange-600' : 'bg-orange-500'
-                } text-white font-bold text-xl`}>
+                <div 
+                  className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 font-bold text-xl"
+                  style={{
+                    backgroundColor: theme === 'dark' ? '#f97316' : '#f97316',
+                    color: '#ffffff',
+                    fontWeight: 'bold',
+                    fontSize: '1.25rem'
+                  }}
+                >
                   3
                 </div>
                 <h5 className={`font-semibold mb-2 ${

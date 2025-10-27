@@ -85,12 +85,25 @@ a[data-cta-link]:visited {
   }
   
   .text-orange-600 {
-    color: #e65100 !important;
+    color: #f97316 !important;
+  }
+  
+  .text-orange-500 {
+    color: #f97316 !important;
   }
   
   /* Ensure the CTA section displays properly */
   .bg-orange-600 {
-    background-color: #e65100 !important;
+    background-color: #f97316 !important;
+  }
+  
+  .bg-orange-500 {
+    background-color: #f97316 !important;
+  }
+  
+  /* Fix mobile Hero numbered circles */
+  div[style*="backgroundColor"] {
+    background-color: #f97316 !important;
   }
   
   /* Force the mobile CTA button to be visible */
@@ -167,7 +180,7 @@ a[data-cta-link]:visited {
   .ant-drawer .ant-menu-item-selected a,
   .ant-drawer .ant-menu-item a:hover,
   .ant-drawer .ant-menu-item-selected a:visited {
-    color: #e65100 !important;
+    color: #f97316 !important;
   }
 }
 
