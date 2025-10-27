@@ -18,6 +18,69 @@ export default function About() {
         industries, and commercial establishments, becoming a trusted partner
         for integrated safety and security systems.
       </p>
+      
+      {/* Download Brochure Section */}
+      <div 
+        className="mt-8 p-6 rounded-lg border shadow-sm dark:shadow-none" 
+        style={{
+          backgroundColor: 'white',
+          borderColor: '#e5e7eb'
+        }}
+        data-theme-override="true"
+      >
+        <style jsx>{`
+          [data-theme-override="true"] {
+            background-color: white !important;
+            border-color: #e5e7eb !important;
+          }
+          [data-theme-override="true"] h3 {
+            color: #000000 !important;
+          }
+          [data-theme-override="true"] p {
+            color: #333333 !important;
+          }
+          .dark [data-theme-override="true"] {
+            background-color: #111827 !important;
+            border-color: #4b5563 !important;
+          }
+          .dark [data-theme-override="true"] h3 {
+            color: #ffffff !important;
+          }
+          .dark [data-theme-override="true"] p {
+            color: #d1d5db !important;
+          }
+        `}</style>
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h3 className="text-xl font-semibold" style={{color: '#000000'}}>Download Our Company Brochure</h3>
+            <p className="mt-2" style={{color: '#333333'}}>
+              Get detailed information about our services, expertise, and completed projects.
+            </p>
+          </div>
+          <a
+            href="/assets/safetyc brochure (1).pdf"
+            download="SafetyC-Company-Brochure.pdf"
+            className="inline-flex items-center px-6 py-3 font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+            style={{
+              backgroundColor: '#f97316',
+              color: 'white'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = '#ea580c';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = '#f97316';
+            }}
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Download PDF
+          </a>
+        </div>
+      </div>
+
+      <div className="mt-5">
       <h2 className="mt-8 text-2xl font-semibold">Our Services</h2>
       <ul className="mt-4 list-disc list-inside text-gray-700 space-y-2">
         <li>
@@ -63,6 +126,7 @@ export default function About() {
           manpower.
         </li>
       </ul>
+    </div>
     </section>
   );
 }
