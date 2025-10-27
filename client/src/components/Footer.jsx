@@ -115,15 +115,21 @@ export default function Footer() {
           <div className="text-sm text-gray-700 space-y-2">
             <div>
               <strong>Registered Office:</strong>
+              <div>76/14 Nutanchati, Panchbaga, P.O.- Kenduadihi, Dist & PS Bankura. Word No 24, W.B., Pin 722102.</div>
+            </div>
+            <div>
+              <strong>Corporate Office:</strong>
               <div>Schooldanga, Bankura - 722101, West Bengal, India</div>
             </div>
             <div>
               <strong>Branch Offices:</strong>
               <ul className="list-disc list-inside mt-1">
-                <li>Purulia - Adra, Purulia 723121</li>
-                <li>Paschim Medinipur - Haldia / Midnapore</li>
-                <li>Birbhum - Suri, Birbhum 731101</li>
-                <li>East Burdwan - Near Seharabazar, 713423</li>
+                <li>Purulia - North Lake road, Raghabpur more, Opposite of Reliance Digital, 723101</li>
+                <li>Purba Medinipur - 2nd Floor. Opposite Sanhati UtsabGround. Keshabpur, chaitanyapur, Haldia. PIN-721645</li>
+                <li>Birbhum - Moumachi Kali Mandir Suri, Birbhum, 731101</li>
+                <li>East Burdwan - Near Seharabazar Football Ground, Pin: 713423</li>
+                <li>Siliguri - Chowrangee bhavan, Chowrangee more, Potiram jote, Matigara, 734010</li>
+                <li>Mejia(Bankura) - Bagangora near Shiv Mandir, Mejhia, Bankura</li>
               </ul>
             </div>
             <div>
