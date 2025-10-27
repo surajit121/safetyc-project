@@ -181,6 +181,119 @@ export default function Hero() {
             ))}
           </div>
         </div>
+        
+        {/* Home Services Section */}
+        <Divider className="my-12" style={{ borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.06)' }} />
+        
+        <div className={`text-center p-8 rounded-2xl ${
+          theme === 'dark' 
+            ? 'bg-gradient-to-br from-gray-800/50 to-gray-900/50 border border-gray-700' 
+            : 'bg-gradient-to-br from-orange-50 to-white border border-orange-100'
+        }`}>
+          <h3 className={`text-2xl md:text-3xl font-bold mb-4 ${
+            theme === 'dark' ? 'text-white' : 'text-gray-900'
+          }`}>
+            Home Services at Your Doorstep
+          </h3>
+          
+          <p className={`text-base md:text-lg mb-8 max-w-4xl mx-auto leading-relaxed ${
+            theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+          }`}>
+            Need a service? We've got you covered! Whether it's CCTV, fire safety, electrical work, solar installation, computer service, or biometric systems, SafetyC brings reliable solutions straight to your home or office.
+          </p>
+          
+          <div className="mb-8">
+            <h4 className={`text-xl md:text-2xl font-semibold mb-6 ${
+              theme === 'dark' ? 'text-orange-300' : 'text-orange-600'
+            }`}>
+              Book a Service in 3 Easy Steps:
+            </h4>
+            
+            <div className="grid md:grid-cols-3 gap-6 mt-6">
+              <div className={`p-6 rounded-xl ${
+                theme === 'dark' 
+                  ? 'bg-gray-700/50 border border-gray-600' 
+                  : 'bg-white border border-gray-200 shadow-md'
+              }`}>
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 ${
+                  theme === 'dark' ? 'bg-orange-600' : 'bg-orange-500'
+                } text-white font-bold text-xl`}>
+                  1
+                </div>
+                <h5 className={`font-semibold mb-2 ${
+                  theme === 'dark' ? 'text-white' : 'text-gray-900'
+                }`}>
+                  What are you looking for?
+                </h5>
+                <p className={`text-sm ${
+                  theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                }`}>
+                  Choose the service you need.
+                </p>
+              </div>
+              
+              <div className={`p-6 rounded-xl ${
+                theme === 'dark' 
+                  ? 'bg-gray-700/50 border border-gray-600' 
+                  : 'bg-white border border-gray-200 shadow-md'
+              }`}>
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 ${
+                  theme === 'dark' ? 'bg-orange-600' : 'bg-orange-500'
+                } text-white font-bold text-xl`}>
+                  2
+                </div>
+                <h5 className={`font-semibold mb-2 ${
+                  theme === 'dark' ? 'text-white' : 'text-gray-900'
+                }`}>
+                  Pick a Date & Time
+                </h5>
+                <p className={`text-sm ${
+                  theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                }`}>
+                  We work 24/7, 365 days to suit your schedule.
+                </p>
+              </div>
+              
+              <div className={`p-6 rounded-xl ${
+                theme === 'dark' 
+                  ? 'bg-gray-700/50 border border-gray-600' 
+                  : 'bg-white border border-gray-200 shadow-md'
+              }`}>
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 ${
+                  theme === 'dark' ? 'bg-orange-600' : 'bg-orange-500'
+                } text-white font-bold text-xl`}>
+                  3
+                </div>
+                <h5 className={`font-semibold mb-2 ${
+                  theme === 'dark' ? 'text-white' : 'text-gray-900'
+                }`}>
+                  Relax & Let Us Handle It
+                </h5>
+                <p className={`text-sm ${
+                  theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                }`}>
+                  Our skilled professionals will take care of everything.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-8">
+            <Link to="/contact">
+              <Button 
+                type="primary" 
+                size="large" 
+                className="h-12 px-8 text-base font-medium"
+                style={{
+                  background: theme === 'dark' ? '#ea580c' : '#f97316',
+                  borderColor: theme === 'dark' ? '#c2410c' : '#ea580c'
+                }}
+              >
+                Book Your Service Now
+              </Button>
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );
