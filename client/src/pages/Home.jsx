@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import Hero from "../components/Hero.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
 import CTA from "../components/CTA.jsx";
@@ -9,6 +10,45 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { theme } = useTheme();
+
+  const heroVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
+  const sectionHeadingVariants = {
+    hidden: { opacity: 0, y: 16 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  };
+
+  const servicesContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const serviceCardVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
+  const ctaVariants = {
+    hidden: { opacity: 0, scale: 0.96 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
 
   useEffect(() => {
     // Set loading state to true before fetching data
@@ -46,9 +86,25 @@ export default function Home() {
 
  return (
   <div>
-    <Hero />
-    <section className="max-w-6xl mx-auto px-4 py-12">
-      <h2 className="text-2xl font-bold mb-6">Core Services</h2>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={heroVariants}
+    >
+      <Hero />
+    </motion.div>
+    <motion.section
+      className="max-w-6xl mx-auto px-4 py-12"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      <motion.h2
+        className="text-2xl font-bold mb-6"
+        variants={sectionHeadingVariants}
+      >
+        Core Services
+      </motion.h2>
       
       {/* Loading state */}
       {loading && (
@@ -80,7 +136,13 @@ export default function Home() {
       
       {/* Services display */}
       {!loading && !error && Array.isArray(services) && services.length > 0 && (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          variants={servicesContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+        >
           {(() => {
             // Define the desired order of services
             const serviceOrder = [
@@ -115,13 +177,24 @@ export default function Home() {
             
             return sortedServices.slice(0, 6).map(s => {
               // Don't include images in the home page service cards
-              return <ServiceCard key={s._id || s.slug} {...s} />;
+              return (
+                <motion.div key={s._id || s.slug} variants={serviceCardVariants}>
+                  <ServiceCard {...s} />
+                </motion.div>
+              );
             });
           })()}
-        </div>
+        </motion.div>
       )}
-    </section>
-    <CTA />
+    </motion.section>
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={ctaVariants}
+    >
+      <CTA />
+    </motion.div>
   </div>
 );
 }
