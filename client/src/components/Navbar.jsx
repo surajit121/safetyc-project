@@ -38,6 +38,9 @@ export default function Navbar() {
   
   // Apply mobile color fixes when location changes to ensure proper highlighting
   useEffect(() => {
+    // Close the mobile drawer whenever the route changes
+    setOpen(false);
+
     // Apply fixes after a short delay to ensure DOM has updated
     const fixTimer = setTimeout(() => {
       applyMobileColorFix();
@@ -124,7 +127,8 @@ export default function Navbar() {
                 key: l.path,
                 className: "",
                 label: <Link 
-                  to={l.path} 
+                  to={l.path}
+                  onClick={() => setOpen(false)}
                   className={location.pathname === l.path ? "text-orange-600 font-semibold" : "text-gray-700 hover:text-orange-600"}
                   data-active={location.pathname === l.path ? "true" : "false"}
                 >
