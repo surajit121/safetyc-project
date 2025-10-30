@@ -112,6 +112,50 @@ a[data-cta-link]:visited {
     visibility: visible !important;
     display: inline-block !important;
   }
+
+  /* Mobile drawer branding styles */
+  .mobile-drawer-header {
+    color: #0f172a !important;
+  }
+
+  .mobile-drawer-header .ant-switch-checked {
+    background: rgba(255, 255, 255, 0.25) !important;
+  }
+
+  .mobile-drawer-label {
+    color: rgba(15, 23, 42, 0.7) !important;
+    letter-spacing: 0.3em !important;
+  }
+
+  .mobile-drawer-brand {
+    color: #0f172a !important;
+  }
+
+  .drawer-brand-accent {
+    color: #e65100 !important;
+  }
+
+  .mobile-drawer-subtext {
+    color: rgba(15, 23, 42, 0.6) !important;
+  }
+
+  .dark .mobile-drawer-label,
+  .dark .mobile-drawer-brand,
+  .dark .mobile-drawer-subtext {
+    color: rgba(226, 232, 240, 0.9) !important;
+  }
+
+  .dark .drawer-brand-accent {
+    color: #f97316 !important;
+  }
+
+  .mobile-drawer-nav a {
+    color: #0f172a !important;
+  }
+
+  .dark .mobile-drawer-nav a {
+    color: rgba(241, 245, 249, 0.95) !important;
+  }
 }
 
 /* Dark mode styles */
