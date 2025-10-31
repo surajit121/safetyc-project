@@ -7,8 +7,8 @@ import cctvImg from "../assets/cctv.jpeg";
 import solarImg from "../assets/solar.jpeg";
 import computerImg from "../assets/computer.jpeg";
 import bioImg from "../assets/bio.jpeg";
-import electricalImg from "../assets/bio.jpeg"; // Using bio image for electrical temporarily
-import rentalImg from "../assets/fire exting.jpeg"; // Using fire extinguisher image for rentals temporarily
+import electricalImg from "../assets/electrical_contracting.jpeg"; 
+import rentalImg from "../assets/fire exting.jpeg"; 
 
 // Fallback static services data
 const staticServices = [
