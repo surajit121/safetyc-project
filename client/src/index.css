@@ -353,3 +353,24 @@ body > button[aria-label*="Switch to"] {
 .dark .active-page-indicator {
   box-shadow: 0 -2px 8px rgba(230, 81, 0, 0.6);
 }
+
+.text-gray-900 {
+  color: #111827 !important;
+}
+.text-gray-800 {
+  color: #1f2937 !important;
+}
+.dark .text-gray-900 {
+  color: #f3f4f6 !important; /* near-white for better dark mode contrast */
+}
+.dark .text-gray-800 {
+  color: #d1d5db !important; /* lighter gray */
+}
+
+/* --- Fix: Allow color utility classes to set .mobile-drawer-brand color --- */
+.mobile-drawer-brand {
+  color: inherit !important; /* allows Tailwind/inline color classes to take effect */
+}
+.dark .mobile-drawer-brand {
+  color: inherit !important;
+}

@@ -131,15 +131,7 @@ export default function Navbar() {
               <div className="flex items-center justify-between gap-3 mobile-drawer-header">
                 <div>
                   <p className="mobile-drawer-label text-xs uppercase tracking-[0.3em] text-slate-600 dark:text-slate-300">Menu</p>
-                  <p className="mobile-drawer-brand text-2xl font-extrabold mt-1 text-slate-900 dark:text-white">
-                    Safety
-                    <span
-                      className="text-orange-600"
-                      style={{ color: "#e65100 !important" }}
-                    >
-                      C
-                    </span>
-                  </p>
+                  <p className="mobile-drawer-brand text-2xl font-extrabold mt-1"><span className="text-sky-700 dark:text-blue-300">Safety</span><span className="text-orange-600" style={{ color: "#e65100 !important" }}>C</span></p>
                   <p className="mobile-drawer-subtext text-sm mt-1 text-slate-500 dark:text-slate-300">
                     Integrated safety & security partners
                   </p>
@@ -205,7 +197,7 @@ export default function Navbar() {
                 </div>
               </div>
 
-              <div className="rounded-3xl bg-white/70 dark:bg-white/10 border border-white/60 dark:border-white/10 px-4 py-3 text-sm text-gray-600 dark:text-gray-300 backdrop-blur-sm">
+              <div className="rounded-3xl bg-white/70 dark:bg-white/10 border border-white/60 dark:border-white/10 px-4 py-3 text-sm text-gray-900 dark:text-gray-300 backdrop-blur-sm">
                 <p className="font-semibold">Office hours</p>
                 <p>Mon - Sat · 9:30 AM to 7:30 PM</p>
               </div>
