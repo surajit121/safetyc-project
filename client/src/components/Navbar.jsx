@@ -20,6 +20,15 @@ const links = [
   { label: "Contact", path: "/contact" },
 ];
 
+function BrandMark() {
+  return (
+    <span className="brand-text">
+      safety
+      <span className="brand-accent">c</span>
+    </span>
+  );
+}
+
 export default function Navbar() {
   const location = useLocation();
   const [open, setOpen] = useState(false);
@@ -74,9 +83,7 @@ export default function Navbar() {
             className="inline-flex items-center text-2xl font-extrabold tracking-tight hover:opacity-90 transition-colors mr-4"
             aria-label="Safetyc Home"
           >
-            <span>
-              Safety<span className="text-orange-600" style={{color: "#e65100 !important"}}>C</span>
-            </span>
+            <BrandMark />
           </Link>
           
           <ThemeToggle 
@@ -131,7 +138,9 @@ export default function Navbar() {
               <div className="flex items-center justify-between gap-3 mobile-drawer-header">
                 <div>
                   <p className="mobile-drawer-label text-xs uppercase tracking-[0.3em] text-slate-600 dark:text-slate-300">Menu</p>
-                  <p className="mobile-drawer-brand text-2xl font-extrabold mt-1"><span className="text-sky-700 dark:text-blue-300">Safety</span><span className="text-orange-600" style={{ color: "#e65100 !important" }}>C</span></p>
+                  <p className="mobile-drawer-brand text-2xl font-extrabold mt-1 leading-none">
+                    <BrandMark />
+                  </p>
                   <p className="mobile-drawer-subtext text-sm mt-1 text-slate-500 dark:text-slate-300">
                     Integrated safety & security partners
                   </p>

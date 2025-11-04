@@ -63,6 +63,23 @@ body {
 a[data-cta-link] {
 	color: #0ea5e9 !important; /* sky-500 */
 }
+
+/* Global brand styling */
+.brand-text {
+  color: var(--text-primary);
+}
+
+.brand-accent {
+  color: #e65100 !important;
+}
+
+.dark .brand-text {
+  color: #f9fafb;
+}
+
+.dark .brand-accent {
+  color: #f97316 !important;
+}
 a[data-cta-link]:hover {
 	color: #0284c7 !important; /* sky-600 */
 }
@@ -125,10 +142,6 @@ a[data-cta-link]:visited {
   .mobile-drawer-label {
     color: rgba(15, 23, 42, 0.7) !important;
     letter-spacing: 0.3em !important;
-  }
-
-  .mobile-drawer-brand {
-    color: #0f172a !important;
   }
 
   .drawer-brand-accent {
