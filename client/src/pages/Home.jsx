@@ -137,7 +137,7 @@ export default function Home() {
       {/* Services display */}
       {!loading && !error && Array.isArray(services) && services.length > 0 && (
         <motion.div
-          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
           variants={servicesContainerVariants}
           initial="hidden"
           whileInView="visible"
@@ -178,7 +178,7 @@ export default function Home() {
             return sortedServices.slice(0, 6).map(s => {
               // Don't include images in the home page service cards
               return (
-                <motion.div key={s._id || s.slug} variants={serviceCardVariants}>
+                <motion.div key={s._id || s.slug} variants={serviceCardVariants} className="h-full">
                   <ServiceCard {...s} />
                 </motion.div>
               );

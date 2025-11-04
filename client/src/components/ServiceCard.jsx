@@ -4,7 +4,7 @@ import { useTheme } from "../context/ThemeContext.jsx";
 export default function ServiceCard({ title, description, highlights = [], image }) {
   const { theme } = useTheme();
   return (
-    <Card hoverable className="rounded-2xl" bodyStyle={{ textAlign: "center" }}>
+    <Card hoverable className="rounded-2xl h-full flex flex-col" bodyStyle={{ textAlign: "center", height: "100%", display: "flex", flexDirection: "column" }}>
       {image && (
         <img 
           src={image} 
@@ -15,17 +15,19 @@ export default function ServiceCard({ title, description, highlights = [], image
           height="96"
         />
       )}
-      <Typography.Title level={4} style={{ marginBottom: 8 }}>{title}</Typography.Title>
-      <Typography.Paragraph type="secondary" style={{ margin: 0 }}>
-        {description}
-      </Typography.Paragraph>
-      {highlights?.length > 0 && (
-        <ul className="mt-3 list-disc list-inside text-sm space-y-1 text-left">
-          {highlights.map((h, i) => (
-            <li key={i} className="text-gray-600">{h}</li>
-          ))}
-        </ul>
-      )}
+      <div className="flex flex-col flex-grow">
+        <Typography.Title level={4} style={{ marginBottom: 8 }}>{title}</Typography.Title>
+        <Typography.Paragraph type="secondary" style={{ margin: 0 }}>
+          {description}
+        </Typography.Paragraph>
+        {highlights?.length > 0 && (
+          <ul className="mt-3 list-disc list-inside text-sm space-y-1 text-left">
+            {highlights.map((h, i) => (
+              <li key={i} className="text-gray-600">{h}</li>
+            ))}
+          </ul>
+        )}
+      </div>
     </Card>
   );
 }
