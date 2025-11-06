@@ -55,6 +55,18 @@ const services = [
     highlights: ["Wiring, Panel Boards & Lighting Systems", "Earthing, Surge Protection & Safety Audits"],
     sortOrder: 6
   },
+  {
+    title: "Rental Services & Equipment Leasing",
+    slug: "rental-services",
+    description:
+      "Flexible short-term and long-term rental options for safety, surveillance, and power equipment so you can scale quickly without heavy upfront investment.",
+    highlights: [
+      "On-demand fire safety and CCTV gear",
+      "Ready-to-install packages with expert setup",
+      "24/7 support and maintenance during rental period"
+    ],
+    sortOrder: 7
+  },
 ];
 
 const clients = [
