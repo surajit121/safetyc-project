@@ -1,4 +1,27 @@
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext.jsx';
+
+// Import founder images
+import coFounder1 from '../assets/co-founder_1.jpeg';
+import coFounder2 from '../assets/co-founder_2.jpeg';
+
 export default function About() {
+  // Get theme from context
+  const { theme } = useTheme();
+  
+  // Set CSS variables based on theme
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.style.setProperty('--card-bg', '#1f2937');
+      document.documentElement.style.setProperty('--card-text', '#f9fafb');
+      document.documentElement.style.setProperty('--card-subtext', '#d1d5db');
+    } else {
+      document.documentElement.style.setProperty('--card-bg', '#ffffff');
+      document.documentElement.style.setProperty('--card-text', '#1f2937');
+      document.documentElement.style.setProperty('--card-subtext', '#4b5563');
+    }
+  }, [theme]);
   return (
     <section className="max-w-6xl mx-auto px-4 py-12">
       <h1 className="text-3xl font-bold">About Safetyc</h1>
@@ -28,7 +51,7 @@ export default function About() {
         }}
         data-theme-override="true"
       >
-        <style jsx>{`
+        <style dangerouslySetInnerHTML={{ __html: `
           [data-theme-override="true"] {
             background-color: white !important;
             border-color: #e5e7eb !important;
@@ -49,7 +72,7 @@ export default function About() {
           .dark [data-theme-override="true"] p {
             color: #d1d5db !important;
           }
-        `}</style>
+        ` }} />
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div>
             <h3 className="text-xl font-semibold" style={{color: '#000000'}}>Download Our Company Brochure</h3>
@@ -126,6 +149,89 @@ export default function About() {
           manpower.
         </li>
       </ul>
+
+      {/* Founders Section */}
+      <h2 className="mt-12 text-2xl font-semibold">Our Leadership</h2>
+      <p className="mt-4 text-gray-900 dark:text-gray-300">
+        Meet the visionaries behind SafetyC who combine decades of experience with a passion for innovation and excellence.
+      </p>
+      
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Founder 1 */}
+        <motion.div 
+          className="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+          style={{ backgroundColor: theme === 'dark' ? '#1f2937' : '#ffffff' }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <div className="relative">
+            <div className="aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-800">
+              <img 
+                src={coFounder1} 
+                alt="Co-Founder of SafetyC" 
+                className="w-full h-full object-cover object-center"
+                loading="lazy"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://via.placeholder.com/400x300?text=Co-Founder';
+                }}
+              />
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-12">
+              <div className="flex items-center space-x-2">
+                <div className="h-2 w-2 rounded-full bg-green-500"></div>
+                <span className="text-xs font-medium text-white">Co-Founder</span>
+              </div>
+            </div>
+          </div>
+          <div className="p-6" style={{backgroundColor: theme === 'dark' ? '#1f2937' : '#ffffff', color: theme === 'dark' ? '#f9fafb' : '#1f2937'}}>
+            <h3 className="text-xl font-bold" style={{color: 'inherit'}}>Pankaj Mukherjee</h3>
+            <p className="mt-2" style={{color: theme === 'dark' ? '#d1d5db' : '#4b5563'}}>
+              Our vision is to grow into a leading safety solutions provider in West Bengal and beyond, known for innovation, quality, and creating safer spaces—and at the same time, build more opportunities for professionals to grow and thrive with us.
+            </p>
+          </div>
+        </motion.div>
+        
+        {/* Founder 2 */}
+        <motion.div 
+          className="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+          style={{ backgroundColor: theme === 'dark' ? '#1f2937' : '#ffffff' }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          <div className="relative">
+            <div className="aspect-[4/3] overflow-hidden" style={{ backgroundColor: 'transparent' }}>
+              <img 
+                src={coFounder2} 
+                alt="Co-Founder of SafetyC" 
+                className="w-full h-full object-cover"
+                style={{ objectPosition: '50% 20%'}}
+                loading="lazy"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://via.placeholder.com/400x300?text=Co-Founder';
+                }}
+              />
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-12">
+              <div className="flex items-center space-x-2">
+                <div className="h-2 w-2 rounded-full bg-green-500"></div>
+                <span className="text-xs font-medium text-white">Co-Founder</span>
+              </div>
+            </div>
+          </div>
+          <div className="p-6" style={{backgroundColor: theme === 'dark' ? '#1f2937' : '#ffffff', color: theme === 'dark' ? '#f9fafb' : '#1f2937'}}>
+            <h3 className="text-xl font-bold" style={{color: 'inherit'}}>Subhajit Mukherjee</h3>
+            <p className="mt-2" style={{color: theme === 'dark' ? '#d1d5db' : '#4b5563'}}>
+              At Safetyc, our mission is simple: to be your go-to safety and security solution across the states, offering quick, hassle-free services anytime, 24/7. We aim to be a trusted name in safety, known for being reliable, innovative, and always there when you need us.
+            </p>
+          </div>
+        </motion.div>
+      </div>
     </div>
     </section>
   );
