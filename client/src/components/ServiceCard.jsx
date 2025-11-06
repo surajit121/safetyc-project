@@ -6,14 +6,16 @@ export default function ServiceCard({ title, description, highlights = [], image
   return (
     <Card hoverable className="rounded-2xl h-full flex flex-col" bodyStyle={{ textAlign: "center", height: "100%", display: "flex", flexDirection: "column" }}>
       {image && (
-        <img 
-          src={image} 
-          alt={title + " image"} 
-          className="mb-4 w-full h-40 object-cover rounded-lg mx-auto" 
-          loading="lazy"
-          width="100%"
-          height="160"
-        />
+        <div className="mb-4 flex justify-center">
+          <img 
+            src={image} 
+            alt={title + " image"} 
+            className="h-24 w-24 object-contain rounded-lg"
+            loading="lazy"
+            width="96"
+            height="96"
+          />
+        </div>
       )}
       <div className="flex flex-col flex-grow">
         <Typography.Title level={4} style={{ marginBottom: 8 }}>{title}</Typography.Title>
