@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import axios from "axios";
-import { apiUrl } from "../lib/api.js";
 import ServiceCard from "../components/ServiceCard.jsx";
 import fireExtinguisherImg from "../assets/fire exting.jpeg";
 import cctvImg from "../assets/cctv.jpeg";
