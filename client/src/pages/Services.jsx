@@ -7,7 +7,7 @@ import solarImg from "../assets/solar.jpeg";
 import computerImg from "../assets/computer.jpeg";
 import bioImg from "../assets/bio.jpeg";
 import electricalImg from "../assets/electrical_contracting.jpeg"; 
-import rentalImg from "../assets/fire exting.jpeg"; 
+import rentalImg from "../assets/rental_service.png"; 
 
 // Fallback static services data
 const staticServices = [
@@ -46,6 +46,16 @@ const staticServices = [
     title: "Electrical Contracting",
     description: "End-to-end electrical services delivering safe, efficient, and code-compliant power distribution systems for commercial and industrial environments.",
     highlights: ["Wiring, Panel Boards & Lighting Systems", "Earthing, Surge Protection & Safety Audits"]
+  },
+  {
+    _id: "s7",
+    title: "Rental Services & Equipment Leasing",
+    description: "Flexible short-term and long-term rental solutions for safety and surveillance equipment, ensuring you get the right tools exactly when you need them.",
+    highlights: [
+      "On-demand fire safety and CCTV equipment",
+      "Ready-to-install packages with expert setup",
+      "24/7 support and maintenance during rental period"
+    ]
   },
 ];
 
@@ -172,7 +182,8 @@ export default function Services() {
       "biometric", 
       "solar", 
       "computer", 
-      "electrical"
+      "electrical",
+      "rental"
     ];
     
     // Sort based on our defined order
