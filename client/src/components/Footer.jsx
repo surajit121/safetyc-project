@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 py-8 grid gap-6 md:grid-cols-3">
         <div>
           <Typography.Title level={4} style={{ marginBottom: 8 }}>
-            Safetyc
+            safetyc
           </Typography.Title>
           <Typography.Paragraph type="secondary" style={{ marginBottom: 8 }}>
             Complete Safety, Security, and Technology Solutions for West Bengal.
@@ -19,7 +19,7 @@ export default function Footer() {
           <div className="text-xs text-gray-500 space-y-1">
             <div>
               <strong>Founders:</strong> Pankaj Mukherjee &amp; Subhajit
-              Mukherjeee
+              Mukherjee
             </div>
             <div>
               <strong>PAN:</strong> AFAFS7759D
@@ -181,7 +181,7 @@ export default function Footer() {
         </a>
       </div>
       <div className="border-t py-4 text-center text-xs text-gray-500">
-        © 2025 Safetyc. All rights reserved.
+        © 2025 safetyc. All rights reserved.
       </div>
     </footer>
   );

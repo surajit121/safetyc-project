@@ -24,9 +24,9 @@ export default function About() {
   }, [theme]);
   return (
     <section className="max-w-6xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold">About Safetyc</h1>
+      <h1 className="text-3xl font-bold">About safetyc</h1>
       <p className="mt-4 text-gray-700">
-        Safetyc, founded in 2023, is a sister concern of P R Solutions, which
+        safetyc, founded in 2023, is a sister concern of P R Solutions, which
         has been serving clients since 2013 with a strong reputation for
         reliability and technical excellence. We are a Security Solutions
         Service Provider company offering a wide range of safety, surveillance,
@@ -35,7 +35,7 @@ export default function About() {
         and peace of mind through reliable and technology-driven services.
       </p>
       <p className="mt-4 text-gray-700">
-        Headquartered in Bankura, West Bengal, Safetyc operates across 12
+        Headquartered in Bankura, West Bengal, safetyc operates across 12
         districts and continues to expand its presence throughout the state. We
         have successfully delivered projects for schools, government offices,
         industries, and commercial establishments, becoming a trusted partner
@@ -82,7 +82,7 @@ export default function About() {
           </div>
           <a
             href="/assets/safetyc brochure (1).pdf"
-            download="SafetyC-Company-Brochure.pdf"
+            download="safetyc-company-brochure.pdf"
             className="inline-flex items-center px-6 py-3 font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
             style={{
               backgroundColor: '#f97316',
@@ -153,7 +153,7 @@ export default function About() {
       {/* Founders Section */}
       <h2 className="mt-12 text-2xl font-semibold">Our Leadership</h2>
       <p className="mt-4 text-gray-900 dark:text-gray-300">
-        Meet the visionaries behind SafetyC who combine decades of experience with a passion for innovation and excellence.
+        Meet the visionaries behind safetyc who combine decades of experience with a passion for innovation and excellence.
       </p>
       
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -170,7 +170,7 @@ export default function About() {
             <div className="aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-800">
               <img 
                 src={coFounder1} 
-                alt="Co-Founder of SafetyC" 
+                alt="Co-Founder of safetyc" 
                 className="w-full h-full object-cover object-center"
                 loading="lazy"
                 onError={(e) => {
@@ -207,7 +207,7 @@ export default function About() {
             <div className="aspect-[4/3] overflow-hidden" style={{ backgroundColor: 'transparent' }}>
               <img 
                 src={coFounder2} 
-                alt="Co-Founder of SafetyC" 
+                alt="Co-Founder of safetyc" 
                 className="w-full h-full object-cover"
                 style={{ objectPosition: '50% 20%'}}
                 loading="lazy"
@@ -227,7 +227,7 @@ export default function About() {
           <div className="p-6" style={{backgroundColor: theme === 'dark' ? '#1f2937' : '#ffffff', color: theme === 'dark' ? '#f9fafb' : '#1f2937'}}>
             <h3 className="text-xl font-bold" style={{color: 'inherit'}}>Subhajit Mukherjee</h3>
             <p className="mt-2" style={{color: theme === 'dark' ? '#d1d5db' : '#4b5563'}}>
-              At Safetyc, our mission is simple: to be your go-to safety and security solution across the states, offering quick, hassle-free services anytime, 24/7. We aim to be a trusted name in safety, known for being reliable, innovative, and always there when you need us.
+              At safetyc, our mission is simple: to be your go-to safety and security solution across the states, offering quick, hassle-free services anytime, 24/7. We aim to be a trusted name in safety, known for being reliable, innovative, and always there when you need us.
             </p>
           </div>
         </motion.div>

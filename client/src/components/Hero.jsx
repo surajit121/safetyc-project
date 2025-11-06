@@ -199,7 +199,7 @@ export default function Hero() {
           <p className={`text-base md:text-lg mb-8 max-w-4xl mx-auto leading-relaxed ${
             theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
           }`}>
-            Need a service? We've got you covered! Whether it's CCTV, fire safety, electrical work, solar installation, computer service, or biometric systems, SafetyC brings reliable solutions straight to your home or office.
+            Need a service? We've got you covered! Whether it's CCTV, fire safety, electrical work, solar installation, computer service, or biometric systems, safetyc brings reliable solutions straight to your home or office.
           </p>
           
           <div className="mb-8">

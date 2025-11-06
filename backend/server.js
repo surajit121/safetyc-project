@@ -102,12 +102,12 @@ const apiLimiter = rateLimit({
 });
 app.use("/api", apiLimiter);
 
-app.get("/", (_req, res) => res.json({ ok: true, name: "Safetyc API" }));
+app.get("/", (_req, res) => res.json({ ok: true, name: "safetyc API" }));
 
 // Add an explicit route for API status check
 app.get("/api", (_req, res) => res.json({ 
     status: "ok", 
-    message: "SafetyC API is running", 
+    message: "safetyc API is running", 
     version: "1.0.0",
     environment: NODE_ENV
 }));

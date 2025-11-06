@@ -1,4 +1,4 @@
-# SafetyC Project
+# safetyc Project
 
 A full-stack application with React frontend and Node.js/Express backend.
 
@@ -18,7 +18,7 @@ A full-stack application with React frontend and Node.js/Express backend.
 5. Select the repository containing this project
 6. Render will automatically detect the `render.yaml` file and configure your services
 7. Configure the required environment variables:
-   - Set `MONGO_URI` to your MongoDB connection string in the SafetyC API service
+   - Set `MONGO_URI` to your MongoDB connection string in the safetyc API service
 8. Click "Create Blueprint"
 9. Wait for the deployment to complete
 
