@@ -9,10 +9,10 @@ export default function ServiceCard({ title, description, highlights = [], image
         <img 
           src={image} 
           alt={title + " image"} 
-          className="mb-4 w-24 h-24 object-cover rounded mx-auto" 
+          className="mb-4 w-full h-40 object-cover rounded-lg mx-auto" 
           loading="lazy"
-          width="96"
-          height="96"
+          width="100%"
+          height="160"
         />
       )}
       <div className="flex flex-col flex-grow">
