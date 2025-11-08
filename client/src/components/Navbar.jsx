@@ -182,7 +182,7 @@ export default function Navbar() {
 
               <div className="rounded-3xl bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 text-white p-5 shadow-xl">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/80">Need assistance?</p>
-                <p className="mt-2 text-lg font-bold">Talk with our experts now.</p>
+                <p className="mt-2 text-lg font-bold text-gray-900 dark:text-white">Talk with our experts now.</p>
                 <div className="mt-4 space-y-3">
                   <Button
                     block
