@@ -19,6 +19,10 @@ dotenv.config();
 const app = express();
 
 const NODE_ENV = process.env.NODE_ENV || "development";
+const isProduction = NODE_ENV === "production";
+const debugLog = (...args) => {
+    if (!isProduction) console.log(...args);
+};
 const port = process.env.PORT || 5000;
 
 const server = http.createServer(app);
@@ -29,7 +33,7 @@ const allowedOrigins = (process.env.ALLOWED_ORIGINS || "*")
     .map((o) => o.trim())
     .filter(Boolean);
     
-console.log('Configured allowed origins:', allowedOrigins);
+debugLog('Configured allowed origins:', allowedOrigins);
 
 // In production, ensure we accept requests from the web frontend
 if (NODE_ENV === 'production') {
@@ -43,7 +47,7 @@ if (NODE_ENV === 'production') {
     webFrontendDomains.forEach(domain => {
         if (!allowedOrigins.includes('*') && !allowedOrigins.includes(domain)) {
             allowedOrigins.push(domain);
-            console.log('Added web frontend domain to allowed origins:', domain);
+            debugLog('Added web frontend domain to allowed origins:', domain);
         }
     });
 }
@@ -52,28 +56,28 @@ app.use(
     cors({
         origin: (origin, callback) => {
             // Log incoming origin for debugging
-            console.log('Request from origin:', origin);
+            debugLog('Request from origin:', origin);
             
             // Allow requests with no origin (like mobile apps, curl requests)
             if (!origin) {
-                console.log('Allowing request with no origin');
+                debugLog('Allowing request with no origin');
                 return callback(null, true);
             }
             
             // Allow any origin if "*" is in allowed origins
             if (allowedOrigins.includes("*")) {
-                console.log('Allowing all origins due to wildcard configuration');
+                debugLog('Allowing all origins due to wildcard configuration');
                 return callback(null, true);
             }
             
             // Check if origin is allowed
             if (allowedOrigins.includes(origin)) {
-                console.log('Origin explicitly allowed:', origin);
+                debugLog('Origin explicitly allowed:', origin);
                 return callback(null, true);
             }
             
             // Origin not allowed
-            console.log('Origin rejected by CORS policy:', origin);
+            debugLog('Origin rejected by CORS policy:', origin);
             return callback(new Error(`Not allowed by CORS: ${origin}`));
         },
         credentials: true,
@@ -133,7 +137,7 @@ dbconnect()
 
 
 server.on('error', (err)=>{
-    console.log(err, "server error from server.js")
+    console.error("Server error from server.js", err);
 })
 
 // 404 handler

@@ -39,7 +39,9 @@ export function ThemeProvider({ children }) {
         
         incorrectButtons.forEach(el => {
           if (el && el.parentElement && !el.closest('.ant-drawer')) {
-            console.log('Removing incorrect theme toggle button:', el.getAttribute('aria-label'));
+            if (import.meta.env.MODE !== "production") {
+              console.log('Removing incorrect theme toggle button:', el.getAttribute('aria-label'));
+            }
             el.parentElement.removeChild(el);
           }
         });

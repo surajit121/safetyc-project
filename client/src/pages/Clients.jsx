@@ -3,6 +3,8 @@ import axios from "axios";
 import { apiUrl } from "../lib/api.js";
 import { useTheme } from "../context/ThemeContext.jsx";
 
+const IS_DEV = import.meta.env.MODE !== "production";
+
 export default function Clients() {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,18 +19,18 @@ export default function Clients() {
     let url;
     const apiBase = import.meta.env.VITE_API_URL;
     
-    console.log("Original API base:", apiBase);
+    if (IS_DEV) console.log("Original API base:", apiBase);
     
     if (apiBase === 'safetyc-api') {
       // Direct hardcoded URL for production
       url = 'https://safetyc-api.onrender.com/api/clients';
-      console.log('Using hardcoded production API URL for clients');
+      if (IS_DEV) console.log('Using hardcoded production API URL for clients');
     } else {
       // Use the apiUrl function for development or custom environments
       url = apiUrl('/clients');
     }
     
-    console.log('Calling API URL for clients:', url);
+    if (IS_DEV) console.log('Calling API URL for clients:', url);
     
     axios.get(url)
       .then(res => {

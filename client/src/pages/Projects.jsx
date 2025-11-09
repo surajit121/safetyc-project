@@ -4,6 +4,8 @@ import { apiUrl } from "../lib/api.js";
 import ProjectCard from "../components/ProjectCard.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
 
+const IS_DEV = import.meta.env.MODE !== "production";
+
 function useProjectsApi() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,18 +31,18 @@ function useProjectsApi() {
       let url;
       const apiBase = import.meta.env.VITE_API_URL;
       
-      console.log("Original API base:", apiBase);
+      if (IS_DEV) console.log("Original API base:", apiBase);
       
       if (apiBase === 'safetyc-api') {
         // Direct hardcoded URL for production
         url = 'https://safetyc-api.onrender.com/api/projects';
-        console.log('Using hardcoded production API URL');
+        if (IS_DEV) console.log('Using hardcoded production API URL');
       } else {
         // Use the apiUrl function for development or custom environments
         url = apiUrl('/projects');
       }
       
-      console.log('Calling API URL:', url);
+      if (IS_DEV) console.log('Calling API URL:', url);
       
       const res = await axios.get(url, { signal: controller.signal, timeout: 10000 });
       if (Array.isArray(res.data)) {

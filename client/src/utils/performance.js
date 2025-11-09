@@ -46,9 +46,11 @@ export const monitorPageSpeed = () => {
     const paint = performance.getEntriesByType('paint');
     const fcp = paint.find(entry => entry.name === 'first-contentful-paint');
 
-    console.log('Performance metrics:', {
-      ttfb: `${ttfb}ms`,
-      fcp: fcp ? `${fcp.startTime}ms` : 'Not available'
-    });
+    if (import.meta.env.MODE !== 'production') {
+      console.log('Performance metrics:', {
+        ttfb: `${ttfb}ms`,
+        fcp: fcp ? `${fcp.startTime}ms` : 'Not available'
+      });
+    }
   }
 };

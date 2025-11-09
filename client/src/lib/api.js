@@ -1,7 +1,8 @@
 const BASE = import.meta.env.VITE_API_URL || '';
+const IS_DEV = import.meta.env.MODE !== 'production';
 
 // For debugging purposes
-console.log('API Base URL (original):', BASE);
+if (IS_DEV) console.log('API Base URL (original):', BASE);
 
 export function apiUrl(path) {
   // Ensure path starts with /
@@ -17,14 +18,14 @@ export function apiUrl(path) {
   // If the base is just "safetyc-api", add ".onrender.com"
   if (base === 'safetyc-api') {
     base = 'safetyc-api.onrender.com';
-    console.log('Added Render domain to API base URL:', base);
+    if (IS_DEV) console.log('Added Render domain to API base URL:', base);
   }
   
   // Check if the base URL includes protocol (http:// or https://)
   // If not, add https:// prefix for production
   if (!base.match(/^https?:\/\//)) {
     base = `https://${base}`;
-    console.log('Added HTTPS protocol to base URL:', base);
+    if (IS_DEV) console.log('Added HTTPS protocol to base URL:', base);
   }
   
   // If base already includes /api suffix, don't add it again

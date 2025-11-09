@@ -15,7 +15,9 @@ export default function copyStaticFiles() {
         
         if (fs.existsSync(srcPath)) {
           fs.copyFileSync(srcPath, destPath)
-          console.log(`Copied ${file} to build output`)
+          if (process.env.NODE_ENV !== 'production') {
+            console.log(`Copied ${file} to build output`)
+          }
         }
       })
     }

@@ -50,6 +50,8 @@ export default function Home() {
     },
   };
 
+  const IS_DEV = import.meta.env.MODE !== 'production';
+
   useEffect(() => {
     // Set loading state to true before fetching data
     setLoading(true);
@@ -70,14 +72,14 @@ export default function Home() {
         if (Array.isArray(data)) {
           setServices(data);
         } else {
-          console.error('API response is not an array:', typeof data);
+          if (IS_DEV) console.error('API response is not an array:', typeof data);
           setServices([]);
           setError(new Error("Unexpected data format from server"));
         }
         setLoading(false); // Set loading to false when data is received
       })
       .catch(err => {
-        console.error("Error fetching services:", err.message);
+        if (IS_DEV) console.error("Error fetching services:", err.message);
         setServices([]);
         setError(err); // Store the error
         setLoading(false); // Set loading to false on error
