@@ -14,6 +14,20 @@ const buildMessage = (author, text) => ({
 
 const normalizeQuery = (value) => value.trim().replace(/\s+/g, " ");
 
+// Determine API base URL with priority: explicit env var -> production default -> dev proxy
+const API_BASE_URL = (() => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (typeof envUrl === "string" && envUrl.trim()) {
+    return envUrl.trim().replace(/\/$/, "");
+  }
+
+  if (import.meta.env.PROD) {
+    return "https://safetyc-api.onrender.com/api";
+  }
+
+  return "/api";
+})();
+
 export default function FaqChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [faqs, setFaqs] = useState([]);
@@ -31,7 +45,7 @@ export default function FaqChatbot() {
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        const response = await fetch("/api/faq", { cache: "no-store" });
+        const response = await fetch(`${API_BASE_URL}/faq`, { cache: "no-store" });
         if (!response.ok) {
           throw new Error(`Failed to load FAQs (${response.status})`);
         }
@@ -90,9 +104,12 @@ export default function FaqChatbot() {
     setLoading(true);
 
     try {
-      const response = await fetch(`/api/faq/search?q=${encodeURIComponent(normalizedQuestion)}`, {
-        cache: "no-store",
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/faq/search?q=${encodeURIComponent(normalizedQuestion)}`,
+        {
+          cache: "no-store",
+        }
+      );
       if (!response.ok) {
         throw new Error(`Failed to search FAQs (${response.status})`);
       }
