@@ -17,6 +17,9 @@ const normalizeQuery = (value) => value.trim().replace(/\s+/g, " ");
 // Determine API base URL with priority: explicit env var -> production default -> dev proxy
 const API_BASE_URL = (() => {
   const envUrl = import.meta.env.VITE_API_URL;
+  console.log('[FAQ Chatbot] VITE_API_URL:', envUrl);
+  console.log('[FAQ Chatbot] import.meta.env.PROD:', import.meta.env.PROD);
+  
   if (typeof envUrl === "string" && envUrl.trim()) {
     return envUrl.trim().replace(/\/$/, "");
   }
@@ -27,6 +30,8 @@ const API_BASE_URL = (() => {
 
   return "/api";
 })();
+
+console.log('[FAQ Chatbot] Final API_BASE_URL:', API_BASE_URL);
 
 export default function FaqChatbot() {
   const [isOpen, setIsOpen] = useState(false);
