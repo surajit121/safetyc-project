@@ -45,11 +45,14 @@ export default function FaqChatbot() {
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
+        console.log('[FAQ Chatbot] Fetching from:', `${API_BASE_URL}/faq`);
         const response = await fetch(`${API_BASE_URL}/faq`, { cache: "no-store" });
+        console.log('[FAQ Chatbot] Response status:', response.status);
         if (!response.ok) {
           throw new Error(`Failed to load FAQs (${response.status})`);
         }
         const data = await response.json();
+        console.log('[FAQ Chatbot] Data received:', data);
         if (Array.isArray(data?.faqs)) {
           setFaqs(data.faqs);
         } else {
