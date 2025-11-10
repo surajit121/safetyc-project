@@ -17,8 +17,6 @@ const normalizeQuery = (value) => value.trim().replace(/\s+/g, " ");
 // Determine API base URL with priority: explicit env var -> production default -> dev proxy
 const API_BASE_URL = (() => {
   const envUrl = import.meta.env.VITE_API_URL;
-  console.log('[FAQ Chatbot] VITE_API_URL:', envUrl);
-  console.log('[FAQ Chatbot] import.meta.env.PROD:', import.meta.env.PROD);
   
   // Only use env var if it's a valid absolute URL (starts with http:// or https://)
   if (typeof envUrl === "string" && envUrl.trim()) {
@@ -26,7 +24,6 @@ const API_BASE_URL = (() => {
     if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
       return trimmed;
     }
-    console.warn('[FAQ Chatbot] VITE_API_URL is not a valid absolute URL, falling back to default');
   }
 
   if (import.meta.env.PROD) {
@@ -35,8 +32,6 @@ const API_BASE_URL = (() => {
 
   return "/api";
 })();
-
-console.log('[FAQ Chatbot] Final API_BASE_URL:', API_BASE_URL);
 
 export default function FaqChatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,14 +50,11 @@ export default function FaqChatbot() {
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        console.log('[FAQ Chatbot] Fetching from:', `${API_BASE_URL}/faq`);
         const response = await fetch(`${API_BASE_URL}/faq`, { cache: "no-store" });
-        console.log('[FAQ Chatbot] Response status:', response.status);
         if (!response.ok) {
           throw new Error(`Failed to load FAQs (${response.status})`);
         }
         const data = await response.json();
-        console.log('[FAQ Chatbot] Data received:', data);
         if (Array.isArray(data?.faqs)) {
           setFaqs(data.faqs);
         } else {
