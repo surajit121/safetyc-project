@@ -20,8 +20,13 @@ const API_BASE_URL = (() => {
   console.log('[FAQ Chatbot] VITE_API_URL:', envUrl);
   console.log('[FAQ Chatbot] import.meta.env.PROD:', import.meta.env.PROD);
   
+  // Only use env var if it's a valid absolute URL (starts with http:// or https://)
   if (typeof envUrl === "string" && envUrl.trim()) {
-    return envUrl.trim().replace(/\/$/, "");
+    const trimmed = envUrl.trim().replace(/\/$/, "");
+    if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+      return trimmed;
+    }
+    console.warn('[FAQ Chatbot] VITE_API_URL is not a valid absolute URL, falling back to default');
   }
 
   if (import.meta.env.PROD) {
