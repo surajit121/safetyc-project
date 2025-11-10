@@ -25,6 +25,7 @@ const scoreFaq = (faq, queryTokens) => {
 };
 
 router.get("/", (_req, res) => {
+  res.set("Cache-Control", "no-store, no-cache, must-revalidate");
   res.json({ faqs });
 });
 
@@ -48,6 +49,7 @@ router.get("/search", (req, res) => {
 
   const results = scoredFaqs.length > 0 ? scoredFaqs : faqs.slice(0, 3);
 
+  res.set("Cache-Control", "no-store, no-cache, must-revalidate");
   res.json({
     query,
     results,

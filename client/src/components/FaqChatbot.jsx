@@ -31,7 +31,7 @@ export default function FaqChatbot() {
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        const response = await fetch("/api/faq");
+        const response = await fetch("/api/faq", { cache: "no-store" });
         if (!response.ok) {
           throw new Error(`Failed to load FAQs (${response.status})`);
         }
@@ -90,7 +90,9 @@ export default function FaqChatbot() {
     setLoading(true);
 
     try {
-      const response = await fetch(`/api/faq/search?q=${encodeURIComponent(normalizedQuestion)}`);
+      const response = await fetch(`/api/faq/search?q=${encodeURIComponent(normalizedQuestion)}`, {
+        cache: "no-store",
+      });
       if (!response.ok) {
         throw new Error(`Failed to search FAQs (${response.status})`);
       }
