@@ -11,6 +11,7 @@ import projectsRouter from "./routes/projects.js";
 import clientsRouter from "./routes/clients.js";
 import inquiriesRouter from "./routes/inquiries.js";
 import applicationsRouter from "./routes/applications.js";
+import faqRouter from "./routes/faq.js";
 
 
 
@@ -122,6 +123,7 @@ app.use("/api/projects", projectsRouter)
 app.use("/api/clients", clientsRouter)
 app.use("/api/inquiries", inquiriesRouter)
 app.use("/api/applications", applicationsRouter)
+app.use("/api/faq", faqRouter)
 
 
 dbconnect()
