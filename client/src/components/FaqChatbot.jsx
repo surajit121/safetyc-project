@@ -6,6 +6,9 @@ const INITIAL_MESSAGE = {
   text: "Hi! I'm the safetyc assistant. Ask me anything about our services, projects, or support hours.",
 };
 
+const GREETING_RESPONSE =
+  "Hello! I'm here to help with anything about safetyc's services, projects, or support. What would you like to know?";
+
 const buildMessage = (author, text) => ({
   id: `${author}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
   author,
@@ -43,7 +46,7 @@ export default function FaqChatbot() {
   const [searchError, setSearchError] = useState(null);
 
   const containerRef = useRef(null);
-  const messageEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
   const panelRef = useRef(null);
 
   // Fetch FAQs once so we can surface suggestions and offline answers
@@ -90,9 +93,21 @@ export default function FaqChatbot() {
   }, [isOpen]);
 
   useEffect(() => {
-    if (isOpen) {
-      messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (!isOpen) {
+      return;
     }
+
+    const node = messagesContainerRef.current;
+    if (!node) {
+      return;
+    }
+
+    const rafId = requestAnimationFrame(() => {
+      const behavior = messages.length <= 1 ? "auto" : "smooth";
+      node.scrollTo({ top: node.scrollHeight, behavior });
+    });
+
+    return () => cancelAnimationFrame(rafId);
   }, [messages, isOpen]);
 
   const popularQuestions = useMemo(() => faqs.slice(0, 3), [faqs]);
@@ -104,8 +119,18 @@ export default function FaqChatbot() {
     }
 
     setSearchError(null);
-    setMessages((prev) => [...prev, buildMessage("user", normalizedQuestion)]);
     setInput("");
+
+    const userMessage = buildMessage("user", normalizedQuestion);
+
+    if (/^(hi|hello|hey|hlw)\b/i.test(normalizedQuestion)) {
+      const greetingMessage = buildMessage("bot", GREETING_RESPONSE);
+      setMessages((prev) => [...prev, userMessage, greetingMessage]);
+      setLoading(false);
+      return;
+    }
+
+    setMessages((prev) => [...prev, userMessage]);
     setLoading(true);
 
     try {
@@ -205,7 +230,7 @@ export default function FaqChatbot() {
             </button>
           </header>
 
-          <div className="faq-chatbot-messages">
+          <div ref={messagesContainerRef} className="faq-chatbot-messages">
             {faqError && (
               <div className="faq-chatbot-alert" role="status">
                 {faqError}
@@ -219,7 +244,6 @@ export default function FaqChatbot() {
                 {renderMessage(message)}
               </div>
             ))}
-            <div ref={messageEndRef} />
           </div>
 
           <form className="faq-chatbot-form" onSubmit={handleSubmit}>

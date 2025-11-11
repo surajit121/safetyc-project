@@ -388,35 +388,73 @@ body > button[aria-label*="Switch to"] {
   color: inherit !important;
 }
 
+/* FAQ chatbot design tokens */
+:root {
+  --faq-space-xs: 0.35rem;
+  --faq-space-sm: 0.5rem;
+  --faq-space-md: 0.75rem;
+  --faq-space-lg: 1.25rem;
+  --faq-space-xl: 1.5rem;
+  --faq-surface-radius: 1.5rem;
+  --faq-border-light: rgba(226, 232, 240, 0.6);
+  --faq-border-dark: rgba(148, 163, 184, 0.25);
+}
+
 /* FAQ chatbot widget */
 .faq-chatbot-container {
   position: fixed;
-  right: 1.5rem;
-  bottom: 1.5rem;
+  right: var(--faq-space-xl);
+  bottom: var(--faq-space-xl);
   z-index: 60;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.75rem;
+  gap: var(--faq-space-md);
 }
 
+
 .faq-chatbot-button {
-  background: linear-gradient(135deg, #f97316, #ea580c);
+  --faq-button-primary: #f97316;
+  --faq-button-secondary: #ea580c;
+  --faq-button-shadow: rgba(249, 115, 22, 0.4);
+  --faq-button-shadow-strong: rgba(249, 115, 22, 0.55);
+  background: linear-gradient(135deg, var(--faq-button-primary), var(--faq-button-secondary));
   color: #fff;
   border: none;
   border-radius: 9999px;
   padding: 0.875rem 1.75rem;
   font-weight: 700;
   font-size: 0.95rem;
-  box-shadow: 0 12px 28px rgba(249, 115, 22, 0.4), 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 28px var(--faq-button-shadow), 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   letter-spacing: 0.3px;
+  position: relative;
+  isolation: isolate;
+  will-change: transform, box-shadow, filter;
+}
+
+.faq-chatbot-button::after {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  border-radius: inherit;
+  background: radial-gradient(circle at center, rgba(249, 115, 22, 0.4), transparent 65%);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: -1;
+  filter: blur(0.5px);
 }
 
 .faq-chatbot-button:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 18px 36px rgba(249, 115, 22, 0.5), 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 18px 36px var(--faq-button-shadow-strong), 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.faq-chatbot-button:hover::after {
+  opacity: 0.45;
+  transform: scale(1.05);
 }
 
 .faq-chatbot-button:active {
@@ -433,28 +471,65 @@ body > button[aria-label*="Switch to"] {
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.4), 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.faq-chatbot-button[aria-expanded="true"]::after {
+  opacity: 0;
+}
+
+.faq-chatbot-button[aria-expanded="false"] {
+  animation: faq-chatbot-callout 1.8s cubic-bezier(0.25, 0.8, 0.25, 1) 0.6s 4 forwards;
+}
+
+.faq-chatbot-button[aria-expanded="false"]::after {
+  animation: faq-chatbot-glow 1.8s ease-in-out 0.6s 4 forwards;
+}
+
+@keyframes faq-chatbot-callout {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 12px 28px var(--faq-button-shadow), 0 4px 8px rgba(0, 0, 0, 0.1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.06);
+    box-shadow: 0 22px 40px var(--faq-button-shadow-strong), 0 8px 14px rgba(0, 0, 0, 0.2);
+    filter: brightness(1.1);
+  }
+}
+
+@keyframes faq-chatbot-glow {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-chatbot-button[aria-expanded="false"] {
+    animation: none;
+  }
+
+  .faq-chatbot-button[aria-expanded="false"]::after {
+    animation: none;
+  }
+}
+
 .faq-chatbot-panel {
   width: min(24rem, 92vw);
   max-height: min(85vh, 32rem);
   background: var(--card-bg);
-  border-radius: 1.5rem;
+  border-radius: var(--faq-surface-radius);
   box-shadow: 0 25px 50px rgba(15, 23, 42, 0.35), 0 10px 20px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(226, 232, 240, 0.6);
+  border: 1px solid var(--faq-border-light);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .dark .faq-chatbot-panel {
@@ -465,14 +540,14 @@ body > button[aria-label*="Switch to"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.25rem;
+  padding: calc(var(--faq-space-lg) - 0.25rem) var(--faq-space-lg);
   background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(249, 115, 22, 0.05));
-  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  border-bottom: 1px solid var(--faq-border-light);
   backdrop-filter: blur(10px);
 }
 
 .dark .faq-chatbot-header {
-  border-bottom-color: rgba(148, 163, 184, 0.25);
+  border-bottom-color: var(--faq-border-dark);
 }
 
 .faq-chatbot-title {
@@ -514,12 +589,12 @@ body > button[aria-label*="Switch to"] {
 }
 
 .faq-chatbot-messages {
-  padding: 0.75rem 1.25rem;
+  padding: var(--faq-space-md) var(--faq-space-lg);
   flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--faq-space-md);
   background: var(--body-bg);
 }
 
@@ -564,14 +639,14 @@ body > button[aria-label*="Switch to"] {
 
 .faq-chatbot-form {
   display: flex;
-  gap: 0.5rem;
-  padding: 0.6rem 1.25rem 0.8rem;
-  border-top: 1px solid rgba(226, 232, 240, 0.6);
+  gap: var(--faq-space-sm);
+  padding: calc(var(--faq-space-sm) + 0.1rem) var(--faq-space-lg) calc(var(--faq-space-sm) + 0.3rem);
+  border-top: 1px solid var(--faq-border-light);
   background: var(--card-bg);
 }
 
 .dark .faq-chatbot-form {
-  border-top-color: rgba(148, 163, 184, 0.25);
+  border-top-color: var(--faq-border-dark);
 }
 
 .faq-chatbot-form input {
@@ -641,20 +716,20 @@ body > button[aria-label*="Switch to"] {
 }
 
 .faq-chatbot-suggestions {
-  padding: 0.5rem 1.25rem 0.75rem;
+  padding: calc(var(--faq-space-sm) + 0.1rem) var(--faq-space-lg) calc(var(--faq-space-sm) + 0.25rem);
 }
 
 .faq-chatbot-suggestions-title {
   font-weight: 600;
   font-size: 0.85rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--faq-space-sm);
   color: var(--text-secondary);
 }
 
 .faq-chatbot-suggestions-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--faq-space-sm);
 }
 
 .faq-chatbot-suggestion {
@@ -662,7 +737,7 @@ body > button[aria-label*="Switch to"] {
   border: 2px solid rgba(30, 64, 175, 0.18);
   color: #1e40af;
   border-radius: 9999px;
-  padding: 0.5rem 0.875rem;
+  padding: var(--faq-space-sm) 0.875rem;
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
