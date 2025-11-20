@@ -12,7 +12,7 @@
   --footer-bg: #f9fafb;
   --border-color: #e5e7eb;
   --hover-bg: #f3f4f6;
-  
+
   /* Ant Design compatibility */
   --ant-primary-color: #e65100;
   --ant-link-color: #1677ff;
@@ -35,7 +35,7 @@
   --footer-bg: #1f1f1f;
   --border-color: #303030;
   --hover-bg: #303030;
-  
+
   /* Ant Design compatibility */
   --ant-primary-color: #e65100;
   --ant-link-color: #4096ff;
@@ -48,20 +48,23 @@
 }
 
 /* Global typography */
-html, body, #root {
-	height: 100%;
+html,
+body,
+#root {
+  height: 100%;
 }
 
 body {
-	font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
-	color: var(--text-primary);
-	background-color: var(--body-bg);
-	transition: color 0.3s ease, background-color 0.3s ease;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
+  color: var(--text-primary);
+  background-color: var(--body-bg);
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 /* Force CTA link color regardless of resets or component styles */
 a[data-cta-link] {
-	color: #0ea5e9 !important; /* sky-500 */
+  color: #0ea5e9 !important;
+  /* sky-500 */
 }
 
 /* Global brand styling */
@@ -80,16 +83,21 @@ a[data-cta-link] {
 .dark .brand-accent {
   color: #f97316 !important;
 }
+
 a[data-cta-link]:hover {
-	color: #0284c7 !important; /* sky-600 */
+  color: #0284c7 !important;
+  /* sky-600 */
 }
+
 a[data-cta-link]:visited {
-	color: #0ea5e9 !important;
+  color: #0ea5e9 !important;
 }
 
 /* Ensure colors are displayed correctly on mobile devices */
 @media (max-width: 768px) {
-  a[data-cta-link], a[data-cta-link]:visited {
+
+  a[data-cta-link],
+  a[data-cta-link]:visited {
     color: #0ea5e9 !important;
     background-color: #ffffff !important;
     display: inline-block !important;
@@ -97,32 +105,32 @@ a[data-cta-link]:visited {
     border-radius: 8px !important;
     text-decoration: none !important;
     font-weight: 600 !important;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
     border: 1px solid rgba(2, 132, 199, 0.15) !important;
   }
-  
+
   .text-orange-600 {
     color: #f97316 !important;
   }
-  
+
   .text-orange-500 {
     color: #f97316 !important;
   }
-  
+
   /* Ensure the CTA section displays properly */
   .bg-orange-600 {
     background-color: #f97316 !important;
   }
-  
+
   .bg-orange-500 {
     background-color: #f97316 !important;
   }
-  
+
   /* Fix mobile Hero numbered circles */
   div[style*="backgroundColor"] {
     background-color: #f97316 !important;
   }
-  
+
   /* Force the mobile CTA button to be visible */
   .mobile-cta-button {
     opacity: 1 !important;
@@ -188,7 +196,7 @@ a[data-cta-link]:visited {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
 }
 
-.dark .bg-white, 
+.dark .bg-white,
 .dark .bg-gray-50 {
   background-color: var(--card-bg);
 }
@@ -234,6 +242,7 @@ a[data-cta-link]:visited {
 
 /* Ensure mobile menu uses correct colors */
 @media (max-width: 768px) {
+
   .ant-drawer .ant-menu-item-selected a,
   .ant-drawer .ant-menu-item a:hover,
   .ant-drawer .ant-menu-item-selected a:visited {
@@ -267,20 +276,20 @@ a[data-cta-link]:visited {
   font-size: 14px;
 }
 
-.ant-menu-horizontal > .ant-menu-item,
-.ant-menu-horizontal > .ant-menu-submenu {
+.ant-menu-horizontal>.ant-menu-item,
+.ant-menu-horizontal>.ant-menu-submenu {
   padding: 0 10px;
   margin: 0 2px;
   position: relative;
 }
 
-.ant-menu-horizontal > .ant-menu-item::after,
-.ant-menu-horizontal > .ant-menu-submenu::after {
+.ant-menu-horizontal>.ant-menu-item::after,
+.ant-menu-horizontal>.ant-menu-submenu::after {
   display: none;
 }
 
 /* Active navlink styling */
-.ant-menu-horizontal > .ant-menu-item-selected::before {
+.ant-menu-horizontal>.ant-menu-item-selected::before {
   content: '';
   position: absolute;
   bottom: 0;
@@ -299,7 +308,7 @@ button.theme-toggle-button[data-theme-state="dark"][aria-label="Switch to Dark M
 }
 
 /* Make sure floating buttons don't appear */
-body > button[aria-label*="Switch to"] {
+body>button[aria-label*="Switch to"] {
   display: none !important;
 }
 
@@ -370,20 +379,27 @@ body > button[aria-label*="Switch to"] {
 .text-gray-900 {
   color: #111827 !important;
 }
+
 .text-gray-800 {
   color: #1f2937 !important;
 }
+
 .dark .text-gray-900 {
-  color: #f3f4f6 !important; /* near-white for better dark mode contrast */
+  color: #f3f4f6 !important;
+  /* near-white for better dark mode contrast */
 }
+
 .dark .text-gray-800 {
-  color: #d1d5db !important; /* lighter gray */
+  color: #d1d5db !important;
+  /* lighter gray */
 }
 
 /* --- Fix: Allow color utility classes to set .mobile-drawer-brand color --- */
 .mobile-drawer-brand {
-  color: inherit !important; /* allows Tailwind/inline color classes to take effect */
+  color: inherit !important;
+  /* allows Tailwind/inline color classes to take effect */
 }
+
 .dark .mobile-drawer-brand {
   color: inherit !important;
 }
@@ -484,12 +500,14 @@ body > button[aria-label*="Switch to"] {
 }
 
 @keyframes faq-chatbot-callout {
+
   0%,
   100% {
     transform: translateY(0) scale(1);
     box-shadow: 0 12px 28px var(--faq-button-shadow), 0 4px 8px rgba(0, 0, 0, 0.1);
     filter: brightness(1);
   }
+
   50% {
     transform: translateY(-4px) scale(1.06);
     box-shadow: 0 22px 40px var(--faq-button-shadow-strong), 0 8px 14px rgba(0, 0, 0, 0.2);
@@ -498,11 +516,13 @@ body > button[aria-label*="Switch to"] {
 }
 
 @keyframes faq-chatbot-glow {
+
   0%,
   100% {
     opacity: 0;
     transform: scale(0.9);
   }
+
   50% {
     opacity: 0.55;
     transform: scale(1.1);
@@ -614,6 +634,7 @@ body > button[aria-label*="Switch to"] {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -633,7 +654,7 @@ body > button[aria-label*="Switch to"] {
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
 }
 
-.faq-chatbot-message-line + .faq-chatbot-message-line {
+.faq-chatbot-message-line+.faq-chatbot-message-line {
   margin-top: 0.35rem;
 }
 
@@ -804,5 +825,33 @@ body > button[aria-label*="Switch to"] {
     flex: 0 0 auto;
     padding: 0.65rem 1.1rem;
     font-size: 0.9rem;
+  }
+
+  /* Mobile menu button - production-level styling */
+  .mobile-menu-button {
+    font-size: 24px !important;
+    height: 40px !important;
+    width: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .mobile-menu-button .anticon {
+    font-size: 24px;
+  }
+
+  /* Mobile header alignment - ensures perfect vertical centering */
+  .ant-layout-header {
+    min-height: 64px !important;
+    height: auto !important;
+    line-height: normal !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  /* Ensure brand and menu button are at same vertical position */
+  .ant-layout-header .brand-text {
+    line-height: 40px !important;
   }
 }

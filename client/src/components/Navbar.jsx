@@ -73,10 +73,10 @@ export default function Navbar() {
 
   return (
     <Header
-      className="sticky top-0 z-50 px-4 shadow-sm transition-colors"
-      style={{ padding: "0 16px", backgroundColor: theme === 'dark' ? 'var(--header-bg)' : 'var(--header-bg)' }}
+      className="sticky top-0 z-50 px-4 shadow-sm transition-colors flex items-center min-h-[64px]"
+      style={{ backgroundColor: 'var(--header-bg)' }}
     >
-      <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+      <div className="max-w-6xl mx-auto flex items-center justify-between gap-4 w-full">
         <div className="flex items-center">
           <Link
             to="/"
@@ -122,7 +122,14 @@ export default function Navbar() {
 
         {/* Mobile menu button */}
         <div className="md:hidden flex items-center">
-          <Button type="text" icon={<MenuOutlined />} onClick={() => setOpen(true)} />
+          <Button 
+            type="text" 
+            size="large"
+            icon={<MenuOutlined />} 
+            onClick={() => setOpen(true)}
+            aria-label="Open navigation menu"
+            className="mobile-menu-button"
+          />
           <Drawer
             title={null}
             placement="right"

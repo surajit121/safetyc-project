@@ -43,30 +43,34 @@
 
 /* Mobile Optimizations */
 @media (max-width: 640px) {
+
   /* Fix for iOS input zoom issues */
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     font-size: 16px !important;
   }
-  
+
   /* Prevent bounce scroll in iOS */
-  html, body {
+  html,
+  body {
     position: relative;
     overflow-x: hidden;
     width: 100%;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   /* Ensure toast notifications don't overflow on mobile */
   .Toastify__toast-container {
     padding: 0 10px;
     width: 100% !important;
   }
-  
+
   .Toastify__toast {
     margin-bottom: 10px;
     border-radius: 8px !important;
   }
-  
+
   /* Fix toast position on mobile */
   .Toastify__toast-container--top-right {
     top: env(safe-area-inset-top, 10px) !important;
@@ -94,12 +98,13 @@ textarea {
 
 /* Improve tap target sizes on mobile */
 @media (max-width: 640px) {
-  button, 
+
+  button,
   a.button,
   input[type="submit"] {
     min-height: 48px;
   }
-  
+
   .mobile-form-container input,
   .mobile-form-container textarea {
     margin-bottom: 10px;
@@ -113,7 +118,7 @@ textarea {
     left: 50%;
     transform: translateX(-50%);
   }
-  
+
   .Toastify__toast {
     margin-bottom: 10px;
     border-radius: 12px !important;
@@ -121,19 +126,19 @@ textarea {
     padding-top: 8px;
     padding-bottom: 8px;
   }
-  
+
   .Toastify__toast-body {
     padding: 6px 4px;
     font-size: 14px;
     line-height: 1.4;
   }
-  
+
   /* Enlarged close button for better tap target */
   .Toastify__close-button {
     padding: 8px;
     margin: -8px -8px -8px 0;
   }
-  
+
   /* Fix for notched iPhones */
   @supports (padding-bottom: env(safe-area-inset-bottom)) {
     .Toastify__toast-container--bottom-center {
