@@ -48,6 +48,7 @@ export default function FaqChatbot() {
   const containerRef = useRef(null);
   const messagesContainerRef = useRef(null);
   const panelRef = useRef(null);
+  const lastMessageRef = useRef(null);
 
   // Fetch FAQs once so we can surface suggestions and offline answers
   useEffect(() => {
@@ -103,8 +104,16 @@ export default function FaqChatbot() {
     }
 
     const rafId = requestAnimationFrame(() => {
-      const behavior = messages.length <= 1 ? "auto" : "smooth";
-      node.scrollTo({ top: node.scrollHeight, behavior });
+      const lastMessage = messages[messages.length - 1];
+      const isBot = lastMessage?.author === "bot";
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+      if (isMobile && isBot && lastMessageRef.current) {
+        lastMessageRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        const behavior = messages.length <= 1 ? "auto" : "smooth";
+        node.scrollTo({ top: node.scrollHeight, behavior });
+      }
     });
 
     return () => cancelAnimationFrame(rafId);
@@ -236,9 +245,10 @@ export default function FaqChatbot() {
                 {faqError}
               </div>
             )}
-            {messages.map((message) => (
+            {messages.map((message, index) => (
               <div
                 key={message.id}
+                ref={index === messages.length - 1 ? lastMessageRef : null}
                 className={`faq-chatbot-message faq-chatbot-message-${message.author}`}
               >
                 {renderMessage(message)}
