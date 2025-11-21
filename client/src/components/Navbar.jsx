@@ -176,7 +176,7 @@ export default function Navbar() {
                       onClick={() => setOpen(false)}
                       className={`block rounded-2xl px-4 py-3 text-base font-semibold transition-all ${
                         isActive
-                          ? "bg-orange-500 text-white shadow-lg shadow-orange-500/30"
+                          ? "bg-orange-500 text-black shadow-lg shadow-orange-500/30"
                           : "bg-white text-gray-900 border border-slate-200 shadow-sm dark:bg-white/10 dark:text-gray-100 dark:border-white/10"
                       }`}
                       data-active={isActive ? "true" : "false"}
@@ -186,7 +186,7 @@ export default function Navbar() {
                         <span
                           className={`text-xs uppercase tracking-wide ${
                             isActive
-                              ? "text-white/90"
+                              ? "text-black/70"
                               : "text-orange-500 dark:text-orange-300"
                           }`}
                         >

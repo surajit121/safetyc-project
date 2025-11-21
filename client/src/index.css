@@ -175,13 +175,8 @@ a[data-cta-link]:visited {
     color: #f97316 !important;
   }
 
-  .mobile-drawer-nav a {
-    color: #0f172a !important;
-  }
-
-  .dark .mobile-drawer-nav a {
-    color: rgba(241, 245, 249, 0.95) !important;
-  }
+  /* Mobile drawer nav colors are handled by Tailwind classes in Navbar.jsx */
+  /* Removed conflicting !important rules to allow proper dark mode text visibility */
 }
 
 /* Dark mode styles */
@@ -1065,6 +1060,15 @@ a:hover .brand-text {
   transform: scaleY(1);
 }
 
+/* Force black text color for active menu items */
+.mobile-drawer-nav a[data-active="true"] {
+  color: #000000 !important;
+}
+
+.mobile-drawer-nav a[data-active="true"] span {
+  color: inherit;
+}
+
 .mobile-drawer-nav a:hover {
   transform: translateX(4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -1150,8 +1154,12 @@ a:hover .brand-text {
   transition: all 0.3s var(--ease-smooth);
 }
 
-/* Smooth color transitions on theme change */
-* {
+/* Smooth color transitions on theme change - scoped to avoid conflicts */
+.ant-layout,
+.ant-layout-header,
+.ant-card,
+.ant-menu,
+.ant-btn {
   transition-property: background-color, border-color, color;
   transition-duration: 0.3s;
   transition-timing-function: var(--ease-smooth);
