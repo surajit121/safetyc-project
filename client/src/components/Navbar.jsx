@@ -32,6 +32,7 @@ function BrandMark() {
 export default function Navbar() {
   const location = useLocation();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { theme } = useTheme();
   const drawerStyles = useMemo(() => ({
     body: {
@@ -58,6 +59,16 @@ export default function Navbar() {
     return match ? [match.path] : [];
   }, [location.pathname]);
   
+  // Add scroll detection for navbar shadow effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
   // Apply mobile color fixes when location changes to ensure proper highlighting
   useEffect(() => {
     // Close the mobile drawer whenever the route changes
@@ -73,7 +84,7 @@ export default function Navbar() {
 
   return (
     <Header
-      className="sticky top-0 z-50 px-4 shadow-sm transition-colors flex items-center min-h-[64px]"
+      className={`sticky top-0 z-50 px-4 shadow-sm transition-colors flex items-center min-h-[64px] ${scrolled ? 'scrolled' : ''}`}
       style={{ backgroundColor: 'var(--header-bg)' }}
     >
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-4 w-full">

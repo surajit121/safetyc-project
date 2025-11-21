@@ -13,6 +13,11 @@
   --border-color: #e5e7eb;
   --hover-bg: #f3f4f6;
 
+  /* Animation variables */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --transition-speed: 0.3s;
+
   /* Ant Design compatibility */
   --ant-primary-color: #e65100;
   --ant-link-color: #1677ff;
@@ -853,5 +858,371 @@ body>button[aria-label*="Switch to"] {
   /* Ensure brand and menu button are at same vertical position */
   .ant-layout-header .brand-text {
     line-height: 40px !important;
+  }
+}
+
+/* ===== MODERN ANIMATIONS & MOBILE OPTIMIZATIONS ===== */
+
+/* Navbar scroll effect - adds shadow when scrolled */
+.ant-layout-header {
+  transition: box-shadow var(--transition-speed) var(--ease-smooth),
+    background-color var(--transition-speed) var(--ease-smooth),
+    backdrop-filter var(--transition-speed) var(--ease-smooth);
+}
+
+.ant-layout-header.scrolled {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.dark .ant-layout-header.scrolled {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Smooth brand link hover effect */
+.brand-text {
+  transition: transform var(--transition-speed) var(--ease-smooth);
+  display: inline-block;
+}
+
+a:hover .brand-text {
+  transform: scale(1.05);
+}
+
+.brand-accent {
+  transition: color 0.2s var(--ease-smooth);
+}
+
+/* Desktop menu item modern hover effects */
+.ant-menu-horizontal>.ant-menu-item {
+  transition: all 0.3s var(--ease-smooth);
+  border-radius: 8px;
+}
+
+.ant-menu-horizontal>.ant-menu-item:hover {
+  transform: translateY(-2px);
+  background-color: rgba(230, 81, 0, 0.05);
+}
+
+.dark .ant-menu-horizontal>.ant-menu-item:hover {
+  background-color: rgba(249, 115, 22, 0.1);
+}
+
+/* Animated underline for active nav items */
+.ant-menu-horizontal>.ant-menu-item-selected::before {
+  animation: slideIn 0.4s var(--ease-smooth);
+}
+
+@keyframes slideIn {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+
+  to {
+    width: 80%;
+    opacity: 1;
+  }
+}
+
+/* Mobile menu button modern animation */
+.mobile-menu-button {
+  transition: all 0.3s var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-menu-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(230, 81, 0, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s var(--ease-smooth), height 0.4s var(--ease-smooth);
+}
+
+.mobile-menu-button:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+.mobile-menu-button:active {
+  transform: scale(0.95);
+}
+
+.mobile-menu-button .anticon {
+  transition: transform 0.3s var(--ease-smooth);
+  position: relative;
+  z-index: 1;
+}
+
+.mobile-menu-button:hover .anticon {
+  transform: rotate(90deg);
+}
+
+/* Mobile drawer smooth slide-in animation */
+.ant-drawer-content-wrapper {
+  animation: drawerSlideIn 0.4s var(--ease-smooth);
+}
+
+@keyframes drawerSlideIn {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Enhanced drawer backdrop */
+.ant-drawer-mask {
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s var(--ease-smooth);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Mobile drawer nav items stagger animation */
+.mobile-drawer-nav a {
+  animation: slideInRight 0.4s var(--ease-smooth) backwards;
+  transform-origin: right center;
+}
+
+.mobile-drawer-nav a:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.mobile-drawer-nav a:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.mobile-drawer-nav a:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.mobile-drawer-nav a:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.mobile-drawer-nav a:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.mobile-drawer-nav a:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+.mobile-drawer-nav a:nth-child(7) {
+  animation-delay: 0.35s;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Enhanced mobile nav link hover/active states */
+.mobile-drawer-nav a {
+  transition: all 0.3s var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-drawer-nav a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, #f97316, #ea580c);
+  transform: scaleY(0);
+  transition: transform 0.3s var(--ease-smooth);
+  border-radius: 0 4px 4px 0;
+}
+
+.mobile-drawer-nav a[data-active="true"]::before {
+  transform: scaleY(1);
+}
+
+.mobile-drawer-nav a:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-drawer-nav a:active {
+  transform: translateX(4px) scale(0.98);
+}
+
+/* Theme toggle smooth transitions */
+.theme-toggle-navbar,
+.ant-switch {
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.ant-switch:hover {
+  box-shadow: 0 0 0 4px rgba(230, 81, 0, 0.1);
+}
+
+/* Smooth button transitions */
+.ant-btn {
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.ant-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.ant-btn:active {
+  transform: translateY(0);
+}
+
+/* Mobile CTA buttons enhanced */
+.mobile-drawer-nav+div .ant-btn {
+  transition: all 0.35s var(--ease-bounce);
+}
+
+.mobile-drawer-nav+div .ant-btn:hover {
+  transform: scale(1.05);
+}
+
+.mobile-drawer-nav+div .ant-btn:active {
+  transform: scale(0.95);
+}
+
+/* Improved touch feedback for mobile */
+@media (max-width: 768px) {
+
+  /* Enhance tap feedback */
+  .mobile-drawer-nav a,
+  .ant-btn,
+  .mobile-menu-button {
+    -webkit-tap-highlight-color: rgba(230, 81, 0, 0.1);
+    touch-action: manipulation;
+  }
+
+  /* Larger tap targets */
+  .mobile-drawer-nav a {
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Smooth scroll behavior on mobile */
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent text selection on repeated taps */
+  .mobile-menu-button,
+  .ant-btn,
+  .mobile-drawer-nav a {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+/* Glass morphism effect for modern look */
+.mobile-drawer-header {
+  backdrop-filter: blur(12px);
+  transition: all 0.3s var(--ease-smooth);
+}
+
+/* Smooth color transitions on theme change */
+* {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.3s;
+  transition-timing-function: var(--ease-smooth);
+}
+
+/* Prevent transition on page load */
+.no-transition * {
+  transition: none !important;
+}
+
+/* Enhanced scroll indicators */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--body-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+  border-radius: 4px;
+  transition: background 0.3s var(--ease-smooth);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ant-primary-color);
+}
+
+/* Smooth page transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s var(--ease-smooth), transform 0.4s var(--ease-smooth);
+}
+
+/* Mobile drawer content stagger */
+.mobile-drawer-header {
+  animation: fadeInDown 0.4s var(--ease-smooth);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Accessibility: Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
   }
 }
