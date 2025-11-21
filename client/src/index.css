@@ -429,112 +429,97 @@ body>button[aria-label*="Switch to"] {
 }
 
 
+
 .faq-chatbot-button {
   --faq-button-primary: #f97316;
   --faq-button-secondary: #ea580c;
-  --faq-button-shadow: rgba(249, 115, 22, 0.4);
-  --faq-button-shadow-strong: rgba(249, 115, 22, 0.55);
+  --faq-button-shadow: rgba(249, 115, 22, 0.3);
+
   background: linear-gradient(135deg, var(--faq-button-primary), var(--faq-button-secondary));
   color: #fff;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 9999px;
   padding: 0.875rem 1.75rem;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 0.95rem;
-  box-shadow: 0 12px 28px var(--faq-button-shadow), 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 10px 15px -3px var(--faq-button-shadow);
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   letter-spacing: 0.3px;
   position: relative;
-  isolation: isolate;
-  will-change: transform, box-shadow, filter;
+  overflow: hidden;
+  z-index: 50;
 }
 
-.faq-chatbot-button::after {
+/* Sheen effect element */
+.faq-chatbot-button::before {
   content: "";
   position: absolute;
-  inset: -8%;
-  border-radius: inherit;
-  background: radial-gradient(circle at center, rgba(249, 115, 22, 0.4), transparent 65%);
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent);
+  transition: left 0.5s ease;
   z-index: -1;
-  filter: blur(0.5px);
 }
 
 .faq-chatbot-button:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 18px 36px var(--faq-button-shadow-strong), 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05),
+    0 20px 25px -5px var(--faq-button-shadow);
 }
 
-.faq-chatbot-button:hover::after {
-  opacity: 0.45;
-  transform: scale(1.05);
+.faq-chatbot-button:hover::before {
+  left: 100%;
 }
 
 .faq-chatbot-button:active {
-  transform: translateY(-1px) scale(0.98);
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .faq-chatbot-button:focus-visible {
-  outline: 3px solid rgba(249, 115, 22, 0.6);
-  outline-offset: 3px;
+  outline: 2px solid var(--faq-button-primary);
+  outline-offset: 2px;
 }
 
 .faq-chatbot-button[aria-expanded="true"] {
-  background: linear-gradient(135deg, #1e293b, #334155);
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.4), 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: #1f2937;
+  /* Dark gray for open state */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.faq-chatbot-button[aria-expanded="true"]::after {
-  opacity: 0;
+/* Periodic sheen animation when closed */
+.faq-chatbot-button[aria-expanded="false"]::before {
+  animation: sheen 3s infinite 2s;
+  /* Run every 5 seconds (3s duration + 2s delay) */
 }
 
-.faq-chatbot-button[aria-expanded="false"] {
-  animation: faq-chatbot-callout 1.8s cubic-bezier(0.25, 0.8, 0.25, 1) 0.6s 4 forwards;
-}
+@keyframes sheen {
+  0% {
+    left: -100%;
+  }
 
-.faq-chatbot-button[aria-expanded="false"]::after {
-  animation: faq-chatbot-glow 1.8s ease-in-out 0.6s 4 forwards;
-}
+  20% {
+    left: 100%;
+  }
 
-@keyframes faq-chatbot-callout {
-
-  0%,
   100% {
-    transform: translateY(0) scale(1);
-    box-shadow: 0 12px 28px var(--faq-button-shadow), 0 4px 8px rgba(0, 0, 0, 0.1);
-    filter: brightness(1);
-  }
-
-  50% {
-    transform: translateY(-4px) scale(1.06);
-    box-shadow: 0 22px 40px var(--faq-button-shadow-strong), 0 8px 14px rgba(0, 0, 0, 0.2);
-    filter: brightness(1.1);
-  }
-}
-
-@keyframes faq-chatbot-glow {
-
-  0%,
-  100% {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-
-  50% {
-    opacity: 0.55;
-    transform: scale(1.1);
+    left: 100%;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .faq-chatbot-button[aria-expanded="false"] {
-    animation: none;
-  }
-
-  .faq-chatbot-button[aria-expanded="false"]::after {
+  .faq-chatbot-button[aria-expanded="false"]::before {
     animation: none;
   }
 }
