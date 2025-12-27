@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext.jsx';
 // Import founder images
 import coFounder1 from '../assets/co-founder_1.jpeg';
 import coFounder2 from '../assets/co-founder_2.jpeg';
+import wbMap from '../assets/wb-map.png';
 
 export default function About() {
   // Get theme from context
@@ -230,6 +231,126 @@ export default function About() {
               At safetyc, our mission is simple: to be your go-to safety and security solution across the states, offering quick, hassle-free services anytime, 24/7. We aim to be a trusted name in safety, known for being reliable, innovative, and always there when you need us.
             </p>
           </div>
+        </motion.div>
+      </div>
+
+      {/* Our Presence Section */}
+      <h2 className="mt-16 text-3xl font-bold flex items-center">
+        <span className="w-8 h-1 bg-orange-600 mr-3 hidden sm:block"></span>
+        Our Presence
+      </h2>
+      <p 
+        className="mt-4 max-w-2xl font-medium"
+        style={{ color: theme === 'dark' ? '#d1d5db' : '#111827', fontSize: '1.05rem' }}
+      >
+        Headquartered in Bankura, we have strategically located branch offices to serve our clients across West Bengal with promptness and efficiency.
+      </p>
+
+      <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pb-12">
+        {/* Left Column: Office Details */}
+        <div className="lg:col-span-5 space-y-6">
+          <motion.div 
+            className="p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm"
+            style={{ backgroundColor: theme === 'dark' ? '#1f2937' : '#ffffff' }}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-lg font-bold text-orange-600 dark:text-orange-500 mb-4 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+              Registered & Corporate Office
+            </h3>
+            <div className="space-y-4 text-sm">
+              <div>
+                <span className="block font-semibold text-gray-900 dark:text-gray-100">Registered Office:</span>
+                <p style={{ color: theme === 'dark' ? '#9ca3af' : '#1f2937' }}>76/14 Nutanchati, Panchbaga, P.O.- Kenduadihi, Dist & PS Bankura. W.B., Pin 722102.</p>
+              </div>
+              <div>
+                <span className="block font-semibold text-gray-900 dark:text-gray-100">Corporate Office:</span>
+                <p style={{ color: theme === 'dark' ? '#9ca3af' : '#1f2937' }}>Schooldanga, Bankura - 722101, West Bengal, India</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            className="p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm"
+            style={{ backgroundColor: theme === 'dark' ? '#1f2937' : '#ffffff' }}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-lg font-bold text-orange-600 dark:text-orange-500 mb-4 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              Branch Offices
+            </h3>
+            <ul className="space-y-4 text-sm">
+              <li className="pb-3 border-b border-gray-100 dark:border-gray-800 last:border-0 last:pb-0">
+                <span className="block font-semibold text-gray-900 dark:text-gray-100">Purulia</span>
+                <p style={{ color: theme === 'dark' ? '#9ca3af' : '#1f2937' }}>North Lake road, Raghabpur more, Opp. Reliance Digital, 723101</p>
+              </li>
+              <li className="pb-3 border-b border-gray-100 dark:border-gray-800 last:border-0 last:pb-0">
+                <span className="block font-semibold text-gray-900 dark:text-gray-100">Haldia (Purba Medinipur)</span>
+                <p style={{ color: theme === 'dark' ? '#9ca3af' : '#1f2937' }}>2nd Floor, Keshabpur, Chaitanyapur, Haldia, PIN-721645</p>
+              </li>
+              <li className="pb-3 border-b border-gray-100 dark:border-gray-800 last:border-0 last:pb-0">
+                <span className="block font-semibold text-gray-900 dark:text-gray-100">Suri (Birbhum)</span>
+                <p style={{ color: theme === 'dark' ? '#9ca3af' : '#1f2937' }}>Moumachi Kali Mandir Suri, Birbhum, 731101</p>
+              </li>
+              <li className="pb-3 border-b border-gray-100 dark:border-gray-800 last:border-0 last:pb-0">
+                <span className="block font-semibold text-gray-900 dark:text-gray-100">Seharabazar (East Burdwan)</span>
+                <p style={{ color: theme === 'dark' ? '#9ca3af' : '#1f2937' }}>Near Seharabazar Football Ground, Pin: 713423</p>
+              </li>
+              <li className="pb-3 border-b border-gray-100 dark:border-gray-800 last:border-0 last:pb-0">
+                <span className="block font-semibold text-gray-900 dark:text-gray-100">Siliguri</span>
+                <p style={{ color: theme === 'dark' ? '#9ca3af' : '#1f2937' }}>Chowrangee bhavan, Matigara, Siliguri, 734010</p>
+              </li>
+              <li className="pb-3 border-b border-gray-100 dark:border-gray-800 last:border-0 last:pb-0">
+                <span className="block font-semibold text-gray-900 dark:text-gray-100">Mejia (Bankura)</span>
+                <p style={{ color: theme === 'dark' ? '#9ca3af' : '#1f2937' }}>Bagangora near Shiv Mandir, Mejhia, Bankura</p>
+              </li>
+            </ul>
+          </motion.div>
+        </div>
+
+        {/* Right Column: Large Clear Map */}
+        <motion.div 
+          className="lg:col-span-7 flex flex-col items-center justify-center p-8 rounded-3xl bg-gray-50/50 dark:bg-gray-800/30 border border-gray-100 dark:border-gray-700 shadow-inner"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="relative w-full max-w-[500px]">
+            <img 
+              src={wbMap} 
+              alt="Where We Operate - West Bengal Map" 
+              className="w-full h-auto object-contain mx-auto"
+              style={{
+                imageRendering: '-webkit-optimize-contrast',
+                filter: theme === 'dark' ? 'invert(1) hue-rotate(180deg) brightness(0.9) contrast(1.1)' : 'none',
+                mixBlendMode: theme === 'dark' ? 'screen' : 'normal'
+              }}
+            />
+            <div className="absolute top-0 right-0 bg-[#FF4A17] text-white text-[10px] px-3 py-1 rounded-full font-bold shadow-lg transform rotate-3 sm:text-xs">
+              SERVING 12+ DISTRICTS
+            </div>
+          </div>
+          <p 
+            className="mt-8 text-center italic font-medium"
+            style={{ 
+              color: theme === 'dark' ? '#94a3b8' : '#374151',
+              fontSize: '0.9rem' 
+            }}
+          >
+            Visual representation of our widespread presence across West Bengal.
+          </p>
         </motion.div>
       </div>
     </div>
