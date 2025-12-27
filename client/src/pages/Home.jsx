@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import SEO from "../components/SEO.jsx";
 import Hero from "../components/Hero.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
 import CTA from "../components/CTA.jsx";
@@ -87,7 +88,13 @@ export default function Home() {
   }, []);
 
  return (
-  <div>
+   <div>
+     <SEO 
+       title="Home" 
+       description="safetyc is Bankura's leading provider of fire safety equipment, CCTV surveillance systems, and complete security solutions. Best rates in West Bengal."
+       path="/"
+       keywords="fire extinguisher Bankura, CCTV installation Bankura, security systems Bankura, fire safety equipment Bankura"
+     />
     <motion.div
       initial="hidden"
       animate="visible"

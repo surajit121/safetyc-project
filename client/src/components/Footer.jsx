@@ -116,7 +116,7 @@ export default function Footer() {
           <div className="text-sm text-gray-700 space-y-2">
             <div>
               <strong>Registered Office:</strong>
-              <div>76/14 Nutanchati, Panchbaga, P.O.- Kenduadihi, Dist & PS Bankura. Word No 24, W.B., Pin 722102.</div>
+              <div>76/14 Nutanchati, Panchbaga, P.O.- Kenduadihi, Dist & PS Bankura. Ward No 24, W.B., Pin 722102.</div>
             </div>
             <div>
               <strong>Corporate Office:</strong>

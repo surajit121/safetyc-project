@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import SEO from "../components/SEO.jsx";
 import { apiUrl } from "../lib/api.js";
 import { ToastManager } from "../components/FallbackToast.jsx";
 
@@ -105,6 +106,11 @@ export default function Contact() {
 
   return (
     <section className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
+      <SEO 
+        title="Contact Us" 
+        description="Get in touch with safetyc for expert safety and security solutions. Our team is ready to assist you with inquiries, consultations, and support."
+        path="/contact"
+      />
       <h1 className="text-3xl font-bold mb-8 text-center">Contact Our Team</h1>
       
       <div className="max-w-2xl mx-auto bg-white rounded-3xl shadow-lg overflow-hidden p-8">

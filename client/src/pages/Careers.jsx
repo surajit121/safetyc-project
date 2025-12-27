@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import SEO from "../components/SEO.jsx";
+import { useTheme } from "../context/ThemeContext.jsx";
 import { apiUrl } from "../lib/api.js";
 import { ToastManager } from "../components/FallbackToast.jsx";
 
@@ -161,6 +163,7 @@ Perks:
 
 
 export default function Careers() {
+  const { theme } = useTheme();
   const [openJobId, setOpenJobId] = useState(null);
   const [formState, setFormState] = useState({ name: "", email: "", message: "", whatsapp: "", address: "", phone: "", dob: "", pincode: "" });
   const [errors, setErrors] = useState({});
@@ -396,9 +399,19 @@ export default function Careers() {
 
   return (
     <section className="max-w-4xl mx-auto px-4 py-12">
+      <SEO 
+        title="Careers" 
+        description="Join the safetyc team and build a career in safety and security solutions. Explore job opportunities in technical, sales, and administrative roles."
+        path="/careers"
+      />
       <header className="mb-6">
         <h1 className="text-3xl font-bold">Careers & Job Opportunities</h1>
-        <p className="text-gray-700 mt-2">Click a job below to view details and apply.</p>
+        <p 
+          className="mt-2"
+          style={{ color: theme === 'dark' ? '#d1d5db' : '#111827' }}
+        >
+          Click a job below to view details and apply.
+        </p>
       </header>
 
       <div className="space-y-4">

@@ -25,7 +25,7 @@ export default function ServiceCard({ title, description, highlights = [], image
         {highlights?.length > 0 && (
           <ul className="mt-3 list-disc list-inside text-sm space-y-1 text-left">
             {highlights.map((h, i) => (
-              <li key={i} className="text-gray-600">{h}</li>
+              <li key={i} style={{ color: theme === 'dark' ? '#9ca3af' : '#1f2937' }}>{h}</li>
             ))}
           </ul>
         )}

@@ -13,6 +13,7 @@ import Projects from "./pages/Projects.jsx";
 import Clients from "./pages/Clients.jsx";
 import Careers from "./pages/Careers.jsx";
 import Contact from "./pages/Contact.jsx";
+import NotFound from "./pages/NotFound.jsx";
 import { useTheme } from "./context/ThemeContext.jsx";
 import applyMobileColorFix from "./utils/mobileColorFix.js";
 import { FallbackToastContainer } from "./components/FallbackToast.jsx";
@@ -116,6 +117,7 @@ export default function App() {
           <Route path="/clients" element={<Clients />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout.Content>
       <Footer />

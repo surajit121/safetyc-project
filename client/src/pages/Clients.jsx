@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import SEO from "../components/SEO.jsx";
 import { apiUrl } from "../lib/api.js";
 import { useTheme } from "../context/ThemeContext.jsx";
 
@@ -46,6 +47,11 @@ export default function Clients() {
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-12" aria-labelledby="clients-heading">
+      <SEO 
+        title="Our Clients" 
+        description="We are proud to serve a diverse range of clients across West Bengal, including government institutions, schools, and private enterprises."
+        path="/clients"
+      />
       <h1 id="clients-heading" className="text-3xl font-bold mb-6">Clients</h1>
       {loading && (
         <div className="py-12 flex justify-center" role="status" aria-live="polite">

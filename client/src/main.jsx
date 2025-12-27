@@ -8,6 +8,7 @@ import { ConfigProvider, theme as antdTheme } from "antd";
 import App from "./App.jsx";
 import { ThemeProvider, useTheme } from "./context/ThemeContext.jsx";
 // Import the duplicate toggle fix script
+import { HelmetProvider } from "react-helmet-async";
 import "./utils/fixDuplicateToggles.js";
 
 // Wrap App with theme-aware ConfigProvider
@@ -39,7 +40,9 @@ function ThemedApp() {
       }}
     >
       <BrowserRouter>
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </BrowserRouter>
     </ConfigProvider>
   );

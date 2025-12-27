@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
 
 // Import founder images
@@ -25,8 +26,16 @@ export default function About() {
   }, [theme]);
   return (
     <section className="max-w-6xl mx-auto px-4 py-12">
+      <SEO 
+        title="About Us" 
+        description="Learn about safetyc, our mission, vision, and our commitment to providing top-notch safety and security solutions in Bankura and across West Bengal."
+        path="/about"
+      />
       <h1 className="text-3xl font-bold">About safetyc</h1>
-      <p className="mt-4 text-gray-700">
+      <p 
+        className="mt-4"
+        style={{ color: theme === 'dark' ? '#d1d5db' : '#111827' }}
+      >
         safetyc, founded in 2023, is a sister concern of P R Solutions, which
         has been serving clients since 2013 with a strong reputation for
         reliability and technical excellence. We are a Security Solutions
@@ -35,7 +44,10 @@ export default function About() {
         is to help our customers achieve complete safety, operational efficiency,
         and peace of mind through reliable and technology-driven services.
       </p>
-      <p className="mt-4 text-gray-700">
+      <p 
+        className="mt-4"
+        style={{ color: theme === 'dark' ? '#d1d5db' : '#111827' }}
+      >
         Headquartered in Bankura, West Bengal, safetyc operates across 12
         districts and continues to expand its presence throughout the state. We
         have successfully delivered projects for schools, government offices,
@@ -106,7 +118,10 @@ export default function About() {
 
       <div className="mt-5">
       <h2 className="mt-8 text-2xl font-semibold">Our Services</h2>
-      <ul className="mt-4 list-disc list-inside text-gray-700 space-y-2">
+      <ul 
+        className="mt-4 list-disc list-inside space-y-2"
+        style={{ color: theme === 'dark' ? '#d1d5db' : '#111827' }}
+      >
         <li>
           CCTV and Surveillance Systems: Supply, installation, and maintenance
           of advanced IP and analog CCTV systems.
@@ -129,14 +144,20 @@ export default function About() {
         </li>
       </ul>
       <h2 className="mt-8 text-2xl font-semibold">Our Vision</h2>
-      <p className="mt-4 text-gray-700">
+      <p 
+        className="mt-4"
+        style={{ color: theme === 'dark' ? '#d1d5db' : '#111827' }}
+      >
         To be recognized as the most trusted and comprehensive safety and
         security solutions provider in Eastern India by combining innovation,
         integrity, and technical expertise to protect people, property, and
         progress.
       </p>
       <h2 className="mt-8 text-2xl font-semibold">Our Mission</h2>
-      <ul className="mt-4 list-disc list-inside text-gray-700 space-y-2">
+      <ul 
+        className="mt-4 list-disc list-inside space-y-2"
+        style={{ color: theme === 'dark' ? '#d1d5db' : '#111827' }}
+      >
         <li>
           Deliver end-to-end safety and security solutions with quality and
           reliability.
@@ -150,6 +171,7 @@ export default function About() {
           manpower.
         </li>
       </ul>
+    </div>
 
       {/* Founders Section */}
       <h2 className="mt-12 text-2xl font-semibold">Our Leadership</h2>
@@ -266,7 +288,7 @@ export default function About() {
             <div className="space-y-4 text-sm">
               <div>
                 <span className="block font-semibold text-gray-900 dark:text-gray-100">Registered Office:</span>
-                <p style={{ color: theme === 'dark' ? '#9ca3af' : '#1f2937' }}>76/14 Nutanchati, Panchbaga, P.O.- Kenduadihi, Dist & PS Bankura. W.B., Pin 722102.</p>
+                <p style={{ color: theme === 'dark' ? '#9ca3af' : '#1f2937' }}>76/14 Nutanchati, Panchbaga, P.O.- Kenduadihi, Dist & PS Bankura. Ward No 24, W.B., Pin 722102.</p>
               </div>
               <div>
                 <span className="block font-semibold text-gray-900 dark:text-gray-100">Corporate Office:</span>
@@ -353,7 +375,6 @@ export default function About() {
           </p>
         </motion.div>
       </div>
-    </div>
     </section>
   );
 }

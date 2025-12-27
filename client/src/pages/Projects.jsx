@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import axios from "axios";
+import SEO from "../components/SEO.jsx";
 import { apiUrl } from "../lib/api.js";
 import ProjectCard from "../components/ProjectCard.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
@@ -91,6 +92,11 @@ export default function Projects() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
+      <SEO 
+        title="Our Projects" 
+        description="View our portfolio of successful safety and security projects across West Bengal. From school surveillance to industrial fire protection systems."
+        path="/projects"
+      />
       <h2 className="text-2xl font-bold mb-6">All Projects</h2>
 
       {loading && (

@@ -1,6 +1,8 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import axios from "axios";
+import SEO from "../components/SEO.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
+import { useTheme } from "../context/ThemeContext.jsx";
 import fireExtinguisherImg from "../assets/fire exting.jpeg";
 import cctvImg from "../assets/cctv.jpeg";
 import solarImg from "../assets/solar.jpeg";
@@ -168,6 +170,7 @@ function useServicesApi() {
 }
 
 export default function Services() {
+  const { theme } = useTheme();
   const { services, loading, error, retry } = useServicesApi();
   
   // Sort services in the specified order
@@ -224,9 +227,19 @@ export default function Services() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
+      <SEO 
+        title="Our Services" 
+        description="Explore our wide range of services including fire safety, CCTV surveillance, biometric systems, solar power, and electrical contracting in Bankura and West Bengal."
+        path="/services"
+      />
       <div className="text-center mb-12">
         <h2 className="text-3xl font-bold mb-3">Our Comprehensive Services</h2>
-        <p className="text-gray-600 max-w-3xl mx-auto">From fire safety and surveillance to renewable energy and IT infrastructure, we provide end-to-end solutions for your business security and operational needs with unmatched expertise and reliability.</p>
+        <p 
+          className="max-w-3xl mx-auto"
+          style={{ color: theme === 'dark' ? '#94a3b8' : '#111827' }}
+        >
+          From fire safety and surveillance to renewable energy and IT infrastructure, we provide end-to-end solutions for your business security and operational needs with unmatched expertise and reliability.
+        </p>
       </div>
 
       {loading && (
