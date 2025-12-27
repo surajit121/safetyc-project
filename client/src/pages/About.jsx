@@ -243,7 +243,7 @@ export default function About() {
         className="mt-4 max-w-2xl font-medium"
         style={{ color: theme === 'dark' ? '#d1d5db' : '#111827', fontSize: '1.05rem' }}
       >
-        Headquartered in Bankura, we have strategically located branch offices to serve our clients across West Bengal with promptness and efficiency.
+        Main branch office in Bankura, we have strategically located branch offices to serve our clients across West Bengal with promptness and efficiency.
       </p>
 
       <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pb-12">
