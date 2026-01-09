@@ -6,182 +6,182 @@ import { FaWhatsapp, FaFacebook, FaInstagram } from "react-icons/fa";
 export default function Footer() {
   const { theme } = useTheme();
 
+  const socialLinks = [
+    {
+      href: "https://wa.me/919907371539",
+      icon: FaWhatsapp,
+      color: "#25D366",
+      hoverBg: "hover:bg-green-50 dark:hover:bg-green-900/20",
+      label: "WhatsApp"
+    },
+    {
+      href: "https://www.facebook.com/share/1D64ztXvSU/",
+      icon: FaFacebook,
+      color: "#1877F2",
+      hoverBg: "hover:bg-blue-50 dark:hover:bg-blue-900/20",
+      label: "Facebook"
+    },
+    {
+      href: "https://www.instagram.com/safet.yc?utm_source=qr&igsh=ejA5YzIzaWx5aTJ1",
+      icon: FaInstagram,
+      color: "#C837AB",
+      hoverBg: "hover:bg-pink-50 dark:hover:bg-pink-900/20",
+      label: "Instagram"
+    }
+  ];
+
   return (
-    <footer className="mt-10">
-      <div className="max-w-6xl mx-auto px-4 py-8 grid gap-6 md:grid-cols-3">
-        <div>
-          <Typography.Title level={4} style={{ marginBottom: 8 }}>
-            safetyc
-          </Typography.Title>
-          <Typography.Paragraph type="secondary" style={{ marginBottom: 8 }}>
-            Complete Safety, Security, and Technology Solutions for West Bengal.
-          </Typography.Paragraph>
-          <div className="text-xs text-gray-500 space-y-1">
-            <div>
-              <strong>Founders:</strong> Pankaj Mukherjee &amp; Subhajit
-              Mukherjee
+    <footer className={`mt-16 relative overflow-hidden ${
+      theme === 'dark' 
+        ? 'bg-gradient-to-b from-[#0a0a0f] to-[#12121a]' 
+        : 'bg-gradient-to-b from-slate-50 to-white'
+    }`}>
+      {/* Decorative gradient blobs */}
+      <div 
+        className="absolute -top-20 -left-20 w-64 h-64 rounded-full opacity-20 blur-3xl pointer-events-none"
+        style={{ 
+          background: theme === 'dark' 
+            ? 'linear-gradient(135deg, #f97316, #ea580c)' 
+            : 'linear-gradient(135deg, #fed7aa, #fdba74)'
+        }}
+      />
+      <div 
+        className="absolute -bottom-20 -right-20 w-64 h-64 rounded-full opacity-10 blur-3xl pointer-events-none"
+        style={{ 
+          background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)'
+        }}
+      />
+      
+      {/* Top border gradient */}
+      <div 
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{
+          background: theme === 'dark'
+            ? 'linear-gradient(90deg, transparent, rgba(249,115,22,0.5), transparent)'
+            : 'linear-gradient(90deg, transparent, rgba(249,115,22,0.3), transparent)'
+        }}
+      />
+      
+      <div className="max-w-6xl mx-auto px-4 py-12 relative z-10">
+        <div className="grid gap-10 md:grid-cols-3">
+          {/* Company Info */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <span className={`text-2xl font-extrabold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                safety<span className="text-orange-500">c</span>
+              </span>
             </div>
-            <div>
-              <strong>PAN:</strong> AFAFS7759D
+            <Typography.Paragraph 
+              className={`!mb-4 ${theme === 'dark' ? '!text-gray-400' : '!text-gray-600'}`}
+            >
+              Complete Safety, Security, and Technology Solutions for West Bengal.
+            </Typography.Paragraph>
+            
+            <div className={`text-xs space-y-1.5 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                <div><strong className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>PAN:</strong> AFAFS7759D</div>
+                <div><strong className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>GSTIN:</strong> 19AFAFS7759D1ZN</div>
+                <div><strong className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>ISO:</strong> 9001:2015</div>
+                <div><strong className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>MSME:</strong> UDYAM-WB-02-0013682</div>
+              </div>
             </div>
-            <div>
-              <strong>GSTIN:</strong> 19AFAFS7759D1ZN
-            </div>
-            <div>
-              <strong>Trade License No:</strong> 0917P263852342147
-            </div>
-            <div>
-              <strong>P Tax Enrolment No:</strong> 192162018684
-            </div>
-            <div>
-              <strong>EPFO Registration No:</strong> WBDGP342472000
-            </div>
-            <div>
-              <strong>ESIC Registration No:</strong> 74000807690001099
-            </div>
-            <div>
-              <strong>ISO 9001:2015:</strong> 230422081150QRA
-            </div>
-            <div>
-              <strong>MSME:</strong> UDYAM-WB-02-0013682
-            </div>
-            <div>
-              <strong>Labour Licence:</strong> BAN01/CLR/000078
-            </div>
-            <div>
-              <strong>SAFETYC GeM Seller Id:</strong> UCCH240012054709
+          </div>
+          
+          {/* Quick Links */}
+          <div>
+            <h5 className={`text-sm font-semibold uppercase tracking-wider mb-4 ${
+              theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+            }`}>
+              Quick Links
+            </h5>
+            <ul className="space-y-2">
+              {[
+                { to: "/", label: "Home" },
+                { to: "/about", label: "About Us" },
+                { to: "/services", label: "Services" },
+                { to: "/projects", label: "Projects" },
+                { to: "/clients", label: "Clients" },
+                { to: "/careers", label: "Careers" },
+                { to: "/contact", label: "Contact" }
+              ].map(({ to, label }) => (
+                <li key={to}>
+                  <Link 
+                    to={to} 
+                    className={`group flex items-center text-sm transition-all duration-300 ${
+                      theme === 'dark' 
+                        ? 'text-gray-400 hover:text-orange-400' 
+                        : 'text-gray-600 hover:text-orange-600'
+                    }`}
+                  >
+                    <span className="w-0 h-0.5 bg-orange-500 mr-0 opacity-0 transition-all duration-300 group-hover:w-3 group-hover:mr-2 group-hover:opacity-100" />
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          {/* Contact Info */}
+          <div>
+            <h5 className={`text-sm font-semibold uppercase tracking-wider mb-4 ${
+              theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+            }`}>
+              Contact
+            </h5>
+            <div className={`text-sm space-y-3 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              <div className="p-3 rounded-xl transition-all duration-300 hover:bg-black/5 dark:hover:bg-white/5">
+                <strong className={`block mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                  Corporate Office:
+                </strong>
+                <span className="text-xs">Schooldanga, Bankura - 722101, West Bengal, India</span>
+              </div>
+              
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-orange-500">📞</span>
+                  <span>+91 97758 02253, +91 99073 71539</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-orange-500">✉️</span>
+                  <a
+                    href="mailto:mssafetyc@gmail.com"
+                    className="text-orange-500 hover:text-orange-600 hover:underline transition-colors"
+                  >
+                    mssafetyc@gmail.com
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div>
-          <Typography.Title level={5}>Quick Links</Typography.Title>
-          <ul className="space-y-1 text-sm text-gray-700">
-            <li>
-              <Link to="/" className="hover:underline hover:text-orange-600">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/about"
-                className="hover:underline hover:text-orange-600"
-              >
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/services"
-                className="hover:underline hover:text-orange-600"
-              >
-                Services
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/projects"
-                className="hover:underline hover:text-orange-600"
-              >
-                Projects
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/clients"
-                className="hover:underline hover:text-orange-600"
-              >
-                Clients
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/careers"
-                className="hover:underline hover:text-orange-600"
-              >
-                Careers
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/contact"
-                className="hover:underline hover:text-orange-600"
-              >
-                Contact
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <Typography.Title level={5}>Contact</Typography.Title>
-          <div className="text-sm text-gray-700 space-y-2">
-            <div>
-              <strong>Registered Office:</strong>
-              <div>76/14 Nutanchati, Panchbaga, P.O.- Kenduadihi, Dist & PS Bankura. Ward No 24, W.B., Pin 722102.</div>
+        
+        {/* Social Links */}
+        <div className="mt-10 pt-8 border-t border-gray-200 dark:border-gray-800">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              {socialLinks.map(({ href, icon: Icon, color, hoverBg, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className={`flex items-center justify-center w-11 h-11 rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${hoverBg} ${
+                    theme === 'dark' 
+                      ? 'bg-white/5 border-white/10' 
+                      : 'bg-white border-gray-200 shadow-sm'
+                  }`}
+                >
+                  <Icon size={22} color={color} />
+                </a>
+              ))}
             </div>
-            <div>
-              <strong>Corporate Office:</strong>
-              <div>Schooldanga, Bankura - 722101, West Bengal, India</div>
-            </div>
-            <div>
-              <strong>Branch Offices:</strong>
-              <ul className="list-disc list-inside mt-1">
-                <li>Purulia - North Lake road, Raghabpur more, Opposite of Reliance Digital, 723101</li>
-                <li>Purba Medinipur - 2nd Floor. Opposite Sanhati UtsabGround. Keshabpur, chaitanyapur, Haldia. PIN-721645</li>
-                <li>Birbhum - Moumachi Kali Mandir Suri, Birbhum, 731101</li>
-                <li>East Burdwan - Near Seharabazar Football Ground, Pin: 713423</li>
-                <li>Siliguri - Chowrangee bhavan, Chowrangee more, Potiram jote, Matigara, 734010</li>
-                <li>Mejia(Bankura) - Bagangora near Shiv Mandir, Mejhia, Bankura</li>
-              </ul>
-            </div>
-            <div>
-              <strong>Phone:</strong> +91 97758 02253, +91 99073 71539
-            </div>
-            <div>
-              <strong>Office:</strong> +91 03242 356676
-            </div>
-            <div>
-              <strong>Email:</strong>{" "}
-              <a
-                href="mailto:mssafetyc@gmail.com"
-                className="text-orange-600 hover:underline"
-              >
-                mssafetyc@gmail.com
-              </a>
-            </div>
+            
+            <p className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>
+              © {new Date().getFullYear()} safetyc. All rights reserved.
+            </p>
           </div>
         </div>
-      </div>
-      <div className="flex justify-center items-center gap-6 py-4">
-        <a
-          href="https://wa.me/919907371539"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="WhatsApp"
-          className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 shadow-sm hover:shadow-md bg-white hover:bg-green-50 transition-all duration-300"
-        >
-          <FaWhatsapp size={24} color="#25D366" />
-        </a>
-        <a
-          href="https://www.facebook.com/share/1D64ztXvSU/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Facebook"
-          className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 shadow-sm hover:shadow-md bg-white hover:bg-blue-50 transition-all duration-300"
-        >
-          <FaFacebook size={24} color="#1877F2" />
-        </a>
-        <a
-          href="https://www.instagram.com/safet.yc?utm_source=qr&igsh=ejA5YzIzaWx5aTJ1"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Instagram"
-          className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 shadow-sm hover:shadow-md bg-white hover:bg-pink-50 transition-all duration-300"
-        >
-          <FaInstagram size={24} color="#C837AB" />
-        </a>
-      </div>
-      <div className="border-t py-4 text-center text-xs text-gray-500">
-        © 2025 safetyc. All rights reserved.
       </div>
     </footer>
   );
