@@ -297,7 +297,7 @@ export default function Hero() {
           </div>
           
           <div className="mt-8">
-            <Link to="/contact">
+            <Link to="/book-service">
               <Button 
                 type="primary" 
                 size="large" 

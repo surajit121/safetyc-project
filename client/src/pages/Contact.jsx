@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import SEO from "../components/SEO.jsx";
 import { apiUrl } from "../lib/api.js";
@@ -18,9 +19,22 @@ try {
 }
 
 export default function Contact() {
+  const [searchParams] = useSearchParams();
+  const selectedService = searchParams.get('service');
+  
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  
+  // Pre-fill message with selected service if coming from Book Service page
+  useEffect(() => {
+    if (selectedService) {
+      setForm(prev => ({
+        ...prev,
+        message: `I am interested in: ${selectedService}\n\nPlease provide more details about this service.`
+      }));
+    }
+  }, [selectedService]);
   
   // Check for mobile device on component mount
   useEffect(() => {
