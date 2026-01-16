@@ -1,23 +1,32 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Layout } from "antd";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import ActivePageIndicator from "./components/ActivePageIndicator.jsx";
 import FaqChatbot from "./components/FaqChatbot.jsx";
-import Home from "./pages/Home.jsx";
-import About from "./pages/About.jsx";
-import Services from "./pages/Services.jsx";
-import Projects from "./pages/Projects.jsx";
-import Clients from "./pages/Clients.jsx";
-import Careers from "./pages/Careers.jsx";
-import Contact from "./pages/Contact.jsx";
-import BookService from "./pages/BookService.jsx";
-import NotFound from "./pages/NotFound.jsx";
 import { useTheme } from "./context/ThemeContext.jsx";
 import applyMobileColorFix from "./utils/mobileColorFix.js";
 import { FallbackToastContainer } from "./components/FallbackToast.jsx";
+
+// Lazy load pages for performance
+const Home = lazy(() => import("./pages/Home.jsx"));
+const About = lazy(() => import("./pages/About.jsx"));
+const Services = lazy(() => import("./pages/Services.jsx"));
+const Projects = lazy(() => import("./pages/Projects.jsx"));
+const Clients = lazy(() => import("./pages/Clients.jsx"));
+const Careers = lazy(() => import("./pages/Careers.jsx"));
+const Contact = lazy(() => import("./pages/Contact.jsx"));
+const BookService = lazy(() => import("./pages/BookService.jsx"));
+const NotFound = lazy(() => import("./pages/NotFound.jsx"));
+
+// Loading fallback
+const PageLoader = () => (
+  <div className="flex items-center justify-center min-h-[50vh]">
+    <div className="w-12 h-12 border-4 border-orange-200 border-t-orange-600 rounded-full animate-spin"></div>
+  </div>
+);
 
 // Dynamically import react-toastify to handle potential import failures
 let ToastContainer = null;
@@ -34,7 +43,6 @@ try {
 } catch (error) {
   // Silently fall back to custom implementation
 }
-
 
 export default function App() {
   const { theme } = useTheme();
@@ -110,17 +118,19 @@ export default function App() {
       <Navbar />
       <Layout.Content className="flex-1">
         <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/clients" element={<Clients />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/book-service" element={<BookService />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/clients" element={<Clients />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/book-service" element={<BookService />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </Layout.Content>
       <Footer />
       <ActivePageIndicator />

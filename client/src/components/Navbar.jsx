@@ -154,30 +154,44 @@ export default function Navbar() {
           />
           <Drawer
             title={null}
-            placement="right"
+            placement="bottom"
             open={open}
+            height="85vh"
             onClose={() => {
               setOpen(false);
-              // Apply mobile fixes after drawer closes to reset any lingering states
               setTimeout(() => applyMobileColorFix(), 100);
             }}
-            styles={drawerStyles}
+            styles={{
+              wrapper: { boxShadow: "0 -4px 24px rgba(0,0,0,0.15)" },
+              content: { 
+                borderTopLeftRadius: "24px", 
+                borderTopRightRadius: "24px",
+                background: "var(--mobile-drawer-bg)",
+                backdropFilter: "blur(20px)",
+                border: "1px solid var(--mobile-drawer-border)",
+                borderBottom: "none"
+              },
+              body: { padding: 0 },
+              mask: { backdropFilter: "blur(4px)", background: "rgba(0,0,0,0.3)" }
+            }}
           >
-            <div className="flex flex-col gap-6 px-5 pb-6 pt-5">
-              <div className="flex items-center justify-between gap-3 mobile-drawer-header">
-                <div>
-                  <p className="mobile-drawer-label text-xs uppercase tracking-[0.3em] text-slate-600 dark:text-slate-300">Menu</p>
-                  <p className="mobile-drawer-brand text-2xl font-extrabold mt-1 leading-none">
-                    <BrandMark />
-                  </p>
-                  <p className="mobile-drawer-subtext text-sm mt-1 text-slate-500 dark:text-slate-300">
-                    Integrated safety & security partners
-                  </p>
+            <div className="flex flex-col h-full">
+              {/* Drag Handle Indicator */}
+              <div className="flex justify-center pt-3 pb-1">
+                <div className="w-12 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700/50" />
+              </div>
+
+              <div className="flex items-center justify-between px-6 py-4 border-b border-dashed border-gray-200 dark:border-gray-800">
+                <div className="flex flex-col">
+                  <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-orange-600 mb-0.5">Menu</span>
+                  <span className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+                    safety<span className="text-orange-600">c</span>
+                  </span>
                 </div>
                 <ThemeToggle variant="drawer" />
               </div>
 
-              <nav className="space-y-3 mobile-drawer-nav">
+              <div className="flex-1 overflow-y-auto px-5 py-6 space-y-2">
                 {links.map((l) => {
                   const isActive = location.pathname === l.path;
                   return (
@@ -185,72 +199,54 @@ export default function Navbar() {
                       key={l.path}
                       to={l.path}
                       onClick={() => setOpen(false)}
-                      className={`block rounded-2xl px-4 py-3 text-base font-semibold transition-all ${
+                      className={`group relative flex items-center justify-between px-5 py-4 rounded-xl transition-all duration-300 ${
                         isActive
-                          ? "bg-orange-500 text-black shadow-lg shadow-orange-500/30"
-                          : "bg-white text-gray-900 border border-slate-200 shadow-sm dark:bg-white/10 dark:text-gray-100 dark:border-white/10"
+                          ? "bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400"
+                          : "bg-transparent hover:bg-gray-50 dark:hover:bg-white/5 text-gray-800 dark:text-gray-200"
                       }`}
-                      data-active={isActive ? "true" : "false"}
+                      style={{
+                        // Force explicit color to override any potential global :visited styles
+                        color: isActive ? (theme === 'dark' ? '#fb923c' : '#ea580c') : (theme === 'dark' ? '#e5e7eb' : '#1f2937')
+                      }}
                     >
-                      <div className="flex items-center justify-between gap-3">
-                        <span>{l.label}</span>
-                        <span
-                          className={`text-xs uppercase tracking-wide ${
-                            isActive
-                              ? "text-black/70"
-                              : "text-orange-500 dark:text-orange-300"
-                          }`}
-                        >
-                          {isActive ? "Current" : "Go"}
-                        </span>
-                      </div>
+                      <span className="text-base font-semibold tracking-wide">
+                        {l.label}
+                      </span>
+                      
+                      {isActive && (
+                        <div className="h-2 w-2 rounded-full bg-orange-600 shadow-[0_0_8px_rgba(249,115,22,0.6)]" />
+                      )}
                     </Link>
                   );
                 })}
-              </nav>
+              </div>
 
-              <div className="px-1">
+              <div className="p-5">
                 <Button 
                   type="primary" 
-                  className="bg-blue-600 hover:bg-blue-700 font-medium h-12 rounded-xl text-lg w-full shadow-md shadow-blue-500/20"
+                  className="w-full h-14 text-base font-bold rounded-2xl bg-gradient-to-r from-orange-600 to-red-600 border-0 shadow-lg shadow-orange-500/25 active:scale-[0.98] transition-all text-white"
                   onClick={() => {
                     setOpen(false);
                     navigate('/contact');
                   }}
                 >
-                  Get Quote
+                  Get a Free Quote
                 </Button>
-              </div>
-
-              <div className="rounded-3xl bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 text-white p-5 shadow-xl">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/80">Need assistance?</p>
-                <p className="mt-2 text-lg font-bold text-gray-900 dark:text-white">Talk with our experts now.</p>
-                <div className="mt-4 space-y-3">
-                  <Button
-                    block
-                    href="tel:+919907371539"
-                    size="large"
-                    className="!h-12 !rounded-2xl font-semibold"
-                    icon={<PhoneFilled />}
-                  >
-                    Call +91 99073 71539
-                  </Button>
-                  <Button
-                    block
-                    href="mailto:mssafetyc@gmail.com"
-                    size="large"
-                    className="!h-12 !rounded-2xl font-semibold"
-                    icon={<MailFilled />}
-                    type="default"
-                  >
-                    Email mssafetyc@gmail.com
-                  </Button>
+                
+                <div className="mt-6 flex items-center justify-center gap-6 pb-6">
+                  <a href="tel:+919907371539" className="flex flex-col items-center gap-2 group">
+                    <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-orange-600 transition-colors group-hover:bg-orange-100">
+                      <PhoneFilled className="text-xl" />
+                    </div>
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-gray-500">Call</span>
+                  </a>
+                  <a href="mailto:mssafetyc@gmail.com" className="flex flex-col items-center gap-2 group">
+                    <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-blue-600 transition-colors group-hover:bg-blue-100">
+                      <MailFilled className="text-xl" />
+                    </div>
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-gray-500">Email</span>
+                  </a>
                 </div>
-              </div>
-
-              <div className="rounded-3xl bg-white/70 dark:bg-white/10 border border-white/60 dark:border-white/10 px-4 py-3 text-sm text-gray-900 dark:text-gray-300 backdrop-blur-sm">
-                <p className="font-semibold">Office hours</p>
-                <p>Mon - Sat · 9:30 AM to 7:30 PM</p>
               </div>
             </div>
           </Drawer>

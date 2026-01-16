@@ -50,6 +50,15 @@
   --gradient-dark: linear-gradient(135deg, #1f2937 0%, #111827 100%);
   --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
 
+  /* Mobile App-like Styles */
+  --mobile-glass-bg: rgba(255, 255, 255, 0.95);
+  --mobile-glass-border: rgba(255, 255, 255, 0.6);
+  --mobile-shadow-up: 0 -4px 20px rgba(0, 0, 0, 0.1);
+
+  /* Mobile Drawer Specifics */
+  --mobile-drawer-bg: rgba(255, 255, 255, 0.95);
+  --mobile-drawer-border: rgba(226, 232, 240, 0.8);
+
   /* Ant Design compatibility */
   --ant-primary-color: #e65100;
   --ant-link-color: #1677ff;
@@ -76,6 +85,16 @@
   /* Dark mode glassmorphism */
   --glass-bg: rgba(24, 24, 31, 0.8);
   --glass-border: rgba(255, 255, 255, 0.1);
+
+  /* Mobile App-like Styles (Dark) */
+  --mobile-glass-bg: rgba(30, 30, 35, 0.9);
+  --mobile-glass-border: rgba(255, 255, 255, 0.1);
+  --mobile-shadow-up: 0 -4px 20px rgba(0, 0, 0, 0.3);
+
+  /* Mobile Drawer Dark Mode Overrides */
+  --mobile-drawer-bg: rgba(20, 20, 25, 0.95);
+  --mobile-drawer-border: rgba(255, 255, 255, 0.1);
+
 
   /* Dark mode shadows - more subtle with color tints */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);

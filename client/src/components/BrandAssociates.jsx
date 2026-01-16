@@ -98,6 +98,7 @@ export default function BrandAssociates() {
                     <img 
                       src={partner.logo} 
                       alt={`${partner.name} logo`}
+                      loading="lazy"
                       className="max-h-full max-w-full object-contain transition-all duration-300 group-hover:scale-110"
                     />
                   </div>
