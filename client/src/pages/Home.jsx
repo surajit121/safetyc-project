@@ -4,6 +4,7 @@ import SEO from "../components/SEO.jsx";
 import Hero from "../components/Hero.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
 import CTA from "../components/CTA.jsx";
+import BrandAssociates from "../components/BrandAssociates.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
 
 export default function Home() {
@@ -195,7 +196,12 @@ export default function Home() {
           })()}
         </motion.div>
       )}
+
     </motion.section>
+
+    {/* Brand Associates Section */}
+    <BrandAssociates />
+
     <motion.div
       initial="hidden"
       whileInView="visible"

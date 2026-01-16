@@ -1,4 +1,4 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Layout, Menu, Button, Drawer } from "antd";
 import { MenuOutlined, PhoneFilled, MailFilled } from "@ant-design/icons";
 import { useMemo, useState, useEffect } from "react";
@@ -31,6 +31,7 @@ function BrandMark() {
 
 export default function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { theme } = useTheme();
@@ -84,7 +85,7 @@ export default function Navbar() {
 
   return (
     <Header
-      className={`sticky top-0 z-50 px-4 shadow-sm transition-colors flex items-center min-h-[64px] ${scrolled ? 'scrolled' : ''}`}
+      className={`sticky top-0 z-50 px-4 md:px-8 shadow-sm transition-colors flex items-center min-h-[80px] ${scrolled ? 'scrolled' : ''}`}
       style={{ backgroundColor: 'var(--header-bg)' }}
     >
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-4 w-full">
@@ -96,16 +97,10 @@ export default function Navbar() {
           >
             <BrandMark />
           </Link>
-          
-          <ThemeToggle 
-            className="hidden md:flex theme-toggle-navbar" 
-            variant="default"
-            key={`theme-toggle-${theme}`} 
-          />
         </div>
 
-        {/* Desktop menu */}
-        <div className="hidden md:flex items-center justify-end">
+        {/* Desktop menu - CENTERED */}
+        <div className="hidden md:flex flex-1 items-center justify-center">
           <Menu
             mode="horizontal"
             selectedKeys={selectedKeys}
@@ -127,8 +122,24 @@ export default function Navbar() {
                 {l.label}
               </NavLink>
             }))}
-            className="border-0 bg-transparent"
+            className="border-0 bg-transparent min-w-[500px] justify-center"
           />
+        </div>
+
+        {/* Right side actions - Theme Toggle & Get Quote */}
+        <div className="hidden md:flex items-center gap-4">
+          <ThemeToggle 
+            className="hidden md:flex theme-toggle-navbar" 
+            variant="default"
+            key={`theme-toggle-${theme}`} 
+          />
+          <Button 
+            type="primary" 
+            className="bg-blue-600 hover:bg-blue-700 font-medium px-6 h-10 rounded-lg"
+            onClick={() => navigate('/contact')}
+          >
+            Get Quote
+          </Button>
         </div>
 
         {/* Mobile menu button */}
@@ -197,6 +208,19 @@ export default function Navbar() {
                   );
                 })}
               </nav>
+
+              <div className="px-1">
+                <Button 
+                  type="primary" 
+                  className="bg-blue-600 hover:bg-blue-700 font-medium h-12 rounded-xl text-lg w-full shadow-md shadow-blue-500/20"
+                  onClick={() => {
+                    setOpen(false);
+                    navigate('/contact');
+                  }}
+                >
+                  Get Quote
+                </Button>
+              </div>
 
               <div className="rounded-3xl bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 text-white p-5 shadow-xl">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/80">Need assistance?</p>

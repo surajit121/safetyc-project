@@ -1,0 +1,134 @@
+import { motion } from "framer-motion";
+import { useTheme } from "../context/ThemeContext";
+import { useNavigate } from "react-router-dom";
+
+export default function BrandAssociates() {
+  const { theme } = useTheme();
+  const navigate = useNavigate();
+  
+  const partners = [
+    { name: "CP Plus", category: "CCTV Partner" },
+    { name: "Hik Vision", category: "CCTV Partner" },
+    { name: "Dahua", category: "CCTV Partner" },
+    { name: "Prama", category: "CCTV Partner" },
+    { name: "Consistent", category: "CCTV Partner" },
+    { name: "Western Digital", category: "Storage Partner" },
+    { name: "Seagate", category: "Storage Partner" }
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  };
+
+  return (
+    <section 
+      className={`py-20 relative overflow-hidden transition-colors duration-300 ${
+        theme === 'dark' ? 'bg-zinc-950 text-white' : 'bg-white text-gray-900'
+      }`}
+    >
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+        <div className={`absolute -top-24 -right-24 w-96 h-96 rounded-full blur-3xl ${
+          theme === 'dark' ? 'bg-orange-900/10' : 'bg-orange-100'
+        }`} />
+        <div className={`absolute -bottom-24 -left-24 w-96 h-96 rounded-full blur-3xl ${
+          theme === 'dark' ? 'bg-red-900/10' : 'bg-red-100'
+        }`} />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={containerVariants}
+        >
+          <div className="text-center mb-16">
+            <h2 className={`text-sm font-semibold tracking-widest uppercase mb-3 ${
+              theme === 'dark' ? 'text-orange-400' : 'text-orange-600'
+            }`}>
+              Our Ecosystem
+            </h2>
+            <h3 className={`text-3xl md:text-4xl font-bold mb-6 ${
+              theme === 'dark' ? 'text-white' : 'text-gray-900'
+            }`}>
+              Trusted Technology Partners
+            </h3>
+            <div className="h-1 w-20 bg-gradient-to-r from-orange-500 to-red-500 mx-auto rounded-full" />
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {partners.map((partner) => (
+              <motion.div
+                key={partner.name}
+                variants={itemVariants}
+                className="group relative"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-300" />
+                <div className={`relative h-full backdrop-blur-sm border p-8 rounded-xl flex flex-col items-center justify-center text-center transition-transform duration-300 group-hover:-translate-y-1 ${
+                  theme === 'dark' 
+                    ? 'bg-zinc-900/90 border-zinc-800' 
+                    : 'bg-white border-gray-100 shadow-sm'
+                }`}>
+                  <span className={`text-xs font-medium uppercase tracking-wider mb-3 ${
+                    theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
+                  }`}>
+                    {partner.category}
+                  </span>
+                  <h4 className={`text-xl md:text-2xl font-bold group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-orange-600 group-hover:to-red-600 transition-all duration-300 ${
+                    theme === 'dark' ? 'text-gray-100' : 'text-gray-800'
+                  }`}>
+                    {partner.name}
+                  </h4>
+                </div>
+              </motion.div>
+            ))}
+            
+            {/* Call to action card */}
+            <motion.div
+              variants={itemVariants}
+              onClick={() => navigate('/contact')}
+              className={`group relative flex flex-col items-center justify-center p-8 rounded-xl border-2 border-dashed transition-colors duration-300 cursor-pointer ${
+                theme === 'dark' 
+                  ? 'border-zinc-800 hover:border-orange-600' 
+                  : 'border-gray-200 hover:border-orange-400'
+              }`}
+            >
+              <span className={`text-sm font-medium mb-2 transition-colors ${
+                theme === 'dark' 
+                  ? 'text-gray-500 group-hover:text-orange-400' 
+                  : 'text-gray-400 group-hover:text-orange-500'
+              }`}>
+                Become a Partner
+              </span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className={`h-6 w-6 transition-colors ${
+                  theme === 'dark' 
+                    ? 'text-gray-600 group-hover:text-orange-400' 
+                    : 'text-gray-300 group-hover:text-orange-500'
+                }`}
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
