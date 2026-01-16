@@ -2,18 +2,27 @@ import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 
+// Import logos
+import cpPlusLogo from "../assets/brands/cp-plus-logos.png";
+import hikVisionLogo from "../assets/brands/hikvission-logos.png";
+import dahuaLogo from "../assets/brands/dahua-logo.png";
+import pramaLogo from "../assets/brands/Prama-Logo_cropped.png";
+import consistentLogo from "../assets/brands/consistent-logo.png";
+import westernDigitalLogo from "../assets/brands/western-logos.png";
+import seagateLogo from "../assets/brands/seagate-logo.png";
+
 export default function BrandAssociates() {
   const { theme } = useTheme();
   const navigate = useNavigate();
   
   const partners = [
-    { name: "CP Plus", category: "CCTV Partner" },
-    { name: "Hik Vision", category: "CCTV Partner" },
-    { name: "Dahua", category: "CCTV Partner" },
-    { name: "Prama", category: "CCTV Partner" },
-    { name: "Consistent", category: "CCTV Partner" },
-    { name: "Western Digital", category: "Storage Partner" },
-    { name: "Seagate", category: "Storage Partner" }
+    { name: "CP Plus", category: "CCTV Partner", logo: cpPlusLogo },
+    { name: "Hik Vision", category: "CCTV Partner", logo: hikVisionLogo },
+    { name: "Dahua", category: "CCTV Partner", logo: dahuaLogo },
+    { name: "Prama", category: "CCTV Partner", logo: pramaLogo },
+    { name: "Consistent", category: "CCTV Partner", logo: consistentLogo },
+    { name: "Western Digital", category: "Storage Partner", logo: westernDigitalLogo },
+    { name: "Seagate", category: "Storage Partner", logo: seagateLogo }
   ];
 
   const containerVariants = {
@@ -76,21 +85,22 @@ export default function BrandAssociates() {
                 className="group relative"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-300" />
-                <div className={`relative h-full backdrop-blur-sm border p-8 rounded-xl flex flex-col items-center justify-center text-center transition-transform duration-300 group-hover:-translate-y-1 ${
+                <div className={`relative h-full backdrop-blur-sm border p-6 rounded-xl flex flex-col items-center justify-center text-center transition-transform duration-300 group-hover:-translate-y-1 ${
                   theme === 'dark' 
-                    ? 'bg-zinc-900/90 border-zinc-800' 
+                    ? 'bg-white/95 border-zinc-800' 
                     : 'bg-white border-gray-100 shadow-sm'
                 }`}>
-                  <span className={`text-xs font-medium uppercase tracking-wider mb-3 ${
-                    theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
-                  }`}>
+                  <span className={`text-xs font-bold uppercase tracking-wider mb-4 text-gray-400`}>
                     {partner.category}
                   </span>
-                  <h4 className={`text-xl md:text-2xl font-bold group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-orange-600 group-hover:to-red-600 transition-all duration-300 ${
-                    theme === 'dark' ? 'text-gray-100' : 'text-gray-800'
-                  }`}>
-                    {partner.name}
-                  </h4>
+                  
+                  <div className="h-16 w-full flex items-center justify-center px-2">
+                    <img 
+                      src={partner.logo} 
+                      alt={`${partner.name} logo`}
+                      className="max-h-full max-w-full object-contain transition-all duration-300 group-hover:scale-110"
+                    />
+                  </div>
                 </div>
               </motion.div>
             ))}
