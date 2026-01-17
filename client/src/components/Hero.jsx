@@ -2,10 +2,98 @@ import { Link } from "react-router-dom";
 import { Typography, Button, Row, Col, Card, Tag, Space, Divider } from "antd";
 import { ArrowRightOutlined, SafetyOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext.jsx";
 
 // Import image dynamically to improve initial load time
 const buildingImageUrl = new URL('../assets/building.png', import.meta.url).href;
+
+// Animated background component
+function AnimatedBackground({ theme }) {
+  return (
+    <div className="hero-gradient-bg">
+      {/* Primary gradient blob */}
+      <motion.div
+        className={`hero-gradient-blob w-[500px] h-[500px] -top-40 -right-40 ${
+          theme === 'dark' ? 'bg-orange-600' : 'bg-orange-300'
+        }`}
+        animate={{
+          scale: [1, 1.2, 1],
+          rotate: [0, 90, 0],
+          x: [0, 30, 0],
+          y: [0, -20, 0],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      
+      {/* Secondary gradient blob */}
+      <motion.div
+        className={`hero-gradient-blob w-[400px] h-[400px] -bottom-32 -left-32 ${
+          theme === 'dark' ? 'bg-blue-600' : 'bg-blue-200'
+        }`}
+        animate={{
+          scale: [1.2, 1, 1.2],
+          rotate: [0, -90, 0],
+          x: [0, -20, 0],
+          y: [0, 30, 0],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      
+      {/* Tertiary accent blob */}
+      <motion.div
+        className={`hero-gradient-blob w-[300px] h-[300px] top-1/3 left-1/4 ${
+          theme === 'dark' ? 'bg-purple-600/30' : 'bg-purple-200/50'
+        }`}
+        animate={{
+          scale: [1, 1.3, 1],
+          x: [0, 50, 0],
+          y: [0, -30, 0],
+        }}
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      
+      {/* Floating geometric shapes */}
+      <motion.div
+        className={`absolute top-20 right-[20%] w-4 h-4 rounded-full ${
+          theme === 'dark' ? 'bg-orange-400/40' : 'bg-orange-400/30'
+        }`}
+        animate={{ y: [0, -15, 0], opacity: [0.4, 0.8, 0.4] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className={`absolute bottom-32 left-[15%] w-3 h-3 rounded-full ${
+          theme === 'dark' ? 'bg-blue-400/40' : 'bg-blue-400/30'
+        }`}
+        animate={{ y: [0, -20, 0], opacity: [0.3, 0.7, 0.3] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+      />
+      <motion.div
+        className={`absolute top-1/2 right-[10%] w-5 h-5 rounded-lg rotate-45 ${
+          theme === 'dark' ? 'bg-orange-300/20' : 'bg-orange-300/40'
+        }`}
+        animate={{ 
+          y: [0, -25, 0], 
+          rotate: [45, 90, 45],
+          opacity: [0.2, 0.5, 0.2] 
+        }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      />
+    </div>
+  );
+}
 
 export default function Hero() {
   const { theme } = useTheme();
@@ -33,16 +121,29 @@ export default function Hero() {
   const clientSectors = ["Government Institutions", "Manufacturing", "Healthcare", "Educational Institutions", "Commercial Buildings"];
   
   return (
-    <section className={theme === 'dark' ? 'bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-blue-50 via-slate-50 to-white'}>
+    <section className={`relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-blue-50 via-slate-50 to-white'}`}>
+      {/* Animated background */}
+      <AnimatedBackground theme={theme} />
       <div className="max-w-6xl mx-auto px-4 py-16 lg:py-20">
         <Row gutter={[32, 40]} align="middle">
           <Col xs={24} lg={14}>
-            <div className="mb-4 flex items-center">
-              <SafetyOutlined className={`text-xl ${theme === 'dark' ? 'text-orange-400' : 'text-orange-500'} mr-2`} />
-              <div className={`text-sm md:text-base px-3 py-1 rounded-md font-medium ${
-                theme === 'dark' ? 'bg-orange-900/50 text-orange-200' : 'bg-orange-100 text-orange-800'
+            <div className="mb-4 flex items-center flex-wrap gap-2">
+              <div className="flex items-center">
+                <SafetyOutlined className={`text-xl ${theme === 'dark' ? 'text-orange-400' : 'text-orange-500'} mr-2`} />
+                <div className={`text-sm md:text-base px-3 py-1 rounded-md font-medium ${
+                  theme === 'dark' ? 'bg-orange-900/50 text-orange-200' : 'bg-orange-100 text-orange-800'
+                }`}>
+                  Trusted by enterprises across West Bengal
+                </div>
+              </div>
+              
+              {/* Live Support Badge */}
+              <div className={`live-indicator text-xs md:text-sm px-3 py-1 rounded-full font-medium ${
+                theme === 'dark' 
+                  ? 'bg-green-900/30 text-green-300 border border-green-700/50' 
+                  : 'bg-green-50 text-green-700 border border-green-200'
               }`}>
-                Trusted by enterprises across West Bengal
+                Live Support Available
               </div>
             </div>
             

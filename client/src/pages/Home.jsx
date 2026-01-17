@@ -5,6 +5,9 @@ import Hero from "../components/Hero.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
 import CTA from "../components/CTA.jsx";
 import BrandAssociates from "../components/BrandAssociates.jsx";
+import StatsSection from "../components/StatsSection.jsx";
+import Testimonials from "../components/Testimonials.jsx";
+import FeatureHighlights from "../components/FeatureHighlights.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
 
 export default function Home() {
@@ -96,6 +99,8 @@ export default function Home() {
        path="/"
        keywords="fire extinguisher Bankura, CCTV installation Bankura, security systems Bankura, fire safety equipment Bankura"
      />
+    
+    {/* Hero Section */}
     <motion.div
       initial="hidden"
       animate="visible"
@@ -103,105 +108,137 @@ export default function Home() {
     >
       <Hero />
     </motion.div>
+    
+    {/* Stats Section - Social Proof */}
+    <StatsSection />
+    
+    {/* Core Services Section */}
     <motion.section
-      className="max-w-6xl mx-auto px-4 py-12"
+      className={`py-16 md:py-20 transition-colors duration-300 ${
+        theme === 'dark' ? 'bg-zinc-900' : 'bg-white'
+      }`}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
     >
-      <motion.h2
-        className="text-2xl font-bold mb-6"
-        variants={sectionHeadingVariants}
-      >
-        Core Services
-      </motion.h2>
-      
-      {/* Loading state */}
-      {loading && (
-        <div className="py-12 flex justify-center" role="status" aria-live="polite">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600 dark:border-blue-400" aria-hidden="true" />
-          <span className="sr-only">Loading services...</span>
-        </div>
-      )}
-      
-      {/* Error state */}
-      {!loading && error && (
-        <div className="text-center py-6 mb-6">
-          <p className="text-red-600 mb-4">Failed to load services. {error.message || ''}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-          >
-            Try Again
-          </button>
-        </div>
-      )}
-      
-      {/* Empty state */}
-      {!loading && !error && Array.isArray(services) && services.length === 0 && (
-        <div className="text-center py-8">
-          <p className="text-gray-600">No services available at the moment.</p>
-        </div>
-      )}
-      
-      {/* Services display */}
-      {!loading && !error && Array.isArray(services) && services.length > 0 && (
-        <motion.div
-          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
-          variants={servicesContainerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Section Header */}
+        <motion.div 
+          className="text-center mb-12"
+          variants={sectionHeadingVariants}
         >
-          {(() => {
-            // Define the desired order of services
-            const serviceOrder = [
-              "fire safety", 
-              "cctv", 
-              "biometric", 
-              "solar", 
-              "computer", 
-              "electrical"
-            ];
-            
-            // Create a copy and sort based on our defined order
-            const sortedServices = [...services].sort((a, b) => {
-              const titleA = (a.title || '').toLowerCase();
-              const titleB = (b.title || '').toLowerCase();
+          <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 ${
+            theme === 'dark' 
+              ? 'bg-orange-500/10 text-orange-400' 
+              : 'bg-orange-100 text-orange-600'
+          }`}>
+            What We Offer
+          </span>
+          <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${
+            theme === 'dark' ? 'text-white' : 'text-gray-900'
+          }`}>
+            Core Services
+          </h2>
+          <p className={`max-w-2xl mx-auto ${
+            theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+          }`}>
+            Comprehensive safety and security solutions tailored for your needs
+          </p>
+        </motion.div>
+        
+        {/* Loading state */}
+        {loading && (
+          <div className="py-12 flex justify-center" role="status" aria-live="polite">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500" aria-hidden="true" />
+            <span className="sr-only">Loading services...</span>
+          </div>
+        )}
+        
+        {/* Error state */}
+        {!loading && error && (
+          <div className="text-center py-6 mb-6">
+            <p className="text-red-600 mb-4">Failed to load services. {error.message || ''}</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="px-6 py-2.5 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+        
+        {/* Empty state */}
+        {!loading && !error && Array.isArray(services) && services.length === 0 && (
+          <div className="text-center py-8">
+            <p className="text-gray-600">No services available at the moment.</p>
+          </div>
+        )}
+        
+        {/* Services display */}
+        {!loading && !error && Array.isArray(services) && services.length > 0 && (
+          <motion.div
+            className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3"
+            variants={servicesContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+          >
+            {(() => {
+              // Define the desired order of services
+              const serviceOrder = [
+                "fire safety", 
+                "cctv", 
+                "biometric", 
+                "solar", 
+                "computer", 
+                "electrical"
+              ];
               
-              // Find the position of each service in our desired order
-              let indexA = -1;
-              let indexB = -1;
-              
-              serviceOrder.forEach((keyword, index) => {
-                if (titleA.includes(keyword)) indexA = index;
-                if (titleB.includes(keyword)) indexB = index;
+              // Create a copy and sort based on our defined order
+              const sortedServices = [...services].sort((a, b) => {
+                const titleA = (a.title || '').toLowerCase();
+                const titleB = (b.title || '').toLowerCase();
+                
+                // Find the position of each service in our desired order
+                let indexA = -1;
+                let indexB = -1;
+                
+                serviceOrder.forEach((keyword, index) => {
+                  if (titleA.includes(keyword)) indexA = index;
+                  if (titleB.includes(keyword)) indexB = index;
+                });
+                
+                // Sort by our defined order
+                if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+                if (indexA !== -1) return -1;
+                if (indexB !== -1) return 1;
+                return 0;
               });
               
-              // Sort by our defined order
-              if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-              if (indexA !== -1) return -1;
-              if (indexB !== -1) return 1;
-              return 0;
-            });
-            
-            return sortedServices.slice(0, 6).map(s => {
-              // Don't include images in the home page service cards
-              return (
-                <motion.div key={s._id || s.slug} variants={serviceCardVariants} className="h-full">
-                  <ServiceCard {...s} />
-                </motion.div>
-              );
-            });
-          })()}
-        </motion.div>
-      )}
-
+              return sortedServices.slice(0, 6).map(s => {
+                // Don't include images in the home page service cards
+                return (
+                  <motion.div key={s._id || s.slug} variants={serviceCardVariants} className="h-full">
+                    <ServiceCard {...s} />
+                  </motion.div>
+                );
+              });
+            })()}
+          </motion.div>
+        )}
+      </div>
     </motion.section>
-
+    
+    {/* Feature Highlights Section */}
+    <FeatureHighlights />
+    
+    {/* Testimonials Section */}
+    <Testimonials />
+    
     {/* Brand Associates Section */}
     <BrandAssociates />
 
+    {/* CTA Section */}
     <motion.div
       initial="hidden"
       whileInView="visible"
@@ -213,3 +250,4 @@ export default function Home() {
   </div>
 );
 }
+

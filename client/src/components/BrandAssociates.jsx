@@ -10,6 +10,11 @@ import pramaLogo from "../assets/brands/Prama-Logo_cropped.png";
 import consistentLogo from "../assets/brands/consistent-logo.png";
 import westernDigitalLogo from "../assets/brands/western-logos.png";
 import seagateLogo from "../assets/brands/seagate-logo.png";
+import matrixLogo from "../assets/brands/Matrix-ComSec_Logo.png";
+import esslLogo from "../assets/brands/esslogo.png";
+import safetyOneLogo from "../assets/brands/safety-one-industries-logo-219x77-1.png";
+import firePartner1 from "../assets/brands/footer-logo.png";
+import firePartner2 from "../assets/brands/img-3712-90x90 (1).png";
 
 export default function BrandAssociates() {
   const { theme } = useTheme();
@@ -22,7 +27,12 @@ export default function BrandAssociates() {
     { name: "Prama", category: "CCTV Partner", logo: pramaLogo },
     { name: "Consistent", category: "CCTV Partner", logo: consistentLogo },
     { name: "Western Digital", category: "Storage Partner", logo: westernDigitalLogo },
-    { name: "Seagate", category: "Storage Partner", logo: seagateLogo }
+    { name: "Seagate", category: "Storage Partner", logo: seagateLogo },
+    { name: "Matrix", category: "Biometrics Partner", logo: matrixLogo },
+    { name: "eSSL", category: "Biometrics Partner", logo: esslLogo },
+    { name: "Safety One", category: "Fire Safety Partner", logo: safetyOneLogo },
+    { name: "Fire Partner", category: "Fire Safety Partner", logo: firePartner1 },
+    { name: "Fire Partner", category: "Fire Safety Partner", logo: firePartner2 }
   ];
 
   const containerVariants = {
