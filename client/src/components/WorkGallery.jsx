@@ -94,6 +94,7 @@ export default function WorkGallery() {
                 alt={photo.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="lazy"
+                decoding="async"
               />
 
               {/* Gradient Overlay */}

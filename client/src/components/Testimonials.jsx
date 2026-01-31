@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useTheme } from "../context/ThemeContext.jsx";
 import { StarFilled, LeftOutlined, RightOutlined } from "@ant-design/icons";
@@ -39,22 +39,25 @@ const testimonials = [
   },
 ];
 
-// Star rating component
-function StarRating({ rating }) {
+// Star rating component - memoized for performance
+const StarRating = memo(function StarRating({ rating }) {
   return (
     <div className="flex gap-1">
       {[...Array(5)].map((_, i) => (
         <StarFilled 
           key={i} 
-          className={i < rating ? "text-amber-400" : "text-gray-300"} 
+          style={{ 
+            color: i < rating ? '#FFD700' : '#D1D5DB',
+            fontSize: '18px'
+          }} 
         />
       ))}
     </div>
   );
-}
+});
 
-// Individual testimonial card
-function TestimonialCard({ testimonial, isActive }) {
+// Individual testimonial card - memoized for performance
+const TestimonialCard = memo(function TestimonialCard({ testimonial, isActive }) {
   const { theme } = useTheme();
   
   return (
@@ -103,7 +106,7 @@ function TestimonialCard({ testimonial, isActive }) {
       </div>
     </motion.div>
   );
-}
+});
 
 export default function Testimonials() {
   const { theme } = useTheme();

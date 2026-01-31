@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, memo } from "react";
 import { motion, useInView } from "framer-motion";
 import { useTheme } from "../context/ThemeContext.jsx";
 import { 
@@ -46,8 +46,8 @@ function useCounter(end, duration = 2000, startOnView = true, isInView = true) {
   return count;
 }
 
-// Individual stat card component
-function StatCard({ icon: Icon, value, suffix = "", label, delay = 0 }) {
+// Individual stat card component - memoized for performance
+const StatCard = memo(function StatCard({ icon: Icon, value, suffix = "", label, delay = 0 }) {
   const { theme } = useTheme();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
@@ -92,7 +92,7 @@ function StatCard({ icon: Icon, value, suffix = "", label, delay = 0 }) {
       </p>
     </motion.div>
   );
-}
+});
 
 export default function StatsSection() {
   const { theme } = useTheme();

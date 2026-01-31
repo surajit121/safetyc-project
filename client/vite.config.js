@@ -35,8 +35,11 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'ui-vendor': ['antd', '@ant-design/icons'],
+          'mui-vendor': ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled'],
+          'animation-vendor': ['framer-motion'],
+          'icons-vendor': ['react-icons'],
           'toast-vendor': ['react-toastify']
         },
         chunkFileNames: 'assets/js/[name]-[hash].js',

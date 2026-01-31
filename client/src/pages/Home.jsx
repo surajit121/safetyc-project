@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import SEO from "../components/SEO.jsx";
 import Hero from "../components/Hero.jsx";
@@ -16,17 +16,18 @@ export default function Home() {
   const [error, setError] = useState(null);
   const { theme } = useTheme();
 
-  const heroVariants = {
+  // Memoize animation variants to prevent recreation on each render
+  const heroVariants = useMemo(() => ({
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
-  };
+  }), []);
 
-  const sectionHeadingVariants = {
+  const sectionHeadingVariants = useMemo(() => ({
     hidden: { opacity: 0, y: 16 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-  };
+  }), []);
 
-  const servicesContainerVariants = {
+  const servicesContainerVariants = useMemo(() => ({
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -35,25 +36,25 @@ export default function Home() {
         delayChildren: 0.1,
       },
     },
-  };
+  }), []);
 
-  const serviceCardVariants = {
+  const serviceCardVariants = useMemo(() => ({
     hidden: { opacity: 0, y: 24 },
     visible: {
       opacity: 1,
       y: 0,
       transition: { duration: 0.5, ease: "easeOut" },
     },
-  };
+  }), []);
 
-  const ctaVariants = {
+  const ctaVariants = useMemo(() => ({
     hidden: { opacity: 0, scale: 0.96 },
     visible: {
       opacity: 1,
       scale: 1,
       transition: { duration: 0.6, ease: "easeOut" },
     },
-  };
+  }), []);
 
   const IS_DEV = import.meta.env.MODE !== 'production';
 

@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
 import { Typography, Button, Row, Col, Card, Tag, Space, Divider } from "antd";
 import { ArrowRightOutlined, SafetyOutlined, CheckCircleOutlined } from "@ant-design/icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo, useMemo } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext.jsx";
 
 // Import image dynamically to improve initial load time
 const buildingImageUrl = new URL('../assets/building.png', import.meta.url).href;
 
-// Animated background component
-function AnimatedBackground({ theme }) {
+// Animated background component - memoized to prevent unnecessary re-renders
+const AnimatedBackground = memo(function AnimatedBackground({ theme }) {
   return (
     <div className="hero-gradient-bg">
       {/* Primary gradient blob */}
@@ -93,7 +93,7 @@ function AnimatedBackground({ theme }) {
       />
     </div>
   );
-}
+});
 
 export default function Hero() {
   const { theme } = useTheme();

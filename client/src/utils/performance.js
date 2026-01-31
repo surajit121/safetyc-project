@@ -54,3 +54,58 @@ export const monitorPageSpeed = () => {
     }
   }
 };
+
+/**
+ * Debounce function - delays execution until after wait ms have elapsed
+ * @param {Function} func - Function to debounce
+ * @param {number} wait - Milliseconds to delay
+ * @returns {Function} Debounced function
+ */
+export function debounce(func, wait = 250) {
+  let timeoutId = null;
+  
+  return function (...args) {
+    const context = this;
+    
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    
+    timeoutId = setTimeout(() => {
+      func.apply(context, args);
+      timeoutId = null;
+    }, wait);
+  };
+}
+
+/**
+ * Throttle function - ensures function is called at most once per wait ms
+ * @param {Function} func - Function to throttle
+ * @param {number} wait - Milliseconds between allowed calls
+ * @returns {Function} Throttled function
+ */
+export function throttle(func, wait = 100) {
+  let lastTime = 0;
+  let timeoutId = null;
+  
+  return function (...args) {
+    const context = this;
+    const now = Date.now();
+    const remaining = wait - (now - lastTime);
+    
+    if (remaining <= 0 || remaining > wait) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+      lastTime = now;
+      func.apply(context, args);
+    } else if (!timeoutId) {
+      timeoutId = setTimeout(() => {
+        lastTime = Date.now();
+        timeoutId = null;
+        func.apply(context, args);
+      }, remaining);
+    }
+  };
+}
