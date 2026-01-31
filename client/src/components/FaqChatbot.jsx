@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 const INITIAL_MESSAGE = {
   id: "welcome",
   author: "bot",
-  text: "Hi! I'm the safetyc assistant. Ask me anything about our services, projects, or support hours.",
+  text: "Hi! I'm the safetyc AI assistant. Ask me anything about our services, projects, or support hours.",
 };
 
 const GREETING_RESPONSE =
@@ -36,6 +36,52 @@ const API_BASE_URL = (() => {
   return "/api";
 })();
 
+// Modern AI Chat Icon Components
+const ChatBotIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C6.48 2 2 6.48 2 12C2 14.85 3.23 17.41 5.18 19.18L4 22L7.24 20.53C8.67 21.14 10.29 21.5 12 21.5C17.52 21.5 22 17.02 22 11.5C22 6.48 17.52 2 12 2Z" fill="currentColor" fillOpacity="0.2"/>
+    <path d="M12 3C7.03 3 3 7.03 3 12C3 14.59 4.13 16.93 5.91 18.53L5.2 20.8L7.8 19.65C9.08 20.2 10.5 20.5 12 20.5C16.97 20.5 21 16.47 21 11.5C21 6.53 16.97 2.5 12 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="8" cy="11" r="1.5" fill="currentColor"/>
+    <circle cx="12" cy="11" r="1.5" fill="currentColor"/>
+    <circle cx="16" cy="11" r="1.5" fill="currentColor"/>
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const SendIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const BotAvatar = () => (
+  <div className="faq-chatbot-avatar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" fill="currentColor" fillOpacity="0.2"/>
+      <circle cx="9" cy="10" r="1.5" fill="currentColor"/>
+      <circle cx="15" cy="10" r="1.5" fill="currentColor"/>
+      <path d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  </div>
+);
+
+// Typing Indicator Component
+const TypingIndicator = () => (
+  <div className="faq-chatbot-typing">
+    <BotAvatar />
+    <div className="faq-chatbot-typing-dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+);
+
 export default function FaqChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [faqs, setFaqs] = useState([]);
@@ -49,6 +95,7 @@ export default function FaqChatbot() {
   const messagesContainerRef = useRef(null);
   const panelRef = useRef(null);
   const lastMessageRef = useRef(null);
+  const inputRef = useRef(null);
 
   // Fetch FAQs once so we can surface suggestions and offline answers
   useEffect(() => {
@@ -74,6 +121,13 @@ export default function FaqChatbot() {
 
     fetchFaqs();
   }, []);
+
+  // Focus input when panel opens
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -117,7 +171,7 @@ export default function FaqChatbot() {
     });
 
     return () => cancelAnimationFrame(rafId);
-  }, [messages, isOpen]);
+  }, [messages, isOpen, loading]);
 
   const popularQuestions = useMemo(() => faqs.slice(0, 3), [faqs]);
 
@@ -225,9 +279,17 @@ export default function FaqChatbot() {
       {isOpen && (
         <div ref={panelRef} className="faq-chatbot-panel" aria-live="polite">
           <header className="faq-chatbot-header">
-            <div>
-              <p className="faq-chatbot-title">Ask safetyc</p>
-              <p className="faq-chatbot-subtitle">Instant answers to common questions</p>
+            <div className="faq-chatbot-header-left">
+              <div className="faq-chatbot-header-icon">
+                <ChatBotIcon />
+                <span className="faq-chatbot-status-dot"></span>
+              </div>
+              <div>
+                <p className="faq-chatbot-title">safetyc Assistant</p>
+                <p className="faq-chatbot-subtitle">
+                  <span className="faq-chatbot-status-text">Online</span> • Typically replies instantly
+                </p>
+              </div>
             </div>
             <button
               type="button"
@@ -235,7 +297,7 @@ export default function FaqChatbot() {
               onClick={() => setIsOpen(false)}
               aria-label="Close FAQ chatbot"
             >
-              ×
+              <CloseIcon />
             </button>
           </header>
 
@@ -251,9 +313,13 @@ export default function FaqChatbot() {
                 ref={index === messages.length - 1 ? lastMessageRef : null}
                 className={`faq-chatbot-message faq-chatbot-message-${message.author}`}
               >
-                {renderMessage(message)}
+                {message.author === "bot" && <BotAvatar />}
+                <div className="faq-chatbot-message-content">
+                  {renderMessage(message)}
+                </div>
               </div>
             ))}
+            {loading && <TypingIndicator />}
           </div>
 
           <form className="faq-chatbot-form" onSubmit={handleSubmit}>
@@ -261,16 +327,21 @@ export default function FaqChatbot() {
               Ask the safetyc assistant a question
             </label>
             <input
+              ref={inputRef}
               id="faq-chatbot-input"
               type="text"
               value={input}
               onChange={(event) => setInput(event.target.value)}
-              placeholder="Type your question..."
+              placeholder="Type your message..."
               autoComplete="off"
               disabled={loading}
             />
-            <button type="submit" disabled={loading || !input.trim()}>
-              {loading ? "…" : "Send"}
+            <button 
+              type="submit" 
+              disabled={loading || !input.trim()}
+              aria-label="Send message"
+            >
+              <SendIcon />
             </button>
           </form>
 
@@ -282,7 +353,7 @@ export default function FaqChatbot() {
 
           {popularQuestions.length > 0 && (
             <div className="faq-chatbot-suggestions">
-              <p className="faq-chatbot-suggestions-title">Popular questions</p>
+              <p className="faq-chatbot-suggestions-title">Quick questions</p>
               <div className="faq-chatbot-suggestions-list">
                 {popularQuestions.map((faq) => (
                   <button
@@ -307,8 +378,10 @@ export default function FaqChatbot() {
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         aria-controls="faq-chatbot-panel"
+        aria-label={isOpen ? "Close chat" : "Open chat assistant"}
       >
-        {isOpen ? "Close" : "Need help?"}
+        {isOpen ? <CloseIcon /> : <ChatBotIcon />}
+        {!isOpen && <span className="faq-chatbot-button-tooltip">Chat with us</span>}
       </button>
     </div>
   );
