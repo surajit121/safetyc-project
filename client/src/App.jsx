@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Layout } from "antd";
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
@@ -10,16 +10,9 @@ import { useTheme } from "./context/ThemeContext.jsx";
 import applyMobileColorFix from "./utils/mobileColorFix.js";
 import { FallbackToastContainer } from "./components/FallbackToast.jsx";
 
-// Lazy load pages for performance
-const Home = lazy(() => import("./pages/Home.jsx"));
-const About = lazy(() => import("./pages/About.jsx"));
-const Services = lazy(() => import("./pages/Services.jsx"));
-const Projects = lazy(() => import("./pages/Projects.jsx"));
-const Clients = lazy(() => import("./pages/Clients.jsx"));
-const Careers = lazy(() => import("./pages/Careers.jsx"));
-const Contact = lazy(() => import("./pages/Contact.jsx"));
-const BookService = lazy(() => import("./pages/BookService.jsx"));
-const NotFound = lazy(() => import("./pages/NotFound.jsx"));
+import { routes } from "./routes.js";
+
+// Lazy load pages moved to routes.js
 
 // Loading fallback
 const PageLoader = () => (
@@ -118,15 +111,9 @@ export default function App() {
         <ScrollToTop />
         <Suspense fallback={<PageLoader />}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/clients" element={<Clients />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/book-service" element={<BookService />} />
-            <Route path="*" element={<NotFound />} />
+            {routes.map(({ path, component: Component }) => (
+              <Route key={path} path={path} element={<Component />} />
+            ))}
           </Routes>
         </Suspense>
       </Layout.Content>

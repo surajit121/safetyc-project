@@ -6,6 +6,7 @@ import { useTheme } from "../context/ThemeContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
 import applyMobileColorFix from "../utils/mobileColorFix.js";
 import { throttle } from "../utils/performance.js";
+import { prefetchRoute } from "../routes.js";
 
 
 const { Header } = Layout;
@@ -112,6 +113,7 @@ export default function Navbar() {
               key: l.path, 
               label: <NavLink 
                 to={l.path} 
+                onMouseEnter={() => prefetchRoute(l.path)}
                 className={({ isActive }) => {
                   // For home link, be very specific about matching only the exact root path
                   if (l.path === "/") {
@@ -202,6 +204,7 @@ export default function Navbar() {
                     <Link
                       key={l.path}
                       to={l.path}
+                      onMouseEnter={() => prefetchRoute(l.path)}
                       onClick={() => setOpen(false)}
                       className={`group relative flex items-center justify-between px-5 py-4 rounded-xl transition-all duration-300 ${
                         isActive
