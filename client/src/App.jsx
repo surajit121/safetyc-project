@@ -49,17 +49,15 @@ export default function App() {
   const location = useLocation();
   
   // Apply mobile color fixes when component mounts, theme changes, or navigation happens
+  // Mobile color fix useEffect removed as improvements are now handled via CSS
+  // to avoid initial load layout thrashing
+  /* 
   useEffect(() => {
-    // Apply mobile fixes immediately
     applyMobileColorFix();
-    
-    // Also reapply after a short delay to catch dynamically rendered elements
-    const fixTimer = setTimeout(() => {
-      applyMobileColorFix();
-    }, 500);
-    
+    const fixTimer = setTimeout(() => { applyMobileColorFix(); }, 500);
     return () => clearTimeout(fixTimer);
-  }, [theme, location.pathname]);
+  }, [theme, location.pathname]); 
+  */
   
   // Detect mobile viewport
   const isMobile = typeof window !== 'undefined' && 

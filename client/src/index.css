@@ -2300,6 +2300,7 @@ a:hover .brand-text {
   border-radius: 50%;
   filter: blur(60px);
   opacity: 0.4;
+  will-change: transform;
 }
 
 .dark .hero-gradient-blob {

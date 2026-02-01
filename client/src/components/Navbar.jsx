@@ -5,6 +5,7 @@ import { useMemo, useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext.jsx";
 import ThemeToggle from "./ThemeToggle.jsx";
 import applyMobileColorFix from "../utils/mobileColorFix.js";
+import { throttle } from "../utils/performance.js";
 
 
 const { Header } = Layout;
@@ -60,11 +61,14 @@ export default function Navbar() {
     return match ? [match.path] : [];
   }, [location.pathname]);
   
+
+  
   // Add scroll detection for navbar shadow effect
   useEffect(() => {
-    const handleScroll = () => {
+    // Throttle scroll handler to improve performance
+    const handleScroll = throttle(() => {
       setScrolled(window.scrollY > 10);
-    };
+    }, 100);
     
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);

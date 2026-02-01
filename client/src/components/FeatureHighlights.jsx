@@ -157,7 +157,7 @@ export default function FeatureHighlights() {
           <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${
             theme === 'dark' ? 'text-white' : 'text-gray-900'
           }`}>
-            The SafetyC Advantage
+            The safetyc Advantage
           </h2>
           <p className={`max-w-2xl mx-auto ${
             theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
