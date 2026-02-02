@@ -149,7 +149,7 @@ export default function Home() {
         
         {/* Loading state */}
         {loading && (
-          <div className="py-12 flex justify-center" role="status" aria-live="polite">
+          <div className="py-12 flex justify-center min-h-[600px] items-center" role="status" aria-live="polite">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500" aria-hidden="true" />
             <span className="sr-only">Loading services...</span>
           </div>

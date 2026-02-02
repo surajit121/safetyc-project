@@ -246,6 +246,8 @@ export default function Hero() {
                   loading="eager" 
                   decoding="async"
                   fetchPriority="high"
+                  width="800"
+                  height="600"
                   onLoad={() => setImageLoaded(true)}
                   style={{
                     maxHeight: '450px',

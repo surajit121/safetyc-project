@@ -11,6 +11,7 @@ import applyMobileColorFix from "./utils/mobileColorFix.js";
 import { FallbackToastContainer } from "./components/FallbackToast.jsx";
 
 import { routes } from "./routes.js";
+import { useEagerPrefetch } from "./hooks/useEagerPrefetch.js";
 
 // Lazy load pages moved to routes.js
 
@@ -40,6 +41,9 @@ try {
 export default function App() {
   const { theme } = useTheme();
   const location = useLocation();
+
+  // Eagerly prefetch critical routes for faster navigation
+  useEagerPrefetch();
   
   // Apply mobile color fixes when component mounts, theme changes, or navigation happens
   // Mobile color fix useEffect removed as improvements are now handled via CSS
