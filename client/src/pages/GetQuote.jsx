@@ -1,0 +1,553 @@
+import { useState, useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { 
+  Steps, 
+  Card, 
+  Form, 
+  Input, 
+  Select, 
+  Button, 
+  Upload, 
+  message, 
+  Row, 
+  Col, 
+  Typography,
+  Radio,
+  InputNumber
+} from "antd";
+import { 
+  FireOutlined, 
+  SafetyOutlined, 
+  VideoCameraOutlined, 
+  ThunderboltOutlined,
+  WarningOutlined,
+  TeamOutlined,
+  ToolOutlined,
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  UploadOutlined,
+  EnvironmentOutlined,
+  HomeOutlined,
+  PhoneOutlined,
+  MailOutlined,
+  UserOutlined,
+  CheckCircleOutlined
+} from "@ant-design/icons";
+import { useTheme } from "../context/ThemeContext.jsx";
+import SEO from "../components/SEO.jsx";
+import axios from "axios";
+import { apiUrl } from "../lib/api.js";
+import { ToastManager } from "../components/FallbackToast.jsx";
+
+const { Title, Text, Paragraph } = Typography;
+const { TextArea } = Input;
+const { Option } = Select;
+
+// Service Categories Data (Reused/Shared structure)
+const serviceCategories = [
+  {
+    id: "fire-safety-installation",
+    icon: FireOutlined,
+    emoji: "🔥",
+    title: "Fire Safety",
+    description: "Installation of alarms, sprinklers, & exits",
+    gradient: "from-red-500 to-orange-500",
+    glowColor: "rgba(239, 68, 68, 0.3)"
+  },
+  {
+    id: "fire-extinguisher-refilling",
+    icon: SafetyOutlined,
+    emoji: "🧯",
+    title: "Extinguisher Service",
+    description: "Refilling and rental availability",
+    gradient: "from-rose-500 to-red-500",
+    glowColor: "rgba(244, 63, 94, 0.3)"
+  },
+  {
+    id: "cctv-surveillance",
+    icon: VideoCameraOutlined,
+    emoji: "📹",
+    title: "CCTV Surveillance",
+    description: "Home & Business camera systems",
+    gradient: "from-blue-500 to-indigo-500",
+    glowColor: "rgba(59, 130, 246, 0.3)"
+  },
+  {
+    id: "electrical-solar",
+    icon: ThunderboltOutlined,
+    emoji: "⚡",
+    title: "Electrical Works",
+    description: "Wiring, repairs, and solar panels",
+    gradient: "from-yellow-500 to-amber-500",
+    glowColor: "rgba(245, 158, 11, 0.3)"
+  },
+  {
+    id: "gps-tracking",
+    icon: EnvironmentOutlined,
+    emoji: "🛰️",
+    title: "GPS Tracking",
+    description: "Vehicle and asset tracking solutions",
+    gradient: "from-green-500 to-emerald-500",
+    glowColor: "rgba(16, 185, 129, 0.3)"
+  },
+  {
+    id: "event-rental",
+    icon: HomeOutlined,
+    emoji: "🎪",
+    title: "Event / Puja Rental",
+    description: "Temporary safety setups for events",
+    gradient: "from-purple-500 to-pink-500",
+    glowColor: "rgba(168, 85, 247, 0.3)"
+  }
+];
+
+export default function GetQuote() {
+  const { theme } = useTheme();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [currentStep, setCurrentStep] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    service: null,
+    siteType: "",
+    siteLocation: "",
+    areaSize: "",
+    name: "",
+    phone: "",
+    email: "",
+    serviceDetails: {},
+    files: [],
+    notes: ""
+  });
+
+  // Handle URL param for pre-selection
+  useEffect(() => {
+    const serviceParam = searchParams.get('service');
+    if (serviceParam) {
+      const matched = serviceCategories.find(s => s.title === serviceParam || s.id === serviceParam);
+      if (matched) {
+        setFormData(prev => ({ ...prev, service: matched }));
+        setCurrentStep(1); // Skip to step 2
+      }
+    }
+  }, [searchParams]);
+
+  const next = () => setCurrentStep(prev => prev + 1);
+  const prev = () => setCurrentStep(prev => prev - 1);
+
+  const handleServiceSelect = (service) => {
+    setFormData(prev => ({ ...prev, service }));
+    next();
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      // Prepare payload - mapping to existing API structure where possible
+      // or formatting into a comprehensive message
+      const description = `
+SERVICE REQUEST: ${formData.service?.title}
+----------------------------------------
+SITE DETAILS:
+Type: ${formData.siteType}
+Location: ${formData.siteLocation}
+Area: ${formData.areaSize} sq ft
+
+SPECIFIC NEEDS:
+${Object.entries(formData.serviceDetails).map(([k, v]) => `${k}: ${v}`).join('\n')}
+
+NOTES:
+${formData.notes}
+      `.trim();
+
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: description
+        // logic for file uploads would go here, likely handling separately or as links
+      };
+
+      // Use direct API URL logic similar to Contact.jsx
+      let url;
+      const apiBase = import.meta.env.VITE_API_URL;
+      if (apiBase === 'safetyc-api') {
+        url = 'https://safetyc-api.onrender.com/api/inquiries';
+      } else {
+        url = apiUrl('/inquiries');
+      }
+
+      await axios.post(url, payload);
+      
+      // Success state
+      setCurrentStep(4); // Move to Success Step
+      
+      // Try using toast if available, otherwise fallback
+      try {
+        import('react-toastify').then(({ toast }) => {
+          toast.success("Quote request received!");
+        });
+      } catch (e) {
+        ToastManager.success("Quote request received!");
+      }
+
+    } catch (error) {
+      console.error("Submission error:", error);
+      try {
+        import('react-toastify').then(({ toast }) => {
+          toast.error("Failed to submit. Please try again.");
+        });
+      } catch (e) {
+        ToastManager.error("Failed to submit. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // --- STEPS RENDERERS ---
+
+  const renderStep1_ServiceSelection = () => (
+    <div className="animate-fade-in">
+      <Title level={3} className={`text-center mb-8 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+        What service do you need?
+      </Title>
+      <Row gutter={[24, 24]}>
+        {serviceCategories.map((service, index) => (
+          <Col xs={24} sm={12} md={8} key={service.id}>
+            <Card
+              hoverable
+              onClick={() => handleServiceSelect(service)}
+              className={`h-full text-center transition-all duration-300 border-2 ${
+                formData.service?.id === service.id 
+                  ? 'border-orange-500 bg-orange-50 dark:bg-orange-900/20' 
+                  : theme === 'dark' ? 'bg-[#18181f] border-gray-800' : 'bg-white border-gray-100'
+              }`}
+              style={{ borderRadius: '16px' }}
+            >
+              <div 
+                className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center text-3xl mb-4 bg-gradient-to-br ${service.gradient} text-white shadow-lg`}
+              >
+                {service.emoji}
+              </div>
+              <h3 className={`font-bold text-lg mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                {service.title}
+              </h3>
+              <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+                {service.description}
+              </p>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </div>
+  );
+
+  const renderStep2_SiteDetails = () => (
+    <div className="max-w-2xl mx-auto animate-fade-in">
+      <Title level={3} className={`text-center mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+        Tell us about your site
+      </Title>
+      
+      <Form layout="vertical" size="large" className="mt-8">
+        <Row gutter={24}>
+          <Col span={24}>
+            <Form.Item label={<span className={theme === 'dark' ? 'text-gray-300' : ''}>Site Type</span>} required>
+              <Radio.Group 
+                value={formData.siteType} 
+                onChange={e => handleInputChange('siteType', e.target.value)}
+                className="w-full grid grid-cols-2 sm:grid-cols-4 gap-4"
+              >
+                {['Home', 'Office', 'Factory', 'Event'].map(type => (
+                  <Radio.Button 
+                    key={type} 
+                    value={type}
+                    className={`text-center rounded-lg border flex items-center justify-center h-12 ${
+                      theme === 'dark' ? 'bg-[#1f2937] border-gray-700 text-white' : ''
+                    }`}
+                  >
+                    {type}
+                  </Radio.Button>
+                ))}
+              </Radio.Group>
+            </Form.Item>
+          </Col>
+          
+          <Col xs={24} sm={12}>
+            <Form.Item label={<span className={theme === 'dark' ? 'text-gray-300' : ''}>Approx. Area (sq ft)</span>} required>
+              <InputNumber 
+                className="w-full rounded-lg" 
+                placeholder="e.g. 1500" 
+                min={0}
+                value={formData.areaSize}
+                onChange={val => handleInputChange('areaSize', val)}
+              />
+            </Form.Item>
+          </Col>
+          
+          <Col xs={24} sm={12}>
+            <Form.Item label={<span className={theme === 'dark' ? 'text-gray-300' : ''}>Location / City</span>} required>
+              <Input 
+                prefix={<EnvironmentOutlined className="text-gray-400" />}
+                placeholder="e.g. Kolkata, Salt Lake" 
+                className="rounded-lg"
+                value={formData.siteLocation}
+                onChange={e => handleInputChange('siteLocation', e.target.value)}
+              />
+            </Form.Item>
+          </Col>
+
+          <Col span={24}>
+            <div className={`p-6 rounded-xl border ${theme === 'dark' ? 'bg-[#1f2937] border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+              <h4 className={`text-sm font-bold uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Contact Information</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Input 
+                  prefix={<UserOutlined className="text-gray-400" />}
+                  placeholder="Your Name" 
+                  className="rounded-lg"
+                  value={formData.name}
+                  onChange={e => handleInputChange('name', e.target.value)}
+                />
+                <Input 
+                  prefix={<PhoneOutlined className="text-gray-400" />}
+                  placeholder="Phone Number" 
+                  className="rounded-lg"
+                  value={formData.phone}
+                  onChange={e => handleInputChange('phone', e.target.value)}
+                />
+                <Input 
+                  prefix={<MailOutlined className="text-gray-400" />}
+                  placeholder="Email Address" 
+                  className="rounded-lg sm:col-span-2"
+                  value={formData.email}
+                  onChange={e => handleInputChange('email', e.target.value)}
+                />
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Form>
+    </div>
+  );
+
+  const renderStep3_ServiceOptions = () => {
+    // Dynamic fields based on service selection
+    const getFields = () => {
+      switch(formData.service?.id) {
+        case 'cctv-surveillance':
+          return (
+            <>
+              <Form.Item label="Number of Cameras Needed">
+                 <Select 
+                   placeholder="Select range"
+                   onChange={v => handleInputChange('serviceDetails', {...formData.serviceDetails, cameraCount: v})}
+                 >
+                   <Option value="1-4">1 - 4 Cameras</Option>
+                   <Option value="5-8">5 - 8 Cameras</Option>
+                   <Option value="9-16">9 - 16 Cameras</Option>
+                   <Option value="16+">16+ Cameras</Option>
+                 </Select>
+              </Form.Item>
+              <Form.Item label="Storage Requirement">
+                 <Radio.Group onChange={e => handleInputChange('serviceDetails', {...formData.serviceDetails, storage: e.target.value})}>
+                   <Radio value="7days">7 Days Recording</Radio>
+                   <Radio value="30days">30 Days Recording</Radio>
+                 </Radio.Group>
+              </Form.Item>
+            </>
+          );
+        case 'fire-safety-installation':
+          return (
+            <>
+              <Form.Item label="Requirement Type">
+                <Select mode="multiple" placeholder="Select all that apply" onChange={v => handleInputChange('serviceDetails', {...formData.serviceDetails, requirements: v})}>
+                  <Option value="alarms">Fire Alarms / Smoke Detectors</Option>
+                  <Option value="sprinklers">Sprinkler System</Option>
+                  <Option value="hydrants">Fire Hydrants</Option>
+                  <Option value="extinguishers">Extinguishers</Option>
+                </Select>
+              </Form.Item>
+            </>
+          );
+        default:
+          return (
+            <div className="text-center py-8">
+              <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}>
+                Please describe your specific requirements in the notes section on the next step.
+              </p>
+            </div>
+          );
+      }
+    };
+
+    return (
+      <div className="max-w-xl mx-auto animate-fade-in">
+         <Title level={3} className={`text-center mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+          {formData.service?.title} Options
+        </Title>
+        <p className={`text-center mb-8 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+          Specific details help us give you an accurate quote
+        </p>
+        
+        <Form layout="vertical" size="large">
+          {getFields()}
+        </Form>
+      </div>
+    );
+  };
+
+  const renderStep4_UploadNotes = () => (
+    <div className="max-w-2xl mx-auto animate-fade-in">
+      <Title level={3} className={`text-center mb-8 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+        Almost there! Any extra info?
+      </Title>
+
+      <Form layout="vertical" size="large">
+        <Form.Item label={<span className={theme === 'dark' ? 'text-gray-300' : ''}>Additional Notes / Specific Requirements</span>}>
+          <TextArea 
+            rows={4} 
+            placeholder="Describe your project, timeline, or any specific constraints..." 
+            className="rounded-xl"
+            value={formData.notes}
+            onChange={e => handleInputChange('notes', e.target.value)}
+          />
+        </Form.Item>
+        
+        <Form.Item label={<span className={theme === 'dark' ? 'text-gray-300' : ''}>Upload Photos / Layouts (Optional)</span>}>
+          <Upload.Dragger 
+            multiple 
+            listType="picture" 
+            className={theme === 'dark' ? 'dark-dragger' : ''}
+            beforeUpload={() => false} // Prevent auto upload
+          >
+            <p className="ant-upload-drag-icon">
+              <UploadOutlined style={{ color: '#f97316' }} />
+            </p>
+            <p className="ant-upload-text" style={{ color: theme === 'dark' ? '#d1d5db' : '' }}>
+              Click or drag file to this area to upload
+            </p>
+            <p className="ant-upload-hint" style={{ color: theme === 'dark' ? '#9ca3af' : '' }}>
+              Support for images or PDF layouts
+            </p>
+          </Upload.Dragger>
+        </Form.Item>
+      </Form>
+    </div>
+  );
+
+  const renderSuccess = () => (
+    <div className="text-center py-16 animate-fade-in">
+      <div className="w-24 h-24 rounded-full bg-green-100 dark:bg-green-900/30 text-green-500 mx-auto flex items-center justify-center mb-6 text-5xl">
+        <CheckCircleOutlined />
+      </div>
+      <Title level={2} className={theme === 'dark' ? 'text-white' : 'text-gray-900'}>
+        Request Received!
+      </Title>
+      <Paragraph className={`text-lg max-w-lg mx-auto ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+        Thank you for choosing Safetyc. Our team is reviewing your requirements and will contact you at <strong>{formData.phone}</strong> or <strong>{formData.email}</strong> within 24 hours.
+      </Paragraph>
+      <div className="mt-8 flex justify-center gap-4">
+        <Button size="large" onClick={() => navigate('/')}>
+          Back to Home
+        </Button>
+        <Button size="large" type="primary" onClick={() => navigate('/projects')}>
+          View Our Work
+        </Button>
+      </div>
+    </div>
+  );
+
+  // --- MAIN RENDER ---
+
+  if (currentStep === 4) {
+    return (
+      <div className={`min-h-screen pt-24 pb-12 px-4 ${theme === 'dark' ? 'bg-[#0a0a0f]' : 'bg-gray-50'}`}>
+        {renderSuccess()}
+      </div>
+    );
+  }
+
+  const steps = [
+    { title: 'Service', icon: <ToolOutlined /> },
+    { title: 'Site Details', icon: <EnvironmentOutlined /> },
+    { title: 'Options', icon: <HomeOutlined /> },
+    { title: 'Review', icon: <CheckCircleOutlined /> },
+  ];
+
+  return (
+    <div className={`min-h-screen pt-24 pb-12 px-4 transition-colors duration-300 ${
+      theme === 'dark' ? 'bg-[#0a0a0f]' : 'bg-gray-50'
+    }`}>
+      <SEO 
+        title="Get A Quote - Safetyc" 
+        description="Request a customized quote for fire safety, CCTV, and electrical services."
+        path="/get-quote"
+      />
+
+      <div className="max-w-5xl mx-auto">
+        {/* Progress Steps */}
+        <div className="mb-12 px-4">
+          <Steps 
+            current={currentStep} 
+            items={steps}
+            className={theme === 'dark' ? 'dark-steps' : ''}
+            responsive
+          />
+        </div>
+
+        {/* Dynamic Content Area */}
+        <div className="mb-12 min-h-[400px]">
+          {currentStep === 0 && renderStep1_ServiceSelection()}
+          {currentStep === 1 && renderStep2_SiteDetails()}
+          {currentStep === 2 && renderStep3_ServiceOptions()}
+          {currentStep === 3 && renderStep4_UploadNotes()}
+        </div>
+
+        {/* Navigation Actions */}
+        <div className="flex justify-between max-w-3xl mx-auto pt-6 border-t border-gray-200 dark:border-gray-800">
+          <Button 
+            size="large" 
+            icon={<ArrowLeftOutlined />}
+            onClick={prev}
+            disabled={currentStep === 0}
+            className={currentStep === 0 ? 'opacity-0 pointer-events-none' : ''}
+          >
+            Back
+          </Button>
+
+          {currentStep < 3 ? (
+            <Button 
+              type="primary" 
+              size="large" 
+              onClick={() => {
+                // Validation logic could go here
+                if (currentStep === 1 && (!formData.siteType || !formData.name || !formData.phone)) {
+                   message.error("Please fill in required details");
+                   return;
+                }
+                next(); 
+              }}
+              className="px-8 bg-orange-600 hover:bg-orange-700 border-none h-12 text-base font-semibold shadow-lg shadow-orange-500/30"
+            >
+              Next Step <ArrowRightOutlined />
+            </Button>
+          ) : (
+            <Button 
+              type="primary" 
+              size="large" 
+              onClick={handleSubmit}
+              loading={loading}
+              className="px-8 bg-green-600 hover:bg-green-700 border-none h-12 text-base font-semibold shadow-lg shadow-green-500/30"
+            >
+              Submit Request
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

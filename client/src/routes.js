@@ -65,6 +65,12 @@ export const routes = [
     component: lazy(() => import("./pages/BookService.jsx"))
   },
   {
+    path: "/get-quote",
+    label: "Get Quote",
+    importFunc: () => import("./pages/GetQuote.jsx"),
+    component: lazy(() => import("./pages/GetQuote.jsx"))
+  },
+  {
     path: "*",
     label: "Not Found",
     importFunc: () => import("./pages/NotFound.jsx"),

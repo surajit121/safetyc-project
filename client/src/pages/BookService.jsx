@@ -83,7 +83,7 @@ export default function BookService() {
   const navigate = useNavigate();
 
   const handleCategorySelect = (category) => {
-    navigate(`/contact?service=${encodeURIComponent(category.title)}`);
+    navigate(`/get-quote?service=${encodeURIComponent(category.id)}`);
   };
 
   return (

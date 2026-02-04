@@ -142,7 +142,7 @@ export default function Navbar() {
           <Button 
             type="primary" 
             className="bg-blue-600 hover:bg-blue-700 font-medium px-6 h-10 rounded-lg"
-            onClick={() => navigate('/contact')}
+            onClick={() => navigate('/get-quote')}
           >
             Get Quote
           </Button>
@@ -234,7 +234,7 @@ export default function Navbar() {
                   className="w-full h-14 text-base font-bold rounded-2xl bg-gradient-to-r from-orange-600 to-red-600 border-0 shadow-lg shadow-orange-500/25 active:scale-[0.98] transition-all text-white"
                   onClick={() => {
                     setOpen(false);
-                    navigate('/contact');
+                    navigate('/get-quote');
                   }}
                 >
                   Get a Free Quote
