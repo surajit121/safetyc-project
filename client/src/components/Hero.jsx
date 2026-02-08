@@ -4,6 +4,7 @@ import { ArrowRightOutlined, SafetyOutlined, CheckCircleOutlined } from "@ant-de
 import { useState, useEffect, memo, useMemo } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext.jsx";
+import OptimizedImage from "./OptimizedImage.jsx";
 
 // Import image dynamically to improve initial load time
 const buildingImageUrl = new URL('../assets/building.png', import.meta.url).href;
@@ -227,32 +228,17 @@ export default function Hero() {
                   borderRadius: '0.75rem'
                 }}
               >
-                {/* Low quality placeholder with colored background */}
-                <div 
-                  className="absolute inset-0 rounded-xl flex items-center justify-center"
-                  style={{ 
-                    opacity: imageLoaded ? 0 : 1,
-                    transition: 'opacity 0.3s ease-in-out'
-                  }}
-                >
-                  <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-                </div>
-
-                {/* Actual image that will fade in when loaded */}
-                <img
+                <OptimizedImage
                   src={buildingImageUrl}
                   alt="Enterprise Security Solutions"
-                  className={`w-full object-cover rounded-xl transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-                  loading="eager" 
-                  decoding="async"
-                  fetchPriority="high"
-                  width="800"
-                  height="600"
-                  onLoad={() => setImageLoaded(true)}
+                  priority={true}
+                  className="rounded-xl w-full"
                   style={{
                     maxHeight: '450px',
                     objectPosition: 'center'
                   }}
+                  width={800}
+                  height={600}
                 />
                 <div className={`absolute inset-0 rounded-xl ${theme === 'dark' ? 'bg-gradient-to-tr from-black/50 to-transparent' : 'bg-gradient-to-tr from-blue-900/20 to-transparent'}`}></div>
               </div>

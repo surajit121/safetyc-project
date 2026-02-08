@@ -3,10 +3,44 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'path'
 import copyStaticFiles from './vite.copy-static'
+import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(), 
+    tailwindcss(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.ico', 'assets/apple-touch-icon.png', 'assets/logo.png'],
+      manifest: {
+        name: 'safetyc - Enterprise Security Solutions',
+        short_name: 'safetyc',
+        description: 'Complete security solutions including fire safety, CCTV surveillance, and more.',
+        theme_color: '#FF4A17',
+        background_color: '#ffffff',
+        display: 'standalone',
+        icons: [
+          {
+            src: 'assets/android-chrome-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: 'assets/android-chrome-512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          },
+          {
+            src: 'assets/android-chrome-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable'
+          }
+        ]
+      }
+    })
+  ],
   server: {
     proxy: {
       // during dev, proxy /api to backend

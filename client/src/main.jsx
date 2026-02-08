@@ -7,6 +7,7 @@ import "./index.css";
 import { ConfigProvider, theme as antdTheme } from "antd";
 import App from "./App.jsx";
 import { ThemeProvider, useTheme } from "./context/ThemeContext.jsx";
+import ErrorBoundary from "./components/ErrorBoundary.jsx";
 // Import the duplicate toggle fix script
 import { HelmetProvider } from "react-helmet-async";
 import "./utils/fixDuplicateToggles.js";
@@ -39,11 +40,13 @@ function ThemedApp() {
         },
       }}
     >
-      <BrowserRouter>
-        <HelmetProvider>
-          <App />
-        </HelmetProvider>
-      </BrowserRouter>
+      <ErrorBoundary>
+        <BrowserRouter>
+          <HelmetProvider>
+            <App />
+          </HelmetProvider>
+        </BrowserRouter>
+      </ErrorBoundary>
     </ConfigProvider>
   );
 }

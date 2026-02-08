@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-const SEO = ({ title, description, path, keywords }) => {
+const SEO = ({ title, description, path, keywords, schema }) => {
   const siteUrl = 'https://safetyc.in';
   const fullUrl = `${siteUrl}${path || ''}`;
   const defaultTitle = 'safetyc - Integrated Safety & Security Solutions';
@@ -27,6 +27,13 @@ const SEO = ({ title, description, path, keywords }) => {
       <meta name="twitter:url" content={fullUrl} />
       <meta name="twitter:title" content={title || defaultTitle} />
       <meta name="twitter:description" content={description || defaultDescription} />
+
+      {/* Structured Data */}
+      {schema && (
+        <script type="application/ld+json">
+          {JSON.stringify(schema)}
+        </script>
+      )}
     </Helmet>
   );
 };

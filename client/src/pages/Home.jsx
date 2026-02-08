@@ -92,6 +92,38 @@ export default function Home() {
       });
   }, []);
 
+  const homeSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "safetyc",
+    "alternateName": "safetyc.in",
+    "url": "https://safetyc.in",
+    "logo": "https://safetyc.in/assets/logo.png",
+    "description": "Leading provider of fire extinguishers and CCTV installation services in Bankura, West Bengal. We offer complete security solutions including fire safety equipment, surveillance systems, and biometric attendance systems.",
+    "image": "https://safetyc.in/assets/logo.png",
+    "priceRange": "₹₹",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Bankura",
+      "addressLocality": "Bankura",
+      "addressRegion": "West Bengal",
+      "postalCode": "722101",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "23.2324",
+      "longitude": "87.0716"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-9933396918",
+      "contactType": "sales",
+      "areaServed": ["Bankura", "West Bengal"],
+      "availableLanguage": ["English", "Bengali"]
+    }
+  };
+
  return (
    <div>
      <SEO 
@@ -99,6 +131,7 @@ export default function Home() {
        description="safetyc is Bankura's leading provider of fire safety equipment, CCTV surveillance systems, and complete security solutions. Best rates in West Bengal."
        path="/"
        keywords="fire extinguisher Bankura, CCTV installation Bankura, security systems Bankura, fire safety equipment Bankura"
+       schema={homeSchema}
      />
     
     {/* Hero Section */}

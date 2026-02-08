@@ -225,12 +225,37 @@ export default function Services() {
     ? sortServices(services) 
     : staticServices;
 
+  const servicesSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Safety and Security Solutions",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "safetyc",
+      "url": "https://safetyc.in"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Safetyc Services Catalog",
+      "itemListElement": displayServices.map((s, index) => ({
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": s.title,
+          "description": s.description
+        },
+        "position": index + 1
+      }))
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
       <SEO 
         title="Our Services" 
         description="Explore our wide range of services including fire safety, CCTV surveillance, biometric systems, solar power, and electrical contracting in Bankura and West Bengal."
         path="/services"
+        schema={servicesSchema}
       />
       <div className="text-center mb-12">
         <h2 className="text-3xl font-bold mb-3">Our Comprehensive Services</h2>

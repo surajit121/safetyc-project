@@ -1,5 +1,6 @@
 import { Card, Typography } from "antd";
 import { useTheme } from "../context/ThemeContext.jsx";
+import OptimizedImage from "./OptimizedImage.jsx";
 
 export default function ServiceCard({ title, description, highlights = [], image }) {
   const { theme } = useTheme();
@@ -7,7 +8,7 @@ export default function ServiceCard({ title, description, highlights = [], image
   return (
     <Card 
       hoverable 
-      className="enterprise-card rounded-2xl h-full flex flex-col overflow-hidden" 
+      className="enterprise-card rounded-2xl h-full flex flex-col overflow-hidden group" 
       bodyStyle={{ 
         textAlign: "center", 
         height: "100%", 
@@ -18,7 +19,7 @@ export default function ServiceCard({ title, description, highlights = [], image
     >
       {/* Decorative top gradient bar */}
       <div 
-        className="absolute top-0 left-0 right-0 h-1 opacity-0 transition-opacity duration-300"
+        className="absolute top-0 left-0 right-0 h-1 opacity-100 transition-opacity duration-300"
         style={{ 
           background: 'linear-gradient(90deg, #f97316, #ea580c)',
         }}
@@ -26,13 +27,12 @@ export default function ServiceCard({ title, description, highlights = [], image
       
       {image && (
         <div className="mb-4 flex justify-center overflow-hidden rounded-xl">
-          <img 
+          <OptimizedImage 
             src={image} 
             alt={title + " image"} 
-            className="h-24 w-24 object-contain rounded-lg transition-transform duration-500 hover:scale-110"
-            loading="lazy"
-            width="96"
-            height="96"
+            className="h-24 w-24 object-contain rounded-lg transition-transform duration-500 group-hover:scale-110"
+            width={96}
+            height={96}
           />
         </div>
       )}
