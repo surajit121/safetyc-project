@@ -341,23 +341,124 @@ ${formData.notes}
         case 'cctv-surveillance':
           return (
             <>
-              <Form.Item label="Number of Cameras Needed">
-                 <Select 
-                   placeholder="Select range"
-                   onChange={v => handleInputChange('serviceDetails', {...formData.serviceDetails, cameraCount: v})}
-                 >
-                   <Option value="1-4">1 - 4 Cameras</Option>
-                   <Option value="5-8">5 - 8 Cameras</Option>
-                   <Option value="9-16">9 - 16 Cameras</Option>
-                   <Option value="16+">16+ Cameras</Option>
-                 </Select>
-              </Form.Item>
-              <Form.Item label="Storage Requirement">
-                 <Radio.Group onChange={e => handleInputChange('serviceDetails', {...formData.serviceDetails, storage: e.target.value})}>
-                   <Radio value="7days">7 Days Recording</Radio>
-                   <Radio value="30days">30 Days Recording</Radio>
-                 </Radio.Group>
-              </Form.Item>
+              {/* 1. Technical Requirements */}
+              <div className={`p-4 rounded-xl border mb-6 ${theme === 'dark' ? 'bg-[#1f2937] border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+                <h4 className={`text-sm font-bold uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Technical Requirements</h4>
+                
+                <Form.Item label="Number of Cameras">
+                  <InputNumber 
+                    min={1} 
+                    max={100} 
+                    placeholder="e.g. 8" 
+                    className="w-full"
+                    onChange={v => handleInputChange('serviceDetails', {...formData.serviceDetails, cameraCount: v})}
+                  />
+                </Form.Item>
+
+                <Form.Item label="Camera Type Preference">
+                  <Select 
+                    mode="multiple"
+                    placeholder="Select camera types"
+                    onChange={v => handleInputChange('serviceDetails', {...formData.serviceDetails, cameraType: v})}
+                  >
+                    <Option value="dome">Dome (Discreet, indoor/ceiling)</Option>
+                    <Option value="bullet">Bullet (Visible deterrent, outdoor/long-range)</Option>
+                    <Option value="ptz">PTZ (Pan-Tilt-Zoom, active monitoring)</Option>
+                  </Select>
+                </Form.Item>
+
+                <Form.Item label="Technology">
+                  <Radio.Group onChange={e => handleInputChange('serviceDetails', {...formData.serviceDetails, technology: e.target.value})}>
+                    <Radio value="ip">IP (Network-based)</Radio>
+                    <Radio value="analog">Analog/HD-TVI</Radio>
+                    <Radio value="not-sure">Not Sure</Radio>
+                  </Radio.Group>
+                </Form.Item>
+
+                <Form.Item label="Resolution">
+                  <Radio.Group onChange={e => handleInputChange('serviceDetails', {...formData.serviceDetails, resolution: e.target.value})}>
+                    <Radio value="2mp">2MP (1080p)</Radio>
+                    <Radio value="4mp">4MP (2K)</Radio>
+                    <Radio value="8mp">8MP (4K)</Radio>
+                  </Radio.Group>
+                </Form.Item>
+
+                <Form.Item label="Storage Duration">
+                  <Radio.Group onChange={e => handleInputChange('serviceDetails', {...formData.serviceDetails, storageDuration: e.target.value})}>
+                    <Radio value="7days">7 Days</Radio>
+                    <Radio value="15days">15 Days</Radio>
+                    <Radio value="30days">30 Days</Radio>
+                    <Radio value="60days">60+ Days</Radio>
+                  </Radio.Group>
+                </Form.Item>
+              </div>
+
+              {/* 2. Installation Details */}
+              <div className={`p-4 rounded-xl border mb-6 ${theme === 'dark' ? 'bg-[#1f2937] border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+                <h4 className={`text-sm font-bold uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Installation Details</h4>
+                
+                <Form.Item label="Environment">
+                  <Radio.Group onChange={e => handleInputChange('serviceDetails', {...formData.serviceDetails, environment: e.target.value})}>
+                    <Radio value="indoor">Indoor Only</Radio>
+                    <Radio value="outdoor">Outdoor Only</Radio>
+                    <Radio value="both">Both</Radio>
+                  </Radio.Group>
+                </Form.Item>
+
+                <Form.Item label="Mounting Surface">
+                  <Select 
+                    mode="multiple"
+                    placeholder="Select mounting surfaces"
+                    onChange={v => handleInputChange('serviceDetails', {...formData.serviceDetails, mountingSurface: v})}
+                  >
+                    <Option value="concrete">Concrete/Brick</Option>
+                    <Option value="wood">Wood</Option>
+                    <Option value="ceiling">False Ceiling</Option>
+                    <Option value="metal">Metal</Option>
+                  </Select>
+                </Form.Item>
+
+                <Form.Item label="Remote Viewing (Smartphone/Tablet access)">
+                  <Radio.Group onChange={e => handleInputChange('serviceDetails', {...formData.serviceDetails, remoteViewing: e.target.value})}>
+                    <Radio value="yes">Yes</Radio>
+                    <Radio value="no">No</Radio>
+                  </Radio.Group>
+                </Form.Item>
+
+                <Form.Item label="Internet Available at Site?">
+                  <Radio.Group onChange={e => handleInputChange('serviceDetails', {...formData.serviceDetails, internetAvailable: e.target.value})}>
+                    <Radio value="yes">Yes</Radio>
+                    <Radio value="no">No</Radio>
+                  </Radio.Group>
+                </Form.Item>
+              </div>
+
+              {/* 3. Service & Maintenance */}
+              <div className={`p-4 rounded-xl border ${theme === 'dark' ? 'bg-[#1f2937] border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+                <h4 className={`text-sm font-bold uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Service & Maintenance (Post-Warranty)</h4>
+                
+                <Form.Item label="Select Service Type">
+                  <Radio.Group 
+                    className="w-full"
+                    onChange={e => handleInputChange('serviceDetails', {...formData.serviceDetails, serviceType: e.target.value})}
+                  >
+                    <div className="space-y-3">
+                      <Radio value="standard" className="block">
+                        <span className="font-medium">Standard Installation</span>
+                        <span className={`block text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>One-time setup with standard product warranty</span>
+                      </Radio>
+                      <Radio value="amc" className="block">
+                        <span className="font-medium">AMC (Annual Maintenance)</span>
+                        <span className={`block text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Regular health checks, cleaning, and labor for repairs. (Parts charged extra)</span>
+                      </Radio>
+                      <Radio value="camc" className="block">
+                        <span className="font-medium">CAMC (Comprehensive AMC)</span>
+                        <span className={`block text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Includes labor and replacement of faulty parts/cables</span>
+                      </Radio>
+                    </div>
+                  </Radio.Group>
+                </Form.Item>
+              </div>
             </>
           );
         case 'fire-safety-installation':
