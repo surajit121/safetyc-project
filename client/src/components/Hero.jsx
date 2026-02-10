@@ -232,13 +232,11 @@ export default function Hero() {
                   src={buildingImageUrl}
                   alt="Enterprise Security Solutions"
                   priority={true}
-                  className="rounded-xl w-full"
+                  className="rounded-xl w-full h-full object-cover"
                   style={{
-                    maxHeight: '450px',
+                    minHeight: '300px',
                     objectPosition: 'center'
                   }}
-                  width={800}
-                  height={600}
                 />
                 <div className={`absolute inset-0 rounded-xl ${theme === 'dark' ? 'bg-gradient-to-tr from-black/50 to-transparent' : 'bg-gradient-to-tr from-blue-900/20 to-transparent'}`}></div>
               </div>

@@ -147,41 +147,42 @@ export default function GetQuote() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      // Prepare payload - mapping to existing API structure where possible
-      // or formatting into a comprehensive message
-      const description = `
-SERVICE REQUEST: ${formData.service?.title}
-----------------------------------------
-SITE DETAILS:
-Type: ${formData.siteType}
-Location: ${formData.siteLocation}
-Area: ${formData.areaSize} sq ft
-
-SPECIFIC NEEDS:
-${Object.entries(formData.serviceDetails).map(([k, v]) => `${k}: ${v}`).join('\n')}
-
-NOTES:
-${formData.notes}
-      `.trim();
-
+      // Prepare booking payload for the new bookings API
       const payload = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        message: description
-        // logic for file uploads would go here, likely handling separately or as links
+        customer: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.siteLocation
+        },
+        service: {
+          type: formData.service?.title,
+          category: formData.service?.id,
+          details: formData.serviceDetails
+        },
+        site: {
+          type: formData.siteType,
+          location: formData.siteLocation,
+          areaSize: formData.areaSize
+        },
+        notes: formData.notes
       };
 
-      // Use direct API URL logic similar to Contact.jsx
+      // Use direct API URL logic
       let url;
       const apiBase = import.meta.env.VITE_API_URL;
       if (apiBase === 'safetyc-api') {
-        url = 'https://safetyc-api.onrender.com/api/inquiries';
+        url = 'https://safetyc-api.onrender.com/api/bookings';
       } else {
-        url = apiUrl('/inquiries');
+        url = apiUrl('/bookings');
       }
 
-      await axios.post(url, payload);
+      const response = await axios.post(url, payload);
+      
+      // Store booking number for success message
+      if (response.data.ok) {
+        setFormData(prev => ({ ...prev, bookingNumber: response.data.bookingNumber }));
+      }
       
       // Success state
       setCurrentStep(4); // Move to Success Step
@@ -189,10 +190,10 @@ ${formData.notes}
       // Try using toast if available, otherwise fallback
       try {
         import('react-toastify').then(({ toast }) => {
-          toast.success("Quote request received!");
+          toast.success("Booking request received!");
         });
       } catch (e) {
-        ToastManager.success("Quote request received!");
+        ToastManager.success("Booking request received!");
       }
 
     } catch (error) {
@@ -546,17 +547,30 @@ ${formData.notes}
         <CheckCircleOutlined />
       </div>
       <Title level={2} className={theme === 'dark' ? 'text-white' : 'text-gray-900'}>
-        Request Received!
+        Booking Received!
       </Title>
+      {formData.bookingNumber && (
+        <div className="mb-6">
+          <Text type="secondary" className="block text-base mb-1">Your Booking Number</Text>
+          <div className="text-3xl font-bold text-orange-600 bg-orange-50 dark:bg-orange-900/10 py-3 px-6 rounded-xl inline-block border border-orange-200 dark:border-orange-800/30">
+            {formData.bookingNumber}
+          </div>
+        </div>
+      )}
       <Paragraph className={`text-lg max-w-lg mx-auto ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-        Thank you for choosing Safetyc. Our team is reviewing your requirements and will contact you at <strong>{formData.phone}</strong> or <strong>{formData.email}</strong> within 24 hours.
+        Thank you for choosing Safetyc. Your booking has been registered. You can track its status using the number above. Our team will contact you within 24 hours.
       </Paragraph>
-      <div className="mt-8 flex justify-center gap-4">
+      <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+        <Button 
+          size="large" 
+          type="primary" 
+          onClick={() => navigate('/track-booking')}
+          style={{ background: "#f97316", borderColor: "#f97316" }}
+        >
+          Track My Booking
+        </Button>
         <Button size="large" onClick={() => navigate('/')}>
           Back to Home
-        </Button>
-        <Button size="large" type="primary" onClick={() => navigate('/projects')}>
-          View Our Work
         </Button>
       </div>
     </div>

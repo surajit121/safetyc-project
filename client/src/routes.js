@@ -71,9 +71,63 @@ export const routes = [
     component: lazy(() => import("./pages/GetQuote.jsx"))
   },
   {
+    path: "/track-booking",
+    label: "Track Booking",
+    importFunc: () => import("./pages/TrackBooking.jsx"),
+    component: lazy(() => import("./pages/TrackBooking.jsx"))
+  },
+  {
+    path: "/feedback/:bookingId",
+    label: "Feedback",
+    importFunc: () => import("./pages/SubmitFeedback.jsx"),
+    component: lazy(() => import("./pages/SubmitFeedback.jsx"))
+  },
+  {
     path: "*",
     label: "Not Found",
     importFunc: () => import("./pages/NotFound.jsx"),
     component: lazy(() => import("./pages/NotFound.jsx"))
   }
 ];
+
+// Admin routes (separate layout)
+export const adminRoutes = [
+  {
+    path: "/admin",
+    label: "Dashboard",
+    importFunc: () => import("./pages/admin/AdminDashboard.jsx"),
+    component: lazy(() => import("./pages/admin/AdminDashboard.jsx")),
+    index: true
+  },
+  {
+    path: "/admin/bookings",
+    label: "Bookings",
+    importFunc: () => import("./pages/admin/BookingsList.jsx"),
+    component: lazy(() => import("./pages/admin/BookingsList.jsx"))
+  },
+  {
+    path: "/admin/bookings/:id",
+    label: "Booking Detail",
+    importFunc: () => import("./pages/admin/BookingsList.jsx"),
+    component: lazy(() => import("./pages/admin/BookingsList.jsx"))
+  },
+  {
+    path: "/admin/work-orders",
+    label: "Work Orders",
+    importFunc: () => import("./pages/admin/WorkOrdersList.jsx"),
+    component: lazy(() => import("./pages/admin/WorkOrdersList.jsx"))
+  },
+  {
+    path: "/admin/work-orders/:id",
+    label: "Work Order Detail",
+    importFunc: () => import("./pages/admin/WorkOrderForm.jsx"),
+    component: lazy(() => import("./pages/admin/WorkOrderForm.jsx"))
+  },
+  {
+    path: "/admin/feedback",
+    label: "Feedback",
+    importFunc: () => import("./pages/admin/FeedbackList.jsx"),
+    component: lazy(() => import("./pages/admin/FeedbackList.jsx"))
+  }
+];
+

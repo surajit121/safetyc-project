@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Layout } from "antd";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
@@ -10,10 +10,14 @@ import { useTheme } from "./context/ThemeContext.jsx";
 import applyMobileColorFix from "./utils/mobileColorFix.js";
 import { FallbackToastContainer } from "./components/FallbackToast.jsx";
 
-import { routes } from "./routes.js";
+import { routes, adminRoutes } from "./routes.js";
 import { useEagerPrefetch } from "./hooks/useEagerPrefetch.js";
+import { AuthProvider } from "./context/AuthContext.jsx";
+import LoginPage from "./pages/admin/LoginPage.jsx";
+import ProtectedRoute from "./components/admin/ProtectedRoute.jsx";
 
-// Lazy load pages moved to routes.js
+// Lazy load admin layout
+const AdminLayout = lazy(() => import("./components/admin/AdminLayout.jsx"));
 
 // Loading fallback
 const PageLoader = () => (
@@ -41,20 +45,10 @@ try {
 export default function App() {
   const { theme } = useTheme();
   const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
 
   // Eagerly prefetch critical routes for faster navigation
   useEagerPrefetch();
-  
-  // Apply mobile color fixes when component mounts, theme changes, or navigation happens
-  // Mobile color fix useEffect removed as improvements are now handled via CSS
-  // to avoid initial load layout thrashing
-  /* 
-  useEffect(() => {
-    applyMobileColorFix();
-    const fixTimer = setTimeout(() => { applyMobileColorFix(); }, 500);
-    return () => clearTimeout(fixTimer);
-  }, [theme, location.pathname]); 
-  */
   
   // Detect mobile viewport
   const isMobile = typeof window !== 'undefined' && 
@@ -71,10 +65,8 @@ export default function App() {
         if (toastify && toastify.ToastContainer) {
           ToastContainer = toastify.ToastContainer;
           setToastifyLoaded(true);
-          // Successfully loaded react-toastify
         }
       } catch (error) {
-        // Silently fall back to custom implementation
         setToastifyLoaded(false);
       }
     };
@@ -83,6 +75,40 @@ export default function App() {
       checkToastify();
     }
   }, [toastifyLoaded]);
+
+  // Render admin layout for admin routes
+  if (isAdminRoute) {
+    return (
+      <div className={theme} data-theme={theme}>
+        {toastifyLoaded && ToastContainer ? (
+          <ToastContainer 
+            position="top-right"
+            autoClose={4000}
+            theme={theme === 'dark' ? 'dark' : 'light'}
+          />
+        ) : (
+          <FallbackToastContainer />
+        )}
+        <AuthProvider>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/admin/login" element={<LoginPage />} />
+              <Route element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+                {adminRoutes.map(({ path, component: Component, index }) => (
+                  <Route 
+                    key={path} 
+                    path={path} 
+                    element={<Component />}
+                    index={index}
+                  />
+                ))}
+              </Route>
+            </Routes>
+          </Suspense>
+        </AuthProvider>
+      </div>
+    );
+  }
   
   return (
     <Layout className={`min-h-screen ${theme} transition-colors app-layout`} data-theme={theme}>
@@ -127,3 +153,4 @@ export default function App() {
     </Layout>
   );
 }
+

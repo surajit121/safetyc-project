@@ -1,9 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config(); // Must be first!
+
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
-import dotenv from "dotenv";
 import http from "http";
 import { dbconnect } from "./config/db.js";
 import servicesRouter from "./routes/services.js";
@@ -12,14 +14,25 @@ import clientsRouter from "./routes/clients.js";
 import inquiriesRouter from "./routes/inquiries.js";
 import applicationsRouter from "./routes/applications.js";
 import faqRouter from "./routes/faq.js";
-
-
-
-dotenv.config();
+import bookingsRouter from "./routes/bookings.js";
+import workOrdersRouter from "./routes/workOrders.js";
+import feedbackRouter from "./routes/feedbackRoutes.js";
+import passport from "passport";
+import session from "express-session";
+import configurePassport from "./config/passport.js"; // Import function
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 
+// Trust proxy for secure cookies on Render/Heroku
+if (process.env.NODE_ENV === "production") {
+    app.set("trust proxy", 1);
+}
+
 const NODE_ENV = process.env.NODE_ENV || "development";
+
+// Initialize Passport config
+configurePassport();
 const isProduction = NODE_ENV === "production";
 const debugLog = (...args) => {
     if (!isProduction) console.log(...args);
@@ -107,6 +120,23 @@ const apiLimiter = rateLimit({
 });
 app.use("/api", apiLimiter);
 
+// Session config
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "safetyc-secret-key",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
+  })
+);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.get("/", (_req, res) => res.json({ ok: true, name: "safetyc API" }));
 
 // Add an explicit route for API status check
@@ -118,12 +148,16 @@ app.get("/api", (_req, res) => res.json({
 }));
 
 // API Routes
+app.use("/api/auth", authRoutes);
 app.use("/api/services", servicesRouter)
 app.use("/api/projects", projectsRouter)
 app.use("/api/clients", clientsRouter)
 app.use("/api/inquiries", inquiriesRouter)
 app.use("/api/applications", applicationsRouter)
 app.use("/api/faq", faqRouter)
+app.use("/api/bookings", bookingsRouter)
+app.use("/api/work-orders", workOrdersRouter)
+app.use("/api/feedback", feedbackRouter)
 
 
 dbconnect()
