@@ -45,7 +45,7 @@ try {
 export default function App() {
   const { theme } = useTheme();
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith("/admin");
+  const isAdminRoute = location.pathname.toLowerCase().startsWith("/admin");
 
   // Eagerly prefetch critical routes for faster navigation
   useEagerPrefetch();
