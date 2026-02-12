@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, Row, Col, Typography, Statistic, Table, Tag, Button, Spin } from "antd";
+import { Card, Row, Col, Typography, Statistic, Table, Tag, Button, Spin, Space } from "antd";
 import { 
   ClockCircleOutlined, 
   CheckCircleOutlined, 
@@ -8,11 +8,13 @@ import {
   PlusOutlined,
   CalendarOutlined,
   ArrowRightOutlined,
-  ReloadOutlined
+  ReloadOutlined,
+  CustomerServiceOutlined
 } from "@ant-design/icons";
 import { useTheme } from "../../context/ThemeContext.jsx";
 import axios from "axios";
 import { apiUrl } from "../../lib/api.js";
+import { motion } from "framer-motion";
 
 const { Title, Text } = Typography;
 
@@ -22,6 +24,7 @@ export default function AdminDashboard() {
   const isDark = theme === "dark";
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const textColor = isDark ? "#f1f5f9" : "#334155";
 
   useEffect(() => {
     fetchStats();
@@ -43,11 +46,62 @@ export default function AdminDashboard() {
     }
   };
 
-  const cardStyle = {
-    background: isDark ? "#18181f" : "#ffffff",
-    border: isDark ? "1px solid rgba(255,255,255,0.1)" : "1px solid #e5e7eb",
-    borderRadius: 16
+  const glassCardStyle = {
+    background: isDark ? "rgba(30, 41, 59, 0.5)" : "rgba(255, 255, 255, 0.7)",
+    backdropFilter: "blur(16px)",
+    WebkitBackdropFilter: "blur(16px)",
+    border: isDark ? "1px solid rgba(255, 255, 255, 0.08)" : "1px solid rgba(0, 0, 0, 0.05)",
+    borderRadius: 20,
+    overflow: "hidden",
+    boxShadow: isDark ? "0 8px 32px rgba(0, 0, 0, 0.2)" : "0 8px 32px rgba(0, 0, 0, 0.05)"
   };
+
+  const GlassStatCard = ({ stat, index }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+    >
+      <Card 
+        style={glassCardStyle} 
+        bodyStyle={{ padding: 24 }}
+        className="hover-lift"
+      >
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+          <div 
+            style={{ 
+              width: 52, 
+              height: 52, 
+              borderRadius: 14, 
+              background: stat.bgColor,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 24,
+              color: stat.color,
+              boxShadow: `0 8px 16px ${stat.bgColor}`
+            }}
+          >
+            {stat.icon}
+          </div>
+          <div style={{ textAlign: "right" }}>
+            <Text style={{ color: isDark ? "#94a3b8" : "#64748b", fontSize: 13, fontWeight: 500, display: "block", marginBottom: 4 }}>
+              {stat.title}
+            </Text>
+            <Title level={2} style={{ margin: 0, color: isDark ? "#fff" : "#1e293b", fontWeight: 700 }}>
+              {stat.value}
+            </Title>
+          </div>
+        </div>
+        <div style={{ marginTop: 20, display: "flex", alignItems: "center", gap: 6 }}>
+          <Tag color={stat.color === "#f97316" ? "orange" : stat.color === "#3b82f6" ? "blue" : "green"} style={{ border: "none", borderRadius: 4 }}>
+            +12%
+          </Tag>
+          <Text style={{ fontSize: 12, color: isDark ? "#64748b" : "#94a3b8" }}>vs last month</Text>
+        </div>
+      </Card>
+    </motion.div>
+  );
 
   const statCards = [
     { 
@@ -136,105 +190,120 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in" style={{ paddingBottom: 40 }}>
       {/* Header */}
-      <div style={{ marginBottom: 32, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div style={{ marginBottom: 40, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
-          <Title level={2} style={{ margin: 0, color: isDark ? "#fff" : "#1f2937" }}>
-            Dashboard
+          <Title level={2} style={{ margin: 0, color: isDark ? "#fff" : "#1e293b", fontWeight: 800, letterSpacing: "-0.5px" }}>
+            Dashboard Overview
           </Title>
-          <Text style={{ color: isDark ? "#9ca3af" : "#6b7280" }}>
-            Service Management Overview
+          <Text style={{ color: isDark ? "#94a3b8" : "#64748b", fontSize: 15 }}>
+            Welcome back! Here's what's happening today.
           </Text>
         </div>
-        <div style={{ display: "flex", gap: 12 }}>
+        <div style={{ display: "flex", gap: 16 }}>
           <Button
             icon={<ReloadOutlined />}
             onClick={() => { setLoading(true); fetchStats(); }}
             style={{ 
-              height: 44,
-              width: 44,
-              borderRadius: 12,
-              background: isDark ? "#1f2937" : "#fff",
-              borderColor: isDark ? "#374151" : "#e5e7eb",
-              color: isDark ? "#9ca3af" : "#6b7280"
+              height: 48,
+              width: 48,
+              borderRadius: 14,
+              background: isDark ? "rgba(255,255,255,0.05)" : "#fff",
+              border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)"}`,
+              color: isDark ? "#94a3b8" : "#64748b",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
             }}
           />
           <Button 
-          type="primary" 
-          icon={<PlusOutlined />}
-          onClick={() => navigate("/get-quote")}
-          style={{ 
-            background: "#f97316", 
-            borderColor: "#f97316",
-            height: 44,
-            paddingInline: 24,
-            fontWeight: 600
-          }}
-        >
-          New Booking
-        </Button>
+            type="primary" 
+            icon={<PlusOutlined />}
+            onClick={() => navigate("/get-quote")}
+            style={{ 
+              background: "#f97316", 
+              borderColor: "#f97316",
+              height: 48,
+              paddingInline: 28,
+              fontWeight: 700,
+              borderRadius: 14,
+              boxShadow: "0 8px 24px rgba(249, 115, 22, 0.3)"
+            }}
+          >
+            New Booking
+          </Button>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <Row gutter={[24, 24]} style={{ marginBottom: 32 }}>
+      <Row gutter={[24, 24]} style={{ marginBottom: 40 }}>
         {statCards.map((stat, index) => (
           <Col xs={24} sm={12} lg={6} key={index}>
-            <Card style={cardStyle} className="hover-lift">
-              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <div 
-                  style={{ 
-                    width: 56, 
-                    height: 56, 
-                    borderRadius: 12, 
-                    background: stat.bgColor,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 24,
-                    color: stat.color
-                  }}
-                >
-                  {stat.icon}
-                </div>
-                <Statistic 
-                  title={<span style={{ color: isDark ? "#9ca3af" : "#6b7280" }}>{stat.title}</span>}
-                  value={stat.value}
-                  valueStyle={{ color: stat.color, fontWeight: 700, fontSize: 28 }}
-                />
-              </div>
-            </Card>
+            <GlassStatCard stat={stat} index={index} />
           </Col>
         ))}
       </Row>
 
-      {/* Recent Bookings */}
-      <Card 
-        style={cardStyle}
-        title={
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ color: isDark ? "#fff" : "#1f2937", fontWeight: 600 }}>
-              Recent Bookings
-            </span>
-            <Button type="link" onClick={() => navigate("/admin/bookings")}>
-              View All <ArrowRightOutlined />
-            </Button>
-          </div>
-        }
-      >
-        <Table 
-          dataSource={stats?.recentBookings || []}
-          columns={recentColumns}
-          rowKey="_id"
-          pagination={false}
-          size="middle"
-          style={{ 
-            background: "transparent"
-          }}
-          scroll={{ x: 600 }}
-        />
-      </Card>
+      <Row gutter={[24, 24]}>
+        <Col xs={24} lg={16}>
+          {/* Recent Bookings */}
+          <Card 
+            style={glassCardStyle}
+            title={
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0" }}>
+                <span style={{ color: isDark ? "#fff" : "#1e293b", fontWeight: 700, fontSize: 18 }}>
+                  Recent Bookings
+                </span>
+                <Button 
+                  type="text" 
+                  onClick={() => navigate("/admin/bookings")}
+                  style={{ color: "#f97316", fontWeight: 600 }}
+                >
+                  View All <ArrowRightOutlined />
+                </Button>
+              </div>
+            }
+          >
+            <Table 
+              dataSource={stats?.recentBookings || []}
+              columns={recentColumns}
+              rowKey="_id"
+              pagination={false}
+              size="middle"
+              className="custom-table"
+              style={{ background: "transparent" }}
+              scroll={{ x: 600 }}
+            />
+          </Card>
+        </Col>
+
+        <Col xs={24} lg={8}>
+          <Card 
+            style={glassCardStyle}
+            title={<span style={{ color: isDark ? "#fff" : "#1e293b", fontWeight: 700, fontSize: 18 }}>Actions</span>}
+          >
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <Button 
+                block 
+                size="large" 
+                icon={<CustomerServiceOutlined />} 
+                style={{ height: 56, borderRadius: 12, textAlign: "left", background: isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.02)", border: "none", color: textColor }}
+              >
+                Send Feedback Requests
+              </Button>
+              <Button 
+                block 
+                size="large" 
+                icon={<CalendarOutlined />} 
+                style={{ height: 56, borderRadius: 12, textAlign: "left", background: isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.02)", border: "none", color: textColor }}
+              >
+                Sync Google Calendar
+              </Button>
+            </div>
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 }

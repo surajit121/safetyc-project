@@ -140,10 +140,13 @@ export default function BookingsList() {
     }
   };
 
-  const cardStyle = {
-    background: isDark ? "#18181f" : "#ffffff",
-    border: isDark ? "1px solid rgba(255,255,255,0.1)" : "1px solid #e5e7eb",
-    borderRadius: 16
+  const glassCardStyle = {
+    background: isDark ? "rgba(30, 41, 59, 0.5)" : "rgba(255, 255, 255, 0.7)",
+    backdropFilter: "blur(16px)",
+    WebkitBackdropFilter: "blur(16px)",
+    border: isDark ? "1px solid rgba(255, 255, 255, 0.08)" : "1px solid rgba(0, 0, 0, 0.05)",
+    borderRadius: 20,
+    boxShadow: isDark ? "0 8px 32px rgba(0, 0, 0, 0.2)" : "0 8px 32px rgba(0, 0, 0, 0.03)"
   };
 
   const getActionMenu = (record) => ({
@@ -263,49 +266,61 @@ export default function BookingsList() {
   ];
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in" style={{ paddingBottom: 40 }}>
       {/* Header */}
-      <div style={{ marginBottom: 24 }}>
-        <Title level={2} style={{ margin: 0, color: isDark ? "#fff" : "#1f2937" }}>
-          Bookings
+      <div style={{ marginBottom: 32 }}>
+        <Title level={2} style={{ margin: 0, color: isDark ? "#fff" : "#1e293b", fontWeight: 800, letterSpacing: "-0.5px" }}>
+          Bookings Management
         </Title>
-        <Text style={{ color: isDark ? "#9ca3af" : "#6b7280" }}>
-          Manage all service booking requests
+        <Text style={{ color: isDark ? "#94a3b8" : "#64748b", fontSize: 15 }}>
+          View and manage all client service requests
         </Text>
       </div>
 
       {/* Filters Card */}
-      <Card style={{ ...cardStyle, marginBottom: 24 }}>
+      <Card 
+        style={{ ...glassCardStyle, marginBottom: 24 }}
+        bodyStyle={{ padding: "16px 24px" }}
+      >
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
           <Tabs 
             activeKey={activeTab} 
             onChange={setActiveTab}
             items={tabItems}
+            className="custom-tabs"
             style={{ marginBottom: 0 }}
           />
           <Input 
-            placeholder="Search by name, phone, or booking #"
+            placeholder="Search bookings..."
             prefix={<SearchOutlined style={{ color: "#9ca3af" }} />}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            style={{ width: 280 }}
+            style={{ 
+              width: 300, 
+              height: 44, 
+              borderRadius: 12,
+              background: isDark ? "rgba(0,0,0,0.1)" : "#fff",
+              border: `1px solid ${isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.1)"}`
+            }}
             allowClear
           />
         </div>
       </Card>
 
       {/* Bookings Table */}
-      <Card style={cardStyle}>
+      <Card style={glassCardStyle}>
         <Table 
           dataSource={bookings}
           columns={columns}
           rowKey="_id"
           loading={loading}
+          className="custom-table"
           pagination={{
             ...pagination,
             showSizeChanger: true,
             showTotal: (total) => `${total} bookings`,
-            onChange: (page, pageSize) => setPagination(prev => ({ ...prev, current: page, pageSize }))
+            onChange: (page, pageSize) => setPagination(prev => ({ ...prev, current: page, pageSize })),
+            style: { padding: "16px 0" }
           }}
           locale={{
             emptyText: <Empty description="No bookings found" />

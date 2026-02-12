@@ -59,6 +59,15 @@
   --mobile-drawer-bg: rgba(255, 255, 255, 0.95);
   --mobile-drawer-border: rgba(226, 232, 240, 0.8);
 
+  /* Stitch Redesign - Dashboard Specifics */
+  --dashboard-bg-dark: #0f172a;
+  --dashboard-card-bg-dark: rgba(30, 41, 59, 0.7);
+  --dashboard-sidebar-bg-dark: rgba(15, 23, 42, 0.8);
+
+  --glass-effect: backdrop-filter: blur(var(--glass-blur));
+  --glass-surface: rgba(255, 255, 255, 0.05);
+  --glass-border-color: rgba(255, 255, 255, 0.1);
+
   /* Ant Design compatibility */
   --ant-primary-color: #e65100;
   --ant-link-color: #1677ff;

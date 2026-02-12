@@ -149,10 +149,13 @@ export default function WorkOrderForm() {
   const discount = form.getFieldValue("discount") || 0;
   const totalCost = materialsCost + laborCost + additionalCharges - discount;
 
-  const cardStyle = {
-    background: isDark ? "#18181f" : "#ffffff",
-    border: isDark ? "1px solid rgba(255,255,255,0.1)" : "1px solid #e5e7eb",
-    borderRadius: 16,
+  const glassCardStyle = {
+    background: isDark ? "rgba(30, 41, 59, 0.5)" : "rgba(255, 255, 255, 0.7)",
+    backdropFilter: "blur(16px)",
+    WebkitBackdropFilter: "blur(16px)",
+    border: isDark ? "1px solid rgba(255, 255, 255, 0.08)" : "1px solid rgba(0, 0, 0, 0.05)",
+    borderRadius: 20,
+    boxShadow: isDark ? "0 8px 32px rgba(0, 0, 0, 0.15)" : "0 8px 32px rgba(0, 0, 0, 0.03)",
     marginBottom: 24
   };
 
@@ -165,46 +168,59 @@ export default function WorkOrderForm() {
   }
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in" style={{ paddingBottom: 60 }}>
       {/* Header */}
-      <div style={{ marginBottom: 24, display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 16 }}>
+      <div style={{ marginBottom: 32, display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 16 }}>
         <div>
           <Button 
             type="text" 
             icon={<ArrowLeftOutlined />} 
             onClick={() => navigate("/admin/work-orders")}
-            style={{ marginLeft: -8, marginBottom: 8 }}
+            style={{ marginLeft: -8, marginBottom: 8, color: isDark ? "#94a3b8" : "#64748b" }}
           >
-            Back
+            Back to List
           </Button>
-          <Title level={2} style={{ margin: 0, color: isDark ? "#fff" : "#1f2937" }}>
+          <Title level={2} style={{ margin: 0, color: isDark ? "#fff" : "#1e293b", fontWeight: 800 }}>
             {workOrder?.docketNumber}
           </Title>
-          <Space size="middle" style={{ marginTop: 8 }}>
-            <Tag color={workOrder?.status === "completed" ? "success" : "processing"}>
+          <Space size="middle" style={{ marginTop: 12 }}>
+            <Tag color={workOrder?.status === "completed" ? "success" : "processing"} style={{ border: "none", borderRadius: 6, padding: "2px 10px" }}>
               {workOrder?.status?.toUpperCase()}
             </Tag>
-            <Text type="secondary">Booking: {workOrder?.bookingId?.bookingNumber}</Text>
+            <Text style={{ color: isDark ? "#94a3b8" : "#64748b" }}>Booking: <b>{workOrder?.bookingId?.bookingNumber}</b></Text>
           </Space>
         </div>
         
-        <Space>
-          <Button icon={<PrinterOutlined />} onClick={() => window.print()}>Print</Button>
-          <Button icon={<SaveOutlined />} onClick={handleSave} loading={saving}>Save</Button>
+        <Space size="middle">
+          <Button 
+            icon={<PrinterOutlined />} 
+            onClick={() => window.print()}
+            style={{ height: 44, borderRadius: 10 }}
+          >
+            Print Docket
+          </Button>
+          <Button 
+            icon={<SaveOutlined />} 
+            onClick={handleSave} 
+            loading={saving}
+            style={{ height: 44, borderRadius: 10 }}
+          >
+            Save Progress
+          </Button>
           {workOrder?.status !== "completed" && (
             <Popconfirm
               title="Complete this work order?"
               description="This will mark the job as done and send a feedback request to the customer."
               onConfirm={handleComplete}
               okText="Yes, Complete"
-              okButtonProps={{ style: { background: "#22c55e" } }}
+              okButtonProps={{ style: { background: "#22c55e", borderColor: "#22c55e" } }}
             >
               <Button 
                 type="primary" 
                 icon={<CheckCircleOutlined />}
-                style={{ background: "#22c55e", borderColor: "#22c55e" }}
+                style={{ background: "#22c55e", borderColor: "#22c55e", height: 44, borderRadius: 10, fontWeight: 600 }}
               >
-                Complete
+                Complete Job
               </Button>
             </Popconfirm>
           )}
@@ -212,29 +228,36 @@ export default function WorkOrderForm() {
       </div>
 
       {/* Customer Info */}
-      <Card style={cardStyle} title="Customer Information">
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
+      <Card 
+        style={glassCardStyle} 
+        title={<span style={{ fontWeight: 700, color: isDark ? "#fff" : "#334155" }}>Customer Information</span>}
+      >
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 24 }}>
           <div>
-            <Text type="secondary">Name</Text>
-            <div style={{ fontWeight: 500 }}>{workOrder?.customer?.name}</div>
+            <Text style={{ color: isDark ? "#64748b" : "#94a3b8", fontSize: 13, display: "block", marginBottom: 4 }}>Name</Text>
+            <div style={{ fontWeight: 600, color: isDark ? "#f1f5f9" : "#1e293b" }}>{workOrder?.customer?.name}</div>
           </div>
           <div>
-            <Text type="secondary">Phone</Text>
-            <div style={{ fontWeight: 500 }}>{workOrder?.customer?.phone}</div>
+            <Text style={{ color: isDark ? "#64748b" : "#94a3b8", fontSize: 13, display: "block", marginBottom: 4 }}>Phone</Text>
+            <div style={{ fontWeight: 600, color: isDark ? "#f1f5f9" : "#1e293b" }}>{workOrder?.customer?.phone}</div>
           </div>
           <div>
-            <Text type="secondary">Service</Text>
-            <div style={{ fontWeight: 500 }}>{workOrder?.serviceType}</div>
+            <Text style={{ color: isDark ? "#64748b" : "#94a3b8", fontSize: 13, display: "block", marginBottom: 4 }}>Service Type</Text>
+            <div style={{ fontWeight: 600, color: isDark ? "#f1f5f9" : "#1e293b" }}>{workOrder?.serviceType}</div>
           </div>
           <div>
-            <Text type="secondary">Address</Text>
-            <div style={{ fontWeight: 500 }}>{workOrder?.customer?.address || "N/A"}</div>
+            <Text style={{ color: isDark ? "#64748b" : "#94a3b8", fontSize: 13, display: "block", marginBottom: 4 }}>Address</Text>
+            <div style={{ fontWeight: 600, color: isDark ? "#f1f5f9" : "#1e293b" }}>{workOrder?.customer?.address || "N/A"}</div>
           </div>
         </div>
       </Card>
 
       {/* Tasks */}
-      <Card style={cardStyle} title="Tasks" extra={<Button icon={<PlusOutlined />} onClick={addTask}>Add Task</Button>}>
+      <Card 
+        style={glassCardStyle} 
+        title={<span style={{ fontWeight: 700, color: isDark ? "#fff" : "#334155" }}>Tasks</span>} 
+        extra={<Button icon={<PlusOutlined />} onClick={addTask} style={{ borderRadius: 8 }}>Add Task</Button>}
+      >
         {workOrder?.tasks?.length === 0 ? (
           <Text type="secondary">No tasks added yet</Text>
         ) : (
@@ -264,7 +287,11 @@ export default function WorkOrderForm() {
       </Card>
 
       {/* Materials */}
-      <Card style={cardStyle} title="Materials Used" extra={<Button icon={<PlusOutlined />} onClick={addMaterial}>Add Material</Button>}>
+      <Card 
+        style={glassCardStyle} 
+        title={<span style={{ fontWeight: 700, color: isDark ? "#fff" : "#334155" }}>Materials Used</span>} 
+        extra={<Button icon={<PlusOutlined />} onClick={addMaterial} style={{ borderRadius: 8 }}>Add Material</Button>}
+      >
         {workOrder?.materials?.length === 0 ? (
           <Text type="secondary">No materials added yet</Text>
         ) : (
@@ -330,7 +357,10 @@ export default function WorkOrderForm() {
       </Card>
 
       {/* Labor & Costs */}
-      <Card style={cardStyle} title="Labor & Costing">
+      <Card 
+        style={glassCardStyle} 
+        title={<span style={{ fontWeight: 700, color: isDark ? "#fff" : "#334155" }}>Labor & Costing</span>}
+      >
         <Form form={form} layout="vertical" onValuesChange={() => form.validateFields()}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
             <Form.Item label="Labor Hours" name="laborHours">
