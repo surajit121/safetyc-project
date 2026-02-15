@@ -38,6 +38,11 @@ const ServiceBookingSchema = new mongoose.Schema(
     service: {
       type: { type: String, required: true },      // e.g., "CCTV Surveillance"
       category: { type: String, required: true },  // e.g., "cctv-surveillance"
+      requestType: { 
+        type: String, 
+        enum: ["new-installation", "service-repair"], 
+        default: "new-installation" 
+      },
       details: { type: mongoose.Schema.Types.Mixed } // Service-specific options
     },
     

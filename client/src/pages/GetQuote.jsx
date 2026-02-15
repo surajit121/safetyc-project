@@ -31,7 +31,9 @@ import {
   PhoneOutlined,
   MailOutlined,
   UserOutlined,
-  CheckCircleOutlined
+  CheckCircleOutlined,
+  BuildOutlined,
+  SettingOutlined
 } from "@ant-design/icons";
 import { useTheme } from "../context/ThemeContext.jsx";
 import SEO from "../components/SEO.jsx";
@@ -42,6 +44,30 @@ import { ToastManager } from "../components/FallbackToast.jsx";
 const { Title, Text, Paragraph } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
+
+// Request Type Options
+const requestTypes = [
+  {
+    id: "new-installation",
+    emoji: "🏗️",
+    icon: BuildOutlined,
+    title: "New Installation",
+    description: "Set up brand-new safety systems, CCTV, electrical, fire safety, or solar panels for your property",
+    gradient: "from-emerald-500 to-teal-600",
+    glowColor: "rgba(16, 185, 129, 0.35)",
+    accentColor: "#10b981"
+  },
+  {
+    id: "service-repair",
+    emoji: "🔧",
+    icon: SettingOutlined,
+    title: "Service & Repair",
+    description: "Maintenance, repair, AMC, troubleshooting, or upgrades for your existing systems",
+    gradient: "from-blue-500 to-indigo-600",
+    glowColor: "rgba(59, 130, 246, 0.35)",
+    accentColor: "#3b82f6"
+  }
+];
 
 // Service Categories Data (Reused/Shared structure)
 const serviceCategories = [
@@ -109,6 +135,7 @@ export default function GetQuote() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     service: null,
+    requestType: null,
     siteType: "",
     siteLocation: "",
     areaSize: "",
@@ -120,20 +147,33 @@ export default function GetQuote() {
     notes: ""
   });
 
-  // Handle URL param for pre-selection
+  // Handle URL params for pre-selection
   useEffect(() => {
     const serviceParam = searchParams.get('service');
-    if (serviceParam) {
-      const matched = serviceCategories.find(s => s.title === serviceParam || s.id === serviceParam);
-      if (matched) {
-        setFormData(prev => ({ ...prev, service: matched }));
-        setCurrentStep(1); // Skip to step 2
+    const typeParam = searchParams.get('type');
+    
+    if (typeParam) {
+      setFormData(prev => ({ ...prev, requestType: typeParam }));
+      // If type is pre-selected from BookService, skip step 0
+      if (serviceParam) {
+        const matched = serviceCategories.find(s => s.title === serviceParam || s.id === serviceParam);
+        if (matched) {
+          setFormData(prev => ({ ...prev, service: matched }));
+          setCurrentStep(2); // Skip to site details (step 2)
+        }
+      } else {
+        setCurrentStep(1); // Skip to service selection (step 1)
       }
     }
   }, [searchParams]);
 
   const next = () => setCurrentStep(prev => prev + 1);
   const prev = () => setCurrentStep(prev => prev - 1);
+
+  const handleRequestTypeSelect = (type) => {
+    setFormData(prev => ({ ...prev, requestType: type.id }));
+    next();
+  };
 
   const handleServiceSelect = (service) => {
     setFormData(prev => ({ ...prev, service }));
@@ -158,6 +198,7 @@ export default function GetQuote() {
         service: {
           type: formData.service?.title,
           category: formData.service?.id,
+          requestType: formData.requestType || "new-installation",
           details: formData.serviceDetails
         },
         site: {
@@ -185,7 +226,7 @@ export default function GetQuote() {
       }
       
       // Success state
-      setCurrentStep(4); // Move to Success Step
+      setCurrentStep(5); // Move to Success Step
       
       // Try using toast if available, otherwise fallback
       try {
@@ -212,35 +253,167 @@ export default function GetQuote() {
 
   // --- STEPS RENDERERS ---
 
+  // Step 0: Request Type (New Installation vs Service & Repair)
+  const renderStep0_RequestType = () => (
+    <div className="animate-fade-in">
+      <Title level={3} className={`text-center mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+        What do you need?
+      </Title>
+      <p className={`text-center mb-10 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+        Tell us whether you need a brand-new installation or service for an existing system
+      </p>
+
+      <Row gutter={[32, 32]} justify="center">
+        {requestTypes.map((type, index) => (
+          <Col xs={24} sm={12} lg={10} key={type.id}>
+            <Card
+              hoverable
+              onClick={() => handleRequestTypeSelect(type)}
+              className={`h-full cursor-pointer transition-all duration-500 group relative overflow-hidden ${
+                formData.requestType === type.id
+                  ? (theme === 'dark' ? 'border-orange-500 bg-orange-900/10' : 'border-orange-500 bg-orange-50')
+                  : theme === 'dark' 
+                    ? 'bg-[#18181f] border-[#27272a] hover:border-transparent' 
+                    : 'bg-white border-gray-200 hover:border-transparent hover:shadow-2xl'
+              }`}
+              style={{
+                borderRadius: '24px',
+                animationDelay: `${index * 0.1}s`
+              }}
+              bodyStyle={{ padding: '40px 32px' }}
+            >
+              {/* Hover glow effect */}
+              <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{
+                  background: `radial-gradient(circle at center, ${type.glowColor} 0%, transparent 70%)`,
+                  filter: 'blur(40px)'
+                }}
+              />
+
+              {/* Top gradient border on hover */}
+              <div 
+                className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                  background: `linear-gradient(90deg, transparent, ${type.accentColor}, transparent)`
+                }}
+              />
+              
+              <div className="flex flex-col items-center text-center relative z-10">
+                {/* Icon with gradient background */}
+                <div 
+                  className={`w-24 h-24 rounded-3xl flex items-center justify-center mb-6 bg-gradient-to-br ${type.gradient} shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-3`}
+                  style={{
+                    boxShadow: `0 15px 40px -12px ${type.glowColor}`
+                  }}
+                >
+                  <span className="text-5xl">{type.emoji}</span>
+                </div>
+                
+                {/* Title */}
+                <h2 className={`text-2xl font-bold mb-3 transition-colors duration-300 ${
+                  theme === 'dark' ? 'text-white' : 'text-gray-900'
+                }`}>
+                  {type.title}
+                </h2>
+                
+                {/* Description */}
+                <p className={`text-base mb-6 leading-relaxed ${
+                  theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                }`}>
+                  {type.description}
+                </p>
+
+                {/* Select button */}
+                <div className={`py-3 px-8 rounded-full text-sm font-semibold transition-all duration-300 transform group-hover:-translate-y-1 ${
+                  theme === 'dark' 
+                    ? 'bg-white/10 text-white group-hover:bg-white/20' 
+                    : 'bg-gray-100 text-gray-700 group-hover:bg-gray-200'
+                }`}
+                style={{
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
+                }}>
+                  Select {type.title} →
+                </div>
+              </div>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </div>
+  );
+
+  // Step 1: Service Category Selection
   const renderStep1_ServiceSelection = () => (
     <div className="animate-fade-in">
-      <Title level={3} className={`text-center mb-8 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+      <Title level={3} className={`text-center mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
         What service do you need?
       </Title>
+      <p className={`text-center mb-8 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+        Select a category below to get started
+      </p>
+
+      {/* Request type badge */}
+      {formData.requestType && (
+        <div className="flex justify-center mb-8">
+          <div className={`inline-flex items-center gap-2 py-2 px-5 rounded-full text-sm font-semibold ${
+            formData.requestType === 'new-installation'
+              ? (theme === 'dark' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/20' : 'bg-emerald-50 text-emerald-700 border border-emerald-200')
+              : (theme === 'dark' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/20' : 'bg-blue-50 text-blue-700 border border-blue-200')
+          }`}>
+            <span className="text-base">{formData.requestType === 'new-installation' ? '🏗️' : '🔧'}</span>
+            {formData.requestType === 'new-installation' ? 'New Installation' : 'Service & Repair'}
+          </div>
+        </div>
+      )}
+
       <Row gutter={[24, 24]}>
         {serviceCategories.map((service, index) => (
           <Col xs={24} sm={12} md={8} key={service.id}>
             <Card
               hoverable
               onClick={() => handleServiceSelect(service)}
-              className={`h-full text-center transition-all duration-300 border-2 ${
+              className={`h-full text-center transition-all duration-500 group relative overflow-hidden ${
                 formData.service?.id === service.id 
                   ? 'border-orange-500 bg-orange-50 dark:bg-orange-900/20' 
-                  : theme === 'dark' ? 'bg-[#18181f] border-gray-800' : 'bg-white border-gray-100'
+                  : theme === 'dark' ? 'bg-[#18181f] border-[#27272a] hover:border-orange-500/30' : 'bg-white border-gray-200 hover:border-orange-300'
               }`}
-              style={{ borderRadius: '16px' }}
+              style={{ borderRadius: '20px', animationDelay: `${index * 0.05}s` }}
+              bodyStyle={{ padding: '28px' }}
             >
+              {/* Hover glow effect */}
               <div 
-                className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center text-3xl mb-4 bg-gradient-to-br ${service.gradient} text-white shadow-lg`}
-              >
-                {service.emoji}
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{
+                  background: `radial-gradient(circle at center, ${service.glowColor} 0%, transparent 70%)`,
+                  filter: 'blur(40px)'
+                }}
+              />
+
+              <div className="relative z-10">
+                <div 
+                  className={`w-18 h-18 mx-auto rounded-2xl flex items-center justify-center text-3xl mb-4 bg-gradient-to-br ${service.gradient} text-white shadow-lg transition-all duration-500 group-hover:scale-110 group-hover:rotate-3`}
+                  style={{
+                    width: '72px', height: '72px',
+                    boxShadow: `0 10px 30px -10px ${service.glowColor}`
+                  }}
+                >
+                  {service.emoji}
+                </div>
+                <h3 className={`font-bold text-lg mb-2 transition-colors duration-300 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                  {service.title}
+                </h3>
+                <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>
+                  {service.description}
+                </p>
+                <div className={`py-2 px-5 rounded-full text-sm font-semibold transition-all duration-300 transform group-hover:-translate-y-1 ${
+                  theme === 'dark'
+                    ? 'bg-orange-500/20 text-orange-300 group-hover:bg-orange-500/30'
+                    : 'bg-orange-100 text-orange-600 group-hover:bg-orange-200'
+                }`}>
+                  Select →
+                </div>
               </div>
-              <h3 className={`font-bold text-lg mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
-                {service.title}
-              </h3>
-              <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
-                {service.description}
-              </p>
             </Card>
           </Col>
         ))}
@@ -250,11 +423,31 @@ export default function GetQuote() {
 
   const renderStep2_SiteDetails = () => (
     <div className="max-w-2xl mx-auto animate-fade-in">
-      <Title level={3} className={`text-center mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+      <Title level={3} className={`text-center mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
         Tell us about your site
       </Title>
+
+      {/* Request type + service badge */}
+      <div className="flex items-center justify-center gap-2 mb-6 flex-wrap">
+        {formData.requestType && (
+          <span className={`inline-flex items-center gap-1.5 py-1.5 px-4 rounded-full text-xs font-semibold ${
+            formData.requestType === 'new-installation'
+              ? (theme === 'dark' ? 'bg-emerald-500/20 text-emerald-300' : 'bg-emerald-100 text-emerald-700')
+              : (theme === 'dark' ? 'bg-blue-500/20 text-blue-300' : 'bg-blue-100 text-blue-700')
+          }`}>
+            {formData.requestType === 'new-installation' ? '🏗️ New Installation' : '🔧 Service & Repair'}
+          </span>
+        )}
+        {formData.service && (
+          <span className={`inline-flex items-center gap-1.5 py-1.5 px-4 rounded-full text-xs font-semibold ${
+            theme === 'dark' ? 'bg-orange-500/20 text-orange-300' : 'bg-orange-100 text-orange-700'
+          }`}>
+            {formData.service.emoji} {formData.service.title}
+          </span>
+        )}
+      </div>
       
-      <Form layout="vertical" size="large" className="mt-8">
+      <Form layout="vertical" size="large" className="mt-4">
         <Row gutter={24}>
           <Col span={24}>
             <Form.Item label={<span className={theme === 'dark' ? 'text-gray-300' : ''}>Site Type</span>} required>
@@ -578,7 +771,7 @@ export default function GetQuote() {
 
   // --- MAIN RENDER ---
 
-  if (currentStep === 4) {
+  if (currentStep === 5) {
     return (
       <div className={`min-h-screen pt-24 pb-12 px-4 ${theme === 'dark' ? 'bg-[#0a0a0f]' : 'bg-gray-50'}`}>
         {renderSuccess()}
@@ -587,6 +780,7 @@ export default function GetQuote() {
   }
 
   const steps = [
+    { title: 'Type', icon: <BuildOutlined /> },
     { title: 'Service', icon: <ToolOutlined /> },
     { title: 'Site Details', icon: <EnvironmentOutlined /> },
     { title: 'Options', icon: <HomeOutlined /> },
@@ -594,9 +788,24 @@ export default function GetQuote() {
   ];
 
   return (
-    <div className={`min-h-screen pt-24 pb-12 px-4 transition-colors duration-300 ${
-      theme === 'dark' ? 'bg-[#0a0a0f]' : 'bg-gray-50'
+    <div className={`min-h-screen pt-24 pb-12 px-4 transition-colors duration-300 relative overflow-hidden ${
+      theme === 'dark' ? 'bg-[#0a0a0f]' : 'bg-gradient-to-br from-slate-50 via-white to-orange-50'
     }`}>
+      {/* Decorative background elements - matching BookService */}
+      <div 
+        className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-20 blur-3xl pointer-events-none"
+        style={{ 
+          background: theme === 'dark' 
+            ? 'radial-gradient(circle, rgba(249,115,22,0.15) 0%, transparent 70%)' 
+            : 'radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%)'
+        }}
+      />
+      <div 
+        className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full opacity-15 blur-3xl pointer-events-none"
+        style={{ 
+          background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)'
+        }}
+      />
       <SEO 
         title="Get A Quote - Safetyc" 
         description="Request a customized quote for fire safety, CCTV, and electrical services."
@@ -616,10 +825,11 @@ export default function GetQuote() {
 
         {/* Dynamic Content Area */}
         <div className="mb-12 min-h-[400px]">
-          {currentStep === 0 && renderStep1_ServiceSelection()}
-          {currentStep === 1 && renderStep2_SiteDetails()}
-          {currentStep === 2 && renderStep3_ServiceOptions()}
-          {currentStep === 3 && renderStep4_UploadNotes()}
+          {currentStep === 0 && renderStep0_RequestType()}
+          {currentStep === 1 && renderStep1_ServiceSelection()}
+          {currentStep === 2 && renderStep2_SiteDetails()}
+          {currentStep === 3 && renderStep3_ServiceOptions()}
+          {currentStep === 4 && renderStep4_UploadNotes()}
         </div>
 
         {/* Navigation Actions */}
@@ -634,13 +844,17 @@ export default function GetQuote() {
             Back
           </Button>
 
-          {currentStep < 3 ? (
+          {currentStep < 4 ? (
             <Button 
               type="primary" 
               size="large" 
               onClick={() => {
-                // Validation logic could go here
-                if (currentStep === 1 && (!formData.siteType || !formData.name || !formData.phone)) {
+                // Validation logic
+                if (currentStep === 0 && !formData.requestType) {
+                   message.error("Please select a request type");
+                   return;
+                }
+                if (currentStep === 2 && (!formData.siteType || !formData.name || !formData.phone)) {
                    message.error("Please fill in required details");
                    return;
                 }
