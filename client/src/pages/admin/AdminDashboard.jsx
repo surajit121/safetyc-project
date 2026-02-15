@@ -56,52 +56,65 @@ export default function AdminDashboard() {
     boxShadow: isDark ? "0 8px 32px rgba(0, 0, 0, 0.2)" : "0 8px 32px rgba(0, 0, 0, 0.05)"
   };
 
-  const GlassStatCard = ({ stat, index }) => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
-    >
-      <Card 
-        style={glassCardStyle} 
-        bodyStyle={{ padding: 24 }}
-        className="hover-lift"
+  const GlassStatCard = ({ stat, index }) => {
+    const growth = stat.growth;
+    const isPositive = growth > 0;
+    const isNegative = growth < 0;
+    const growthColor = isPositive ? "green" : isNegative ? "red" : "default";
+    const growthPrefix = isPositive ? "+" : "";
+    
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
       >
-        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
-          <div 
-            style={{ 
-              width: 52, 
-              height: 52, 
-              borderRadius: 14, 
-              background: stat.bgColor,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 24,
-              color: stat.color,
-              boxShadow: `0 8px 16px ${stat.bgColor}`
-            }}
-          >
-            {stat.icon}
+        <Card 
+          style={glassCardStyle} 
+          bodyStyle={{ padding: 24 }}
+          className="hover-lift"
+        >
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+            <div 
+              style={{ 
+                width: 52, 
+                height: 52, 
+                borderRadius: 14, 
+                background: stat.bgColor,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 24,
+                color: stat.color,
+                boxShadow: `0 8px 16px ${stat.bgColor}`
+              }}
+            >
+              {stat.icon}
+            </div>
+            <div style={{ textAlign: "right" }}>
+              <Text style={{ color: isDark ? "#94a3b8" : "#64748b", fontSize: 13, fontWeight: 500, display: "block", marginBottom: 4 }}>
+                {stat.title}
+              </Text>
+              <Title level={2} style={{ margin: 0, color: isDark ? "#fff" : "#1e293b", fontWeight: 700 }}>
+                {stat.value}
+              </Title>
+            </div>
           </div>
-          <div style={{ textAlign: "right" }}>
-            <Text style={{ color: isDark ? "#94a3b8" : "#64748b", fontSize: 13, fontWeight: 500, display: "block", marginBottom: 4 }}>
-              {stat.title}
-            </Text>
-            <Title level={2} style={{ margin: 0, color: isDark ? "#fff" : "#1e293b", fontWeight: 700 }}>
-              {stat.value}
-            </Title>
+          <div style={{ marginTop: 20, display: "flex", alignItems: "center", gap: 6 }}>
+            <Tag 
+              color={growthColor} 
+              style={{ border: "none", borderRadius: 4 }}
+            >
+              {growthPrefix}{growth}%
+            </Tag>
+            <Text style={{ fontSize: 12, color: isDark ? "#64748b" : "#94a3b8" }}>vs last month</Text>
           </div>
-        </div>
-        <div style={{ marginTop: 20, display: "flex", alignItems: "center", gap: 6 }}>
-          <Tag color={stat.color === "#f97316" ? "orange" : stat.color === "#3b82f6" ? "blue" : "green"} style={{ border: "none", borderRadius: 4 }}>
-            +12%
-          </Tag>
-          <Text style={{ fontSize: 12, color: isDark ? "#64748b" : "#94a3b8" }}>vs last month</Text>
-        </div>
-      </Card>
-    </motion.div>
-  );
+        </Card>
+      </motion.div>
+    );
+  };
+
+  const monthlyGrowth = stats?.monthlyGrowth || {};
 
   const statCards = [
     { 
@@ -109,28 +122,32 @@ export default function AdminDashboard() {
       value: stats?.pending || 0, 
       icon: <ClockCircleOutlined />,
       color: "#f97316",
-      bgColor: "rgba(249, 115, 22, 0.1)"
+      bgColor: "rgba(249, 115, 22, 0.1)",
+      growth: monthlyGrowth.pending ?? 0
     },
     { 
       title: "In Progress", 
       value: stats?.["in-progress"] || 0, 
       icon: <ToolOutlined />,
       color: "#3b82f6",
-      bgColor: "rgba(59, 130, 246, 0.1)"
+      bgColor: "rgba(59, 130, 246, 0.1)",
+      growth: monthlyGrowth["in-progress"] ?? 0
     },
     { 
       title: "Completed", 
       value: stats?.completed || 0, 
       icon: <CheckCircleOutlined />,
       color: "#22c55e",
-      bgColor: "rgba(34, 197, 94, 0.1)"
+      bgColor: "rgba(34, 197, 94, 0.1)",
+      growth: monthlyGrowth.completed ?? 0
     },
     { 
       title: "Today's Bookings", 
       value: stats?.todayBookings || 0, 
       icon: <CalendarOutlined />,
       color: "#8b5cf6",
-      bgColor: "rgba(139, 92, 246, 0.1)"
+      bgColor: "rgba(139, 92, 246, 0.1)",
+      growth: monthlyGrowth.total ?? 0
     }
   ];
 

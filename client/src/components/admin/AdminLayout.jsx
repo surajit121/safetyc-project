@@ -117,7 +117,7 @@ export default function AdminLayout() {
                     exit={{ opacity: 0, x: -10 }}
                     transition={{ duration: 0.2 }}
                   >
-                    SafetyC Admin
+                    Safetyc Admin
                   </motion.span>
                 )}
               </AnimatePresence>

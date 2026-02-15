@@ -171,19 +171,54 @@ export async function updateBooking(req, res) {
  */
 export async function getBookingStats(req, res) {
   try {
-    const today = new Date();
+    const now = new Date();
+    
+    // Today start
+    const today = new Date(now);
     today.setHours(0, 0, 0, 0);
 
-    const [statusCounts, todayBookings, recentBookings] = await Promise.all([
+    // Current month start
+    const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    
+    // Last month range
+    const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999);
+
+    const [
+      statusCounts, 
+      todayBookings, 
+      recentBookings,
+      thisMonthCounts,
+      lastMonthCounts,
+      thisMonthTotal,
+      lastMonthTotal
+    ] = await Promise.all([
+      // Overall status counts
       ServiceBooking.aggregate([
         { $group: { _id: "$status", count: { $sum: 1 } } }
       ]),
+      // Today's count
       ServiceBooking.countDocuments({ createdAt: { $gte: today } }),
+      // Recent 5 bookings
       ServiceBooking.find()
         .sort({ createdAt: -1 })
         .limit(5)
         .select("bookingNumber customer.name service.type status createdAt")
-        .lean()
+        .lean(),
+      // This month status counts
+      ServiceBooking.aggregate([
+        { $match: { createdAt: { $gte: thisMonthStart } } },
+        { $group: { _id: "$status", count: { $sum: 1 } } }
+      ]),
+      // Last month status counts
+      ServiceBooking.aggregate([
+        { $match: { createdAt: { $gte: lastMonthStart, $lte: lastMonthEnd } } },
+        { $group: { _id: "$status", count: { $sum: 1 } } }
+      ]),
+      // This month total
+      ServiceBooking.countDocuments({ createdAt: { $gte: thisMonthStart } }),
+      // Last month total
+      ServiceBooking.countDocuments({ createdAt: { $gte: lastMonthStart, $lte: lastMonthEnd } })
     ]);
 
     const stats = {
@@ -200,6 +235,27 @@ export async function getBookingStats(req, res) {
     statusCounts.forEach(s => {
       stats[s._id] = s.count;
     });
+
+    // Build monthly counts maps
+    const thisMonthMap = {};
+    thisMonthCounts.forEach(s => { thisMonthMap[s._id] = s.count; });
+    
+    const lastMonthMap = {};
+    lastMonthCounts.forEach(s => { lastMonthMap[s._id] = s.count; });
+
+    // Calculate percentage change: ((current - previous) / previous) * 100
+    const calcGrowth = (current, previous) => {
+      if (previous === 0 && current === 0) return 0;
+      if (previous === 0) return 100; // went from 0 to something
+      return Math.round(((current - previous) / previous) * 100);
+    };
+
+    stats.monthlyGrowth = {
+      pending: calcGrowth(thisMonthMap.pending || 0, lastMonthMap.pending || 0),
+      "in-progress": calcGrowth(thisMonthMap["in-progress"] || 0, lastMonthMap["in-progress"] || 0),
+      completed: calcGrowth(thisMonthMap.completed || 0, lastMonthMap.completed || 0),
+      total: calcGrowth(thisMonthTotal, lastMonthTotal)
+    };
 
     res.json({ ok: true, data: stats });
   } catch (err) {
