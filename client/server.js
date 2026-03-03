@@ -62,6 +62,25 @@ app.get('/robots.txt', (req, res) => {
   res.status(404).send('Robots.txt not found');
 });
 
+// Google Search Console verification file
+app.get('/google7e99dac7ad6a56c4.html', (req, res) => {
+  const candidatePaths = [
+    path.join(distPath, 'google7e99dac7ad6a56c4.html'),
+    path.join(publicPath, 'google7e99dac7ad6a56c4.html'),
+    path.join(projectRoot, 'google7e99dac7ad6a56c4.html')
+  ];
+
+  const verificationPath = candidatePaths.find(fs.existsSync);
+
+  if (verificationPath) {
+    res.header('Content-Type', 'text/html');
+    return res.sendFile(verificationPath);
+  }
+
+  console.error('Google verification file not found');
+  res.status(404).send('Verification file not found');
+});
+
 // Handle client-side routing
 app.get('*', (req, res) => {
   const indexPath = path.join(distPath, 'index.html');
