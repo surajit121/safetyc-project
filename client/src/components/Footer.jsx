@@ -31,29 +31,28 @@ export default function Footer() {
   ];
 
   return (
-    <footer className={`mt-16 relative overflow-hidden ${
-      theme === 'dark' 
-        ? 'bg-gradient-to-b from-[#0a0a0f] to-[#12121a]' 
+    <footer className={`mt-16 relative overflow-hidden ${theme === 'dark'
+        ? 'bg-gradient-to-b from-[#0a0a0f] to-[#12121a]'
         : 'bg-gradient-to-b from-slate-50 to-white'
-    }`}>
+      }`}>
       {/* Decorative gradient blobs */}
-      <div 
+      <div
         className="absolute -top-20 -left-20 w-64 h-64 rounded-full opacity-20 blur-3xl pointer-events-none"
-        style={{ 
-          background: theme === 'dark' 
-            ? 'linear-gradient(135deg, #f97316, #ea580c)' 
+        style={{
+          background: theme === 'dark'
+            ? 'linear-gradient(135deg, #f97316, #ea580c)'
             : 'linear-gradient(135deg, #fed7aa, #fdba74)'
         }}
       />
-      <div 
+      <div
         className="absolute -bottom-20 -right-20 w-64 h-64 rounded-full opacity-10 blur-3xl pointer-events-none"
-        style={{ 
+        style={{
           background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)'
         }}
       />
-      
+
       {/* Top border gradient */}
-      <div 
+      <div
         className="absolute top-0 left-0 right-0 h-px"
         style={{
           background: theme === 'dark'
@@ -61,7 +60,7 @@ export default function Footer() {
             : 'linear-gradient(90deg, transparent, rgba(249,115,22,0.3), transparent)'
         }}
       />
-      
+
       <div className="max-w-6xl mx-auto px-4 py-12 relative z-10">
         <div className="grid gap-10 md:grid-cols-3">
           {/* Company Info */}
@@ -71,12 +70,12 @@ export default function Footer() {
                 safety<span className="text-orange-500">c</span>
               </span>
             </div>
-            <Typography.Paragraph 
+            <Typography.Paragraph
               className={`!mb-4 ${theme === 'dark' ? '!text-gray-400' : '!text-gray-600'}`}
             >
               Complete Safety, Security, and Technology Solutions for West Bengal.
             </Typography.Paragraph>
-            
+
             <div className={`text-xs space-y-1.5 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>
               <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
                 <div><strong className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>PAN:</strong> AFAFS7759D</div>
@@ -86,12 +85,11 @@ export default function Footer() {
               </div>
             </div>
           </div>
-          
+
           {/* Quick Links */}
           <div>
-            <h5 className={`text-sm font-semibold uppercase tracking-wider mb-4 ${
-              theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-            }`}>
+            <h5 className={`text-sm font-semibold uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+              }`}>
               Quick Links
             </h5>
             <ul className="space-y-2">
@@ -105,13 +103,12 @@ export default function Footer() {
                 { to: "/contact", label: "Contact" }
               ].map(({ to, label }) => (
                 <li key={to}>
-                  <Link 
-                    to={to} 
-                    className={`group flex items-center text-sm transition-all duration-300 ${
-                      theme === 'dark' 
-                        ? 'text-gray-400 hover:text-orange-400' 
+                  <Link
+                    to={to}
+                    className={`group flex items-center text-sm transition-all duration-300 ${theme === 'dark'
+                        ? 'text-gray-400 hover:text-orange-400'
                         : 'text-gray-600 hover:text-orange-600'
-                    }`}
+                      }`}
                   >
                     <span className="w-0 h-0.5 bg-orange-500 mr-0 opacity-0 transition-all duration-300 group-hover:w-3 group-hover:mr-2 group-hover:opacity-100" />
                     {label}
@@ -120,12 +117,11 @@ export default function Footer() {
               ))}
             </ul>
           </div>
-          
+
           {/* Contact Info */}
           <div>
-            <h5 className={`text-sm font-semibold uppercase tracking-wider mb-4 ${
-              theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-            }`}>
+            <h5 className={`text-sm font-semibold uppercase tracking-wider mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+              }`}>
               Contact
             </h5>
             <div className={`text-sm space-y-3 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -133,9 +129,9 @@ export default function Footer() {
                 <strong className={`block mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                   Corporate Office:
                 </strong>
-                <span className="text-xs">Schooldanga, Bankura - 722101, West Bengal, India</span>
+                <span className="text-xs">Royal Residency, Junbedia(Near Damro Furniture), Bankura–722155, Bankura, West Bengal 722101</span>
               </div>
-              
+
               <div className="space-y-1.5">
                 <div className="flex items-center gap-2">
                   <span className="text-orange-500">📞</span>
@@ -154,7 +150,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        
+
         {/* Social Links */}
         <div className="mt-10 pt-8 border-t border-gray-200 dark:border-gray-800">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
@@ -166,17 +162,16 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className={`flex items-center justify-center w-11 h-11 rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${hoverBg} ${
-                    theme === 'dark' 
-                      ? 'bg-white/5 border-white/10' 
+                  className={`flex items-center justify-center w-11 h-11 rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${hoverBg} ${theme === 'dark'
+                      ? 'bg-white/5 border-white/10'
                       : 'bg-white border-gray-200 shadow-sm'
-                  }`}
+                    }`}
                 >
                   <Icon size={22} color={color} />
                 </a>
               ))}
             </div>
-            
+
             <p className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>
               © {new Date().getFullYear()} safetyc. All rights reserved.
             </p>
