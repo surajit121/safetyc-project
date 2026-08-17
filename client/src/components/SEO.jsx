@@ -3,13 +3,13 @@ import { Helmet } from 'react-helmet-async';
 const SEO = ({ title, description, path, keywords, schema }) => {
   const siteUrl = 'https://safetyc.in';
   const fullUrl = `${siteUrl}${path || ''}`;
-  const defaultTitle = 'safetyc - Integrated Safety & Security Solutions';
+  const defaultTitle = 'Safetyc - Integrated Safety & Security Solutions';
   const defaultDescription = 'Professional fire safety, CCTV surveillance, and electrical solutions in West Bengal. Your trusted partner for security and peace of mind.';
 
   return (
     <Helmet>
       {/* Basic Meta Tags */}
-      <title>{title ? `${title} | safetyc` : defaultTitle}</title>
+      <title>{title ? `${title} | Safetyc` : defaultTitle}</title>
       <meta name="description" content={description || defaultDescription} />
       {keywords && <meta name="keywords" content={keywords} />}
       

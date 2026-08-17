@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Typography } from "antd";
 import { useTheme } from "../context/ThemeContext.jsx";
 import { FaWhatsapp, FaFacebook, FaInstagram } from "react-icons/fa";
+import safetycLogo from "../assets/logo.png";
 
 export default function Footer() {
   const { theme } = useTheme();
@@ -65,9 +66,14 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-3">
           {/* Company Info */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <span className={`text-2xl font-extrabold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                safety<span className="text-orange-500">c</span>
+            <div className="flex items-center gap-3">
+              <img
+                src={safetycLogo}
+                alt="Safetyc Logo"
+                className="h-10 w-auto object-contain bg-white rounded-lg p-0.5 shadow-sm border border-slate-200 dark:border-slate-800"
+              />
+              <span className={`text-xl md:text-2xl font-extrabold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                Safety<span className="text-orange-500">c</span> Private Limited
               </span>
             </div>
             <Typography.Paragraph
@@ -140,10 +146,10 @@ export default function Footer() {
                 <div className="flex items-center gap-2">
                   <span className="text-orange-500">✉️</span>
                   <a
-                    href="mailto:mssafetyc@gmail.com"
+                    href="mailto:info@safetyc.in"
                     className="text-orange-500 hover:text-orange-600 hover:underline transition-colors"
                   >
-                    mssafetyc@gmail.com
+                    info@safetyc.in
                   </a>
                 </div>
               </div>
@@ -173,7 +179,7 @@ export default function Footer() {
             </div>
 
             <p className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>
-              © {new Date().getFullYear()} safetyc. All rights reserved.
+              © {new Date().getFullYear()} Safetyc Private Limited. All rights reserved.
             </p>
           </div>
         </div>

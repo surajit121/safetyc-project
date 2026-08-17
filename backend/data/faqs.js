@@ -10,7 +10,7 @@ export const faqs = [
     id: "contact",
     question: "How can I reach safetyc?",
     answer:
-      "Call us at +91 99073 71539 or email mssafetyc@gmail.com. You can also use the contact form on our website for quick assistance.",
+      "Call us at +91 99073 71539 or email info@safetyc.in. You can also use the contact form on our website for quick assistance.",
     tags: ["contact", "support"],
   },
   {

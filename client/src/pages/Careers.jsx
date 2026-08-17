@@ -401,7 +401,7 @@ export default function Careers() {
     <section className="max-w-4xl mx-auto px-4 py-12">
       <SEO 
         title="Careers" 
-        description="Join the safetyc team and build a career in safety and security solutions. Explore job opportunities in technical, sales, and administrative roles."
+        description="Join the Safetyc team and build a career in safety and security solutions. Explore job opportunities in technical, sales, and administrative roles."
         path="/careers"
       />
       <header className="mb-6">

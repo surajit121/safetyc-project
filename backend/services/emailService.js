@@ -96,7 +96,7 @@ export async function sendBookingConfirmation(booking) {
     </div>
     <div class="footer">
       <p>Safetyc - Your Safety Partner</p>
-      <p>📞 Contact: +91-99073 71539 | ✉️ mssafetyc@gmail.com</p>
+      <p>📞 Contact: +91-99073 71539 | ✉️ info@safetyc.in</p>
     </div>
   </div>
 </body>

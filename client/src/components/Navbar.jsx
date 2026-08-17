@@ -7,6 +7,7 @@ import ThemeToggle from "./ThemeToggle.jsx";
 import applyMobileColorFix from "../utils/mobileColorFix.js";
 import { throttle } from "../utils/performance.js";
 import { prefetchRoute } from "../routes.js";
+import safetycLogo from "../assets/logo.png";
 
 
 const { Header } = Layout;
@@ -24,10 +25,17 @@ const links = [
 
 function BrandMark() {
   return (
-    <span className="brand-text">
-      safety
-      <span className="brand-accent">c</span>
-    </span>
+    <div className="flex items-center gap-2.5">
+      <img
+        src={safetycLogo}
+        alt="Safetyc Logo"
+        className="h-9 w-auto object-contain bg-white rounded-lg p-0.5 shadow-sm border border-slate-200/80 dark:border-slate-800 transition-transform duration-300 group-hover:scale-105"
+      />
+      <span className="brand-text">
+        Safety
+        <span className="brand-accent">c</span>
+      </span>
+    </div>
   );
 }
 
@@ -188,11 +196,18 @@ export default function Navbar() {
               </div>
 
               <div className="flex items-center justify-between px-6 py-4 border-b border-dashed border-gray-200 dark:border-gray-800">
-                <div className="flex flex-col">
-                  <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-orange-600 mb-0.5">Menu</span>
-                  <span className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-                    safety<span className="text-orange-600">c</span>
-                  </span>
+                <div className="flex items-center gap-3">
+                  <img
+                    src={safetycLogo}
+                    alt="Safetyc Logo"
+                    className="h-9 w-auto object-contain bg-white rounded-lg p-0.5 shadow-sm border border-slate-200 dark:border-slate-800"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-orange-600 mb-0.5">Menu</span>
+                    <span className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+                      Safety<span className="text-orange-600">c</span>
+                    </span>
+                  </div>
                 </div>
                 <ThemeToggle variant="drawer" />
               </div>
@@ -247,7 +262,7 @@ export default function Navbar() {
                     </div>
                     <span className="text-[10px] uppercase font-bold tracking-wider text-gray-500">Call</span>
                   </a>
-                  <a href="mailto:mssafetyc@gmail.com" className="flex flex-col items-center gap-2 group">
+                  <a href="mailto:info@safetyc.in" className="flex flex-col items-center gap-2 group">
                     <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-blue-600 transition-colors group-hover:bg-blue-100">
                       <MailFilled className="text-xl" />
                     </div>

@@ -8,6 +8,7 @@ import BrandAssociates from "../components/BrandAssociates.jsx";
 import StatsSection from "../components/StatsSection.jsx";
 import Testimonials from "../components/Testimonials.jsx";
 import FeatureHighlights from "../components/FeatureHighlights.jsx";
+import RecentWorkCarousel from "../components/RecentWorkCarousel.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
 
 export default function Home() {
@@ -262,6 +263,9 @@ export default function Home() {
         )}
       </div>
     </motion.section>
+    
+    {/* Live Projects & Installations Showcase (with Solar spotlight) */}
+    <RecentWorkCarousel />
     
     {/* Feature Highlights Section */}
     <FeatureHighlights />

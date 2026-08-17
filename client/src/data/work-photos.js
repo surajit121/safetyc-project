@@ -31,7 +31,7 @@ export const workPhotos = [
     src: solarImg,
     category: "Solar Energy",
     title: "Muiliple Locations",
-    description: "1 MW rooftop solar installation for industrial facility.",
+    description: "200 kW rooftop solar installation for industrial facility.",
     location: "siliguri",
     year: "2025"
   },

@@ -3,11 +3,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 const INITIAL_MESSAGE = {
   id: "welcome",
   author: "bot",
-  text: "Hi! I'm the safetyc AI assistant. Ask me anything about our services, projects, or support hours.",
+  text: "Hi! I'm the Safetyc AI assistant. Ask me anything about our services, projects, or support hours.",
 };
 
 const GREETING_RESPONSE =
-  "Hello! I'm here to help with anything about safetyc's services, projects, or support. What would you like to know?";
+  "Hello! I'm here to help with anything about Safetyc's services, projects, or support. What would you like to know?";
 
 const buildMessage = (author, text) => ({
   id: `${author}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
@@ -244,7 +244,7 @@ export default function FaqChatbot() {
         ...prev,
         buildMessage(
           "bot",
-          "I'm having trouble fetching answers right now. You can call +91 99073 71539 or email mssafetyc@gmail.com."
+          "I'm having trouble fetching answers right now. You can call +91 99073 71539 or email info@safetyc.in."
         ),
       ]);
     } finally {
@@ -285,7 +285,7 @@ export default function FaqChatbot() {
                 <span className="faq-chatbot-status-dot"></span>
               </div>
               <div>
-                <p className="faq-chatbot-title">safetyc Assistant</p>
+                <p className="faq-chatbot-title">Safetyc Assistant</p>
                 <p className="faq-chatbot-subtitle">
                   <span className="faq-chatbot-status-text">Online</span> • Typically replies instantly
                 </p>
@@ -324,7 +324,7 @@ export default function FaqChatbot() {
 
           <form className="faq-chatbot-form" onSubmit={handleSubmit}>
             <label htmlFor="faq-chatbot-input" className="sr-only">
-              Ask the safetyc assistant a question
+              Ask the Safetyc assistant a question
             </label>
             <input
               ref={inputRef}
